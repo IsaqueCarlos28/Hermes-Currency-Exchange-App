@@ -1,6 +1,6 @@
 @reference "../../index.css"
 
 .button {
-  @apply cursor-pointer border border-border bg-surface text-navy rounded-[10px] w-12 h-12 flex items-center justify-center text-lg mb-0.5 hover:bg-canvas;
+  @apply w-12 h-12 p-0 flex items-center justify-center text-lg mb-0.5 hover:bg-canvas;
 }
 

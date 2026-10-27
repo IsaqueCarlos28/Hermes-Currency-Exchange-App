@@ -1,10 +1,11 @@
 import styles from './SwapButton.module.css';
+import Button from '../atoms/Button/Button';
 
 function SwapButton({ onClick, disabled }) {
   return (
-    <button type="button" className={styles.button} onClick={onClick} disabled={disabled}>
+    <Button onClick={onClick} disabled={disabled} className={styles.button}>
       ⇄
-    </button>
+    </Button>
   );
 }
 

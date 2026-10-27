@@ -4,20 +4,8 @@
   @apply flex flex-col gap-3;
 }
 
-.panel > button {
-  @apply px-3 py-2.5 border border-border bg-surface text-navy rounded-[10px] cursor-pointer font-sans font-semibold;
-}
-
 .field {
   @apply flex flex-col gap-1.5;
-}
-
-.field label {
-  @apply font-semibold text-[13px] text-navy;
-}
-
-.field input {
-  @apply px-3 py-2.5 border border-border rounded-[10px] font-sans text-sm text-navy bg-surface focus:outline-2 focus:outline-blue/20 focus:border-blue;
 }
 
 .error {

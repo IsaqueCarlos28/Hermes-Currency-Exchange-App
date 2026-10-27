@@ -1,4 +1,5 @@
 import styles from './ExportCsvButton.module.css';
+import Button from '../atoms/Button/Button';
 
 function ExportCsvButton({ rows = [], from, to, disabled, labels }) {
   const handleClick = () => {
@@ -6,9 +7,9 @@ function ExportCsvButton({ rows = [], from, to, disabled, labels }) {
   };
 
   return (
-    <button type="button" className={styles.button} onClick={handleClick} disabled={disabled || rows.length === 0}>
+    <Button onClick={handleClick} disabled={disabled || rows.length === 0} className={styles.button}>
       Exportar CSV
-    </button>
+    </Button>
   );
 }
 

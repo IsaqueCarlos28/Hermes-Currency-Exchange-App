@@ -1,4 +1,7 @@
 import styles from './FiltersPanel.module.css';
+import Label from '../atoms/Label/Label';
+import Input from '../atoms/Input/Input';
+import Button from '../atoms/Button/Button';
 
 function FiltersPanel({ filters = {}, onChange, onClear, errors = {} }) {
   const handleChange = (field, value) => {
@@ -8,22 +11,22 @@ function FiltersPanel({ filters = {}, onChange, onClear, errors = {} }) {
   return (
     <div className={styles.panel}>
       <div className={styles.field}>
-        <label>Data inicial</label>
-        <input type="date" value={filters.startDate || ''} onChange={(e) => handleChange('startDate', e.target.value)} />
+        <Label>Data inicial</Label>
+        <Input type="date" value={filters.startDate || ''} onChange={(v) => handleChange('startDate', v)} />
       </div>
       <div className={styles.field}>
-        <label>Data final</label>
-        <input type="date" value={filters.endDate || ''} onChange={(e) => handleChange('endDate', e.target.value)} />
+        <Label>Data final</Label>
+        <Input type="date" value={filters.endDate || ''} onChange={(v) => handleChange('endDate', v)} />
       </div>
       <div className={styles.field}>
-        <label>Cotação mínima</label>
-        <input value={filters.minRate || ''} onChange={(e) => handleChange('minRate', e.target.value)} />
+        <Label>Cotação mínima</Label>
+        <Input value={filters.minRate || ''} onChange={(v) => handleChange('minRate', v)} />
       </div>
       <div className={styles.field}>
-        <label>Cotação máxima</label>
-        <input value={filters.maxRate || ''} onChange={(e) => handleChange('maxRate', e.target.value)} />
+        <Label>Cotação máxima</Label>
+        <Input value={filters.maxRate || ''} onChange={(v) => handleChange('maxRate', v)} />
       </div>
-      <button type="button" onClick={onClear}>Limpar filtros</button>
+      <Button onClick={onClear}>Limpar filtros</Button>
       {errors.dates && <div className={styles.error}>{errors.dates}</div>}
       {errors.rate && <div className={styles.error}>{errors.rate}</div>}
     </div>

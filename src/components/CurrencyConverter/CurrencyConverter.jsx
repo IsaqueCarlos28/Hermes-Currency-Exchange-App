@@ -25,7 +25,9 @@ function CurrencyConverter({
         <SwapButton onClick={onSwap} />
         <CurrencySelect label="Moeda de destino" value={to} options={currencies} onChange={onToChange} />
       </div>
-      <AmountInput label="Valor" value={amount} onChange={onAmountChange} />
+      <div className={styles.amount}>
+        <AmountInput label="Valor" value={amount} onChange={onAmountChange} />
+      </div>
       <ConversionResult converted={converted} rate={rate} rateDate={rateDate} from={from} to={to} status={status} />
     </section>
   );

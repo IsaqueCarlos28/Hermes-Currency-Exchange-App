@@ -1,10 +1,14 @@
 @reference "../../index.css"
 
 .converter {
-  @apply flex flex-col gap-5 p-6 md:p-4 bg-surface border border-border rounded-[14px];
+  @apply flex flex-col gap-6 p-6 md:p-4 bg-surface border border-border rounded-[14px];
 }
 
 .row {
-  @apply flex items-end gap-4 flex-wrap md:flex-col md:items-stretch md:gap-3;
+  @apply grid grid-cols-[1fr_auto_1fr] items-end gap-4 md:grid-cols-1;
+}
+
+.amount {
+  @apply w-full max-w-[320px] md:max-w-full;
 }
 

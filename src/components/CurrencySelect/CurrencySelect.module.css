@@ -1,14 +1,6 @@
 @reference "../../index.css"
 
 .container {
-  @apply flex flex-col gap-1.5 min-w-[180px] flex-1 md:min-w-full;
-}
-
-.label {
-  @apply font-semibold text-[13px] text-navy;
-}
-
-.select {
-  @apply px-4 py-3 border border-border rounded-[10px] font-sans text-[15px] text-navy bg-surface focus:outline-2 focus:outline-blue/20 focus:border-blue;
+  @apply flex flex-col gap-1.5 w-full;
 }
 
