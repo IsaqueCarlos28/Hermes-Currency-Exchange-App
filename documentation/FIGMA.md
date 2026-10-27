@@ -10,6 +10,8 @@
 
 **Ferramenta:** Figma
 
+> **Nota de implementação:** este documento está alinhado à fonte da verdade visual `documentation/New Styles/HERMES_UI_SPEC.md` e aos tokens de `src/styles/tokens.css`. Os valores e comportamentos abaixo refletem o código atual em React + CSS Modules (Tailwind v4 via `@apply`).
+
 ---
 
 ## 1. Direção Visual
@@ -69,14 +71,19 @@ A paleta foi definida para criar uma identidade mais próxima de produtos financ
 | **Canvas** | `#F5F7FA` | Fundo principal da aplicação |
 | **Surface** | `#FFFFFF` | Superfícies e áreas de conteúdo |
 | **Border** | `#E2E8F0` | Bordas, divisores e separações |
-| **Muted** | `#64748B` | Textos secundários e informações auxiliares |
+| **Muted** | `#64748B` | Textos secundários e informações auxiliares sobre `Surface` |
+| **Text Secondary** | `#475569` | Texto auxiliar sobre `Canvas` (contraste ≥ 4.5:1) |
+| **Blue Hover** | `#1D4ED8` | Hover das ações primárias |
 
 ## Cores semânticas
 
 | Token | Hexadecimal | Uso |
 | --- | --- | --- |
-| **Positive** | `#16A34A` | Sucesso, valorização e resultados positivos |
+| **Positive** | `#16A34A` | Ícones e fundos semânticos de sucesso/valorização |
+| **Positive Text** | `#15803D` | Texto de variação positiva (contraste) |
 | **Negative** | `#DC2626` | Erros, queda e resultados negativos |
+| **Disabled Background** | `#F1F5F9` | Fundo de controles desabilitados |
+| **Disabled Text** | `#94A3B8` | Texto de controles desabilitados |
 
 ### Regra de uso
 
@@ -183,8 +190,8 @@ Utilizado principalmente em:
 | --- | --- |
 | Inputs | 10 px |
 | Botões | 10 px |
-| Containers | 12 px |
-| Elementos maiores | 14 px |
+| Tabela e containers internos | 12 px |
+| Cards e superfícies | 14 px |
 
 O objetivo é criar uma interface moderna e amigável sem utilizar formas excessivamente arredondadas.
 
@@ -218,7 +225,7 @@ Canvas
     └── Surface
 ```
 
-Cards devem ser utilizados quando realmente ajudarem a agrupar informações relacionadas.
+Cards devem ser utilizados apenas nas três seções principais — **Conversor**, **Histórico** e **Tabela** —, com borda de 1 px, raio de 14 px e padding de 32 px no desktop (`24px 16px` no mobile). O restante da interface é organizado por espaço, bordas e hierarquia tipográfica.
 
 ---
 
@@ -240,10 +247,13 @@ Exemplo:
 
 Características:
 
-- fundo `Blue`;
-- texto claro;
-- radius 10 px;
-- destaque visual superior aos demais botões.
+- fundo `Blue`, borda `Blue` e texto branco;
+- altura 48 px, padding horizontal 24 px e radius 10 px;
+- tipografia 15 px/600;
+- hover com `Blue Hover`;
+- foco com outline de 2 px azul e offset de 2 px;
+- disabled com fundo `#F1F5F9`, texto `#94A3B8` e borda `Border`;
+- loading com spinner de 18 px e `aria-busy="true"`.
 
 ### Secondary
 
@@ -258,9 +268,10 @@ Exemplo:
 Características:
 
 - fundo `Surface`;
-- borda `Border`;
+- borda `Border`, que fica `Blue` no hover;
 - texto `Navy`;
-- radius 10 px.
+- altura 48 px, padding horizontal 24 px e radius 10 px;
+- foco com outline de 2 px azul e offset de 2 px.
 
 ### Estados
 
@@ -299,6 +310,8 @@ Disabled
 
 O estado de foco deve possuir indicação visual clara.
 
+Todos os inputs têm **48 px de altura**, padding horizontal de **16 px** e radius de **10 px**. O foco usa borda `Blue` com ring de 2 px e offset de 2 px; o erro usa borda `Negative` e `aria-invalid="true"`.
+
 ---
 
 # 9. Selects
@@ -331,6 +344,8 @@ Error
 Disabled
 ```
 
+O select é nativo, com `appearance: none`, altura de 48 px, radius 10 px, padding horizontal de 16 px e `padding-right` de 44 px para o `ChevronDown` de 20 px em `Muted`.
+
 ---
 
 # 10. Currency Pair
@@ -349,7 +364,7 @@ A interface também possui a ação de inversão:
 [ USD ]  ⇄  [ BRL ]
 ```
 
-O botão de troca deve possuir destaque suficiente para ser facilmente identificado, mas não deve competir visualmente com a ação principal de conversão.
+O botão de troca deve possuir destaque suficiente para ser facilmente identificado, mas não deve competir visualmente com a ação principal de conversão. Na implementação, ele mede **48 × 48 px**, usa a variante secundária e mantém a borda neutra por padrão, ficando `Blue` no hover.
 
 ---
 
@@ -381,6 +396,8 @@ Cotação de 27/10/2026
 
 O valor convertido deve ser apresentado utilizando a escala `Financial Value`.
 
+Na implementação, o valor convertido usa 40 px/700 no desktop, 36 px no tablet e 32 px no mobile; o valor de origem usa 20 px/600 e a taxa/data usam 15 px em `Text Secondary`.
+
 ---
 
 # 12. Period Selector
@@ -402,6 +419,8 @@ Focus
 
 O período selecionado deve possuir destaque visual utilizando a identidade `Blue`.
 
+Cada opção tem 40 px de altura, `min-width` de 48 px, padding horizontal de 12 px, radius 10 px e tipografia 14 px/600. O container usa `display: flex`, gap de 4 px e rolagem horizontal interna no mobile.
+
 ---
 
 # 13. Chart
@@ -410,14 +429,19 @@ O gráfico representa a evolução histórica da cotação.
 
 ### Direção visual
 
-- linha principal em `Blue`;
-- grid discreto;
-- textos em `Muted`;
+- linha principal em `Blue`, com 2,5 px;
+- área preenchida em `Blue` com opacidade de 0,07 (cor sólida, sem gradiente);
+- grid horizontal discreto em `Border`;
+- textos dos eixos em `Muted`, 13 px;
 - valores em `Navy`;
-- tooltip em `Surface`;
-- bordas em `Border`.
+- ponto final branco com borda `Blue` de 3 px e linha vertical tracejada;
+- tooltip estático em `Surface`, borda `Border` e radius 10 px (data em 12 px `Muted`, valor em 16 px/700 `Navy`).
 
 O gráfico deve priorizar a leitura dos dados em vez de elementos decorativos.
+
+### Implementação
+
+O gráfico é um **SVG próprio**, sem biblioteca de gráficos. A largura é medida com `ResizeObserver` e o SVG usa 1 unidade = 1 px. As alturas são **280 px no mobile, 320 px no tablet e 360 px no desktop**; as marcações dos eixos são calculadas a partir dos dados carregados.
 
 ### Estados
 
@@ -457,6 +481,8 @@ Error
 
 A ordenação ativa deve possuir indicação visual clara.
 
+Na implementação, a tabela fica em um wrapper com `overflow-x: auto`, borda `Border` e radius 12 px. A `<table>` tem `min-width: 560 px`, cabeçalho de 44 px e linhas de 52 px; a página não adquire rolagem horizontal.
+
 ---
 
 # 15. Filters
@@ -479,6 +505,8 @@ Cotação máxima
 
 Os filtros devem possuir agrupamento visual claro, sem criar excesso de containers.
 
+Na implementação, os campos ficam em uma coluna no mobile e, a partir de 768 px, em `repeat(auto-fit, minmax(170px, 1fr))`; o botão "Limpar filtros" ocupa 100% da largura da sua coluna.
+
 ---
 
 # 16. CSV Export
@@ -500,6 +528,8 @@ Loading
 ```
 
 Quando não houver registros disponíveis, a ação de exportação deve ficar desabilitada ou apresentar claramente o motivo da indisponibilidade.
+
+Na implementação, o arquivo é gerado como `hermes-<ORIGEM>-<DESTINO>.csv`, em UTF-8 com BOM, separador `;` e cabeçalhos no idioma ativo.
 
 ---
 
@@ -565,21 +595,21 @@ Os ícones devem possuir estilo consistente e não devem ser utilizados apenas c
 
 O layout deve utilizar uma composição ampla e organizada, priorizando a leitura dos dados.
 
-Referência inicial:
+O conteúdo fica em um container único, centralizado, com:
 
 ```
 Max-width: 1200 px
-Grid: 12 colunas
-Gutter: 24 px
-Margin: 32 px
+Padding lateral: 32 px (desktop), 24 px (tablet), 16 px (mobile)
 ```
+
+Não há um grid global de 12 colunas: cada seção organiza o próprio conteúdo (o conversor usa 2 colunas no desktop; filtros usam `auto-fit`).
 
 ## Mobile
 
 No mobile:
 
 ```
-Grid: 1 coluna
+Seções em 1 coluna
 Padding: 16 px
 ```
 
@@ -625,26 +655,27 @@ O layout deve se adaptar ao espaço disponível. Os breakpoints não devem ser u
 ### Desktop
 
 ```
-12 colunas
-Gutter: 24 px
-Margem: 32 px
-Max-width: 1200 px
+Seções em coluna única
+Conversor: 2 colunas (formulário + resultado)
+Container: max-width 1200 px
+Padding lateral: 32 px
 ```
 
 ### Tablet
 
 ```
-8 colunas
-Gutter: 20 px
-Margem: 24 px
+Seções em coluna única
+Conversor: formulário sobre resultado
+Filtros: auto-fit (min. 170 px)
+Padding lateral: 24 px
 ```
 
 ### Mobile
 
 ```
 1 coluna
-Gutter: 16 px
-Margem: 16 px
+Controles com largura total
+Padding lateral: 16 px
 ```
 
 ---
@@ -654,9 +685,9 @@ Margem: 16 px
 | Elemento | Desktop | Tablet | Mobile |
 | --- | --- | --- | --- |
 | Padding lateral | 32 px | 24 px | 16 px |
-| Entre seções | 48–64 px | 40–48 px | 32–40 px |
-| Entre grupos | 24 px | 20 px | 16 px |
-| Entre elementos | 16 px | 16 px | 12–16 px |
+| Entre seções | 48 px | 48 px | 32 px |
+| Entre grupos | 24 px | 24 px | 16 px |
+| Entre elementos | 16 px | 16 px | 16 px |
 | Micro espaçamento | 8 px | 8 px | 8 px |
 
 A escala continua baseada em múltiplos de 8 px sempre que possível.
@@ -685,25 +716,33 @@ Valores financeiros continuam recebendo maior destaque mesmo no mobile.
 
 ### Desktop
 
-O conversor pode utilizar uma composição horizontal:
+O conversor usa duas colunas: formulário à esquerda e resultado à direita. A ordem do formulário é valor → par → botão:
 
 ```
+┌───────────────────────────────┐
+│ 100,00                        │
+└───────────────────────────────┘
+
 ┌──────────────┐     ┌──────────────┐
 │ USD          │ ⇄   │ BRL          │
 └──────────────┘     └──────────────┘
+
+[          Converter           ]
+```
+
+O resultado fica à direita, separado por `border-left` e `padding-left` de 48 px, alinhado ao topo.
+
+### Mobile
+
+Os elementos são reorganizados verticalmente:
+
+```
+Valor
 
 ┌───────────────────────────────┐
 │ 100,00                        │
 └───────────────────────────────┘
 
-[          Converter           ]
-```
-
-### Mobile
-
-Os elementos devem ser reorganizados verticalmente:
-
-```
 Moeda de origem
 
 ┌───────────────────────────────┐
@@ -718,16 +757,10 @@ Moeda de destino
 │ BRL                        ▼  │
 └───────────────────────────────┘
 
-Valor
-
-┌───────────────────────────────┐
-│ 100,00                        │
-└───────────────────────────────┘
-
 [          Converter           ]
 ```
 
-O botão de troca permanece acessível entre os seletores.
+O botão de troca permanece acessível entre os seletores, centralizado, e o resultado aparece abaixo do formulário.
 
 ---
 
@@ -778,14 +811,21 @@ O gráfico deve ocupar toda a largura disponível.
 
 ```
 Largura: disponível
-Altura aproximada: 320–400 px
+Altura: 360 px
+```
+
+### Tablet
+
+```
+Largura: disponível
+Altura: 320 px
 ```
 
 ### Mobile
 
 ```
 Largura: 100%
-Altura aproximada: 260–300 px
+Altura: 280 px
 ```
 
 Os elementos secundários do gráfico devem ser reduzidos quando necessário para preservar a área útil de visualização.
@@ -823,6 +863,8 @@ Cotação máxima
 ```
 
 Os campos devem ocupar a largura disponível.
+
+No tablet e no desktop, os filtros usam `grid-template-columns: repeat(auto-fit, minmax(170px, 1fr))`; o botão "Limpar filtros" ocupa 100% da largura da sua coluna.
 
 ---
 
@@ -872,7 +914,7 @@ Todos os inputs e selects devem possuir:
 
 ```
 Height: 48 px
-Radius: 10–12 px
+Radius: 10 px
 Padding horizontal: 16 px
 ```
 
@@ -1077,9 +1119,9 @@ A identidade do Hermes deve fazer com que a aplicação pareça uma ferramenta f
 
 ## 25 Referência para Implementação
 
-As decisões deste documento devem orientar a construção da interface no Figma e posteriormente a implementação em React.
+As decisões deste documento orientaram a construção do Figma e a implementação em React.
 
-A implementação deve manter correspondência entre:
+A implementação mantém correspondência entre:
 
 ```
 Figma
@@ -1091,4 +1133,20 @@ Componentes React
 CSS Modules
 ```
 
-Os tokens visuais definidos neste documento devem ser reutilizados na implementação, evitando estilos arbitrários espalhados pelos componentes.
+Os tokens visuais definidos neste documento são reutilizados na implementação, evitando estilos arbitrários espalhados pelos componentes.
+
+### 25.1 Como o design system chega ao código
+
+- **Tokens:** `src/styles/tokens.css` é a fonte única de cores, tipografia, espaçamento, forma e layout.
+- **Tailwind:** `src/index.css` importa a Manrope e o Tailwind, mapeia os tokens com `@theme inline` e define a tipografia base e o foco global.
+- **CSS Modules:** cada componente tem seu `.module.css` com `@reference "../../../index.css";` e utilitários via `@apply`, sempre usando as variáveis (`var(--color-*)`, `var(--sp-*)`, `var(--radius-*)`).
+- **Breakpoints:** mobile-first; `md:` corresponde a tablet (≥768 px) e `lg:` a desktop (≥1024 px).
+- **Estrutura:** `src/components/atoms`, `src/components/molecules` e `src/components/organisms`; a árvore completa e as props estão em `COMPONENTS.md`.
+
+## 26. Estado atual da implementação
+
+- Interface completa em React + CSS Modules, com os três cards (Conversor, Histórico e Tabela), responsiva em 390/768/1024/1440 px.
+- Dados mock em `src/App.jsx` (5 moedas e 21 registros de histórico); a conversão é calculada em tempo real e o botão "Converter" é visual.
+- Estados de loading, erro e vazio implementados nos componentes; a integração com a API Frankfurter está preparada em `services/` e `hooks/`, mas ainda não ativa.
+- Internacionalização PT/EN/ES via `constants/i18n.js`, com `document.documentElement.lang` sincronizado.
+- Exportação CSV no navegador, com os registros filtrados e na ordenação atual.

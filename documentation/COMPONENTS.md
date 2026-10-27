@@ -2,126 +2,134 @@
 
 Arquitetura de componentes do **Hermes — Currency Exchange App**.
 
-> **Nota:** este documento descreve a arquitetura planejada a partir do `REQUIREMENTS.md` e do wireframe (Figma). Se algum nome de arquivo, prop ou estado mudar durante a implementação, atualize a tabela correspondente para o documento refletir o código final.
-> 
+> **Nota:** este documento descreve o código atual em `src/` depois da refatoração visual alinhada a `documentation/New Styles/`. A interface está implementada e funcional com dados mock no `App`; `services/frankfurterApi.js` e os hooks de consulta já existem como base, mas a integração com a API Frankfurter ainda não está ativa. Onde isso afeta o comportamento, há uma observação.
 
 ## 1. Visão geral
 
-O wireframe tem cinco blocos em uma única página, que viram os componentes principais:
+A tela mantém cinco blocos em uma única página:
 
 ```
-Logo + Idioma  →  Título/descrição  →  Conversor  →  Gráfico + Períodos  →  Filtros / Tabela / CSV
+Header (Logo + Idioma)  →  PageIntro  →  Conversor  →  Histórico + Períodos  →  Filtros / Tabela / CSV
 ```
 
-Convenções:
+Convenções adotadas no código:
 
-- Cada componente fica em `src/components/<Nome>/` com `<Nome>.jsx` e `<Nome>.module.css`.
+- **Atomic design:** componentes organizados em `src/components/atoms`, `src/components/molecules` e `src/components/organisms`.
+- Cada componente fica em `src/components/<nível>/<Nome>/` com `<Nome>.jsx` e `<Nome>.module.css`.
 - Componentes são **funcionais** e recebem dados e callbacks por **props**.
-- Componentes de UI não chamam a API nem contêm regras de negócio: isso fica em `services/`, `utils/` e `hooks/`.
-- O estado compartilhado (par de moedas, valor, período, idioma) fica no `App` (**lifting state up**).
+- A UI não chama a API nem concentra regras de negócio: isso fica em `services/`, `utils/` e `hooks/`.
+- O estado compartilhado (par, valor, período e idioma) fica no `App` (**lifting state up**).
+- O Tailwind v4 é usado **dentro dos CSS Modules**, com `@reference "../../../index.css"` e utilitários via `@apply`. Os valores vêm dos tokens de `src/styles/tokens.css`, mapeados em `src/index.css` com `@theme inline`.
+- Acessibilidade: labels associados, `aria-invalid`, `aria-describedby`, `aria-live`, `aria-pressed`, `aria-sort`, `aria-current` e foco visível global.
 
 ## 2. Árvore de componentes
 
 ```
 App
-├── Header
-│   ├── Logo
-│   └── LanguageSwitcher
-├── PageIntro
-├── CurrencyConverter
-│   ├── AmountInput
-│   ├── CurrencySelect (origem)
-│   ├── SwapButton
-│   ├── CurrencySelect (destino)
-│   └── ConversionResult
-├── HistorySection
-│   ├── PeriodSelector
-│   ├── RateChart
-│   └── (LoadingState | ErrorState | EmptyState)
-└── RatesTableSection
-    ├── FiltersPanel
-    ├── TableSummary
-    ├── ExportCsvButton
-    ├── RatesTable
-    │   └── RateRow (lista renderizada com map)
-    └── (LoadingState | ErrorState | EmptyState)
+├── Header (organism)
+│   ├── Logo (atom)
+│   └── LanguageSwitcher (molecule)
+├── PageIntro (molecule)
+├── CurrencyConverter (organism)
+│   ├── AmountInput (molecule)
+│   │   ├── Label (atom)
+│   │   └── Input (atom)
+│   ├── CurrencySelect (molecule, origem)
+│   │   ├── Label (atom)
+│   │   └── Select (atom)
+│   ├── SwapButton (atom)
+│   ├── CurrencySelect (molecule, destino)
+│   ├── ConversionResult (molecule)
+│   └── Button (atom, "Converter")
+├── HistorySection (organism)
+│   ├── PeriodSelector (molecule)
+│   ├── RateChart (molecule)
+│   └── LoadingState | ErrorState | EmptyState (atoms)
+└── RatesTableSection (organism)
+    ├── FiltersPanel (molecule)
+    │   ├── Label / Input / Button (atoms)
+    ├── TableSummary (atom)
+    ├── ExportCsvButton (atom)
+    ├── RatesTable (organism)
+    │   └── RateRow (molecule, renderizado com map)
+    └── LoadingState | ErrorState | EmptyState (atoms)
 ```
 
 ## 3. Componentes
 
-### 3.1 Estrutura e layout
+### 3.1 Atoms
 
 | Componente | Responsabilidade | JSX | CSS Module | Principais props | Estados |
 | --- | --- | --- | --- | --- | --- |
-| `App` | Raiz da aplicação. Guarda o estado compartilhado, chama os hooks de dados e distribui dados e callbacks. | `src/App.jsx` | `src/App.module.css` | — | `from`, `to`, `amount`, `period`, `language` |
-| `Header` | Cabeçalho com logo e seletor de idioma. | `components/Header/Header.jsx` | `Header.module.css` | `language`, `onLanguageChange` | — |
-| `Logo` | Marca "HERMES". | `components/Logo/Logo.jsx` | `Logo.module.css` | — | — |
-| `LanguageSwitcher` | Alterna entre PT, EN e ES; destaca o idioma ativo. | `components/LanguageSwitcher/LanguageSwitcher.jsx` | `LanguageSwitcher.module.css` | `language`, `onChange` | — |
-| `PageIntro` | Título da página e breve descrição. | `components/PageIntro/PageIntro.jsx` | `PageIntro.module.css` | `title`, `description` | — |
+| `Button` | Base dos botões. Aplica variante, altura de controle, foco e estado desabilitado/loading. | `atoms/Button/Button.jsx` | `Button.module.css` | `children`, `onClick`, `disabled`, `loading`, `type`, `className`, `variant` (`primary`/`secondary`), `aria-label` | `loading` (spinner + `aria-busy`), `disabled` |
+| `EmptyState` | Estado de ausência de dados, com ícone, mensagem, descrição e ação opcionais. | `atoms/EmptyState/EmptyState.jsx` | `EmptyState.module.css` | `message`, `description`, `action`, `compact` | — |
+| `ErrorState` | Estado de erro com ícone, mensagem, descrição e botão de nova tentativa. | `atoms/ErrorState/ErrorState.jsx` | `ErrorState.module.css` | `message`, `description`, `retryLabel`, `onRetry` | — |
+| `ExportCsvButton` | Gera e baixa o CSV dos registros recebidos. Fica desabilitado sem linhas. | `atoms/ExportCsvButton/ExportCsvButton.jsx` | `ExportCsvButton.module.css` | `rows`, `from`, `to`, `disabled`, `language`, `labels`, `className` | `disabled` quando `rows.length === 0` |
+| `Input` | Campo de texto controlado, com estado de erro e `aria-invalid`. | `atoms/Input/Input.jsx` | `Input.module.css` | `value`, `onChange`, `type`, `placeholder`, `disabled`, `error`, `id` | `error`, `disabled` |
+| `Label` | Rótulo associado ao campo via `htmlFor`. | `atoms/Label/Label.jsx` | `Label.module.css` | `children`, `htmlFor` | — |
+| `LoadingState` | Indicador de carregamento (spinner) ou skeleton de tabela. | `atoms/LoadingState/LoadingState.jsx` | `LoadingState.module.css` | `message`, `variant` (`default`/`table`) | `role="status"` + `aria-live` |
+| `Logo` | Marca "HERMES": quadrado azul com ícone `ArrowLeftRight` e wordmark. | `atoms/Logo/Logo.jsx` | `Logo.module.css` | — | — |
+| `Select` | Select nativo controlado, com `ChevronDown` e estado de erro. | `atoms/Select/Select.jsx` | `Select.module.css` | `value`, `onChange`, `options`, `disabled`, `error`, `id` | `error`, `disabled` |
+| `SwapButton` | Botão 48×48 que inverte origem e destino. | `atoms/SwapButton/SwapButton.jsx` | `SwapButton.module.css` | `onClick`, `disabled`, `label` | — |
+| `TableSummary` | Exibe a contagem no formato "N de M registros". | `atoms/TableSummary/TableSummary.jsx` | `TableSummary.module.css` | `filteredCount`, `totalCount`, `format` | — |
 
-### 3.2 Conversor
-
-| Componente | Responsabilidade | JSX | CSS Module | Principais props | Estados |
-| --- | --- | --- | --- | --- | --- |
-| `CurrencyConverter` | Reúne os campos do conversor, valida a entrada e dispara o cálculo do resultado. | `components/CurrencyConverter/CurrencyConverter.jsx` | `CurrencyConverter.module.css` | `currencies`, `from`, `to`, `amount`, `rate`, `rateDate`, `status`, `onFromChange`, `onToChange`, `onAmountChange`, `onSwap` | `validationError` (derivado da validação) |
-| `AmountInput` | Campo do valor a converter; aceita vírgula ou ponto e mostra erro de validação. | `components/AmountInput/AmountInput.jsx` | `AmountInput.module.css` | `value`, `onChange`, `error`, `label` | — (controlado pelo pai) |
-| `CurrencySelect` | Seletor de moeda reutilizado para origem e destino; lista renderizada com `map`. | `components/CurrencySelect/CurrencySelect.jsx` | `CurrencySelect.module.css` | `label`, `value`, `options`, `onChange`, `disabled` | — (controlado pelo pai) |
-| `SwapButton` | Botão "Trocar ⇄" que inverte origem e destino. | `components/SwapButton/SwapButton.jsx` | `SwapButton.module.css` | `onClick`, `disabled` | — |
-| `ConversionResult` | Exibe valor convertido, taxa usada e data efetiva da cotação (ou loading/erro). | `components/ConversionResult/ConversionResult.jsx` | `ConversionResult.module.css` | `converted`, `rate`, `rateDate`, `from`, `to`, `status` | — |
-
-### 3.3 Histórico e gráfico
+### 3.2 Molecules
 
 | Componente | Responsabilidade | JSX | CSS Module | Principais props | Estados |
 | --- | --- | --- | --- | --- | --- |
-| `HistorySection` | Seção do gráfico: título, seletor de período e gráfico, com tratamento de loading, erro e ausência de dados. | `components/HistorySection/HistorySection.jsx` | `HistorySection.module.css` | `period`, `onPeriodChange`, `rates`, `from`, `to`, `status`, `onRetry` | — |
-| `PeriodSelector` | Botões 7D · 15D · 30D · 3M · 6M · 1A · 5A · 10A; destaca o ativo. | `components/PeriodSelector/PeriodSelector.jsx` | `PeriodSelector.module.css` | `periods`, `value`, `onChange` | — |
-| `RateChart` | Desenha o gráfico de linha do histórico usando a biblioteca de gráficos (Recharts ou Chart.js). | `components/RateChart/RateChart.jsx` | `RateChart.module.css` | `data` (`[{ date, rate }]`), `from`, `to` | — |
+| `AmountInput` | `Label` + `Input` do valor, com mensagem de erro associada. | `molecules/AmountInput/AmountInput.jsx` | `AmountInput.module.css` | `value`, `onChange`, `error`, `label`, `id` | `error` (controlado pelo pai) |
+| `ConversionResult` | Resultado da conversão: valor de origem, valor convertido, taxa e data, com variantes de loading e erro. | `molecules/ConversionResult/ConversionResult.jsx` | `ConversionResult.module.css` | `converted`, `rate`, `rateDate`, `from`, `to`, `status`, `amount`, `language`, `labels`, `invalidAmount`, `onRetry` | `status` (`success`/`loading`/`error`), `invalidAmount` |
+| `CurrencySelect` | `Label` + `Select` de moeda, reutilizado para origem e destino. Pode delegar a mensagem de erro ao pai. | `molecules/CurrencySelect/CurrencySelect.jsx` | `CurrencySelect.module.css` | `label`, `value`, `options`, `onChange`, `disabled`, `error`, `showErrorMessage`, `describedBy`, `id` | `error` |
+| `FiltersPanel` | Campos de data inicial/final e cotação mínima/máxima, além de "Limpar filtros" e mensagens de validação. | `molecules/FiltersPanel/FiltersPanel.jsx` | `FiltersPanel.module.css` | `filters`, `onChange`, `onClear`, `errors`, `labels` | `errors` (`startDate`, `endDate`, `minRate`, `maxRate`, `range`, `rates`) |
+| `LanguageSwitcher` | Alterna PT/EN/ES e destaca o idioma ativo com `aria-current`. | `molecules/LanguageSwitcher/LanguageSwitcher.jsx` | `LanguageSwitcher.module.css` | `language`, `onChange` | — |
+| `PageIntro` | H1 e descrição da página. | `molecules/PageIntro/PageIntro.jsx` | `PageIntro.module.css` | `title`, `description` | — |
+| `PeriodSelector` | Botões 7D · 15D · 30D · 3M · 6M · 1A · 5A · 10A, com rolagem interna no mobile. | `molecules/PeriodSelector/PeriodSelector.jsx` | `PeriodSelector.module.css` | `periods`, `value`, `onChange`, `label` | `aria-pressed` no ativo |
+| `RateChart` | Gráfico de linha em SVG próprio, medido com `ResizeObserver`, com eixos, área, marcador e caixa do último ponto. | `molecules/RateChart/RateChart.jsx` | `RateChart.module.css` | `data` (`[{ date, rate }]`), `from`, `to`, `language`, `labels` | — (recebe dados já carregados) |
+| `RateRow` | Uma linha da tabela: data, origem, destino e cotação formatados. | `molecules/RateRow/RateRow.jsx` | `RateRow.module.css` | `date`, `from`, `to`, `rate`, `language` | — |
 
-### 3.4 Tabela, filtros e CSV
-
-| Componente | Responsabilidade | JSX | CSS Module | Principais props | Estados |
-| --- | --- | --- | --- | --- | --- |
-| `RatesTableSection` | Coordena filtros, ordenação, contagem, tabela e exportação. Aplica `filterRates` e `sortRates` sobre os dados recebidos. | `components/RatesTableSection/RatesTableSection.jsx` | `RatesTableSection.module.css` | `rates`, `from`, `to`, `period`, `status`, `onRetry` | `filters` (`startDate`, `endDate`, `minRate`, `maxRate`), `sort` (`field`, `direction`) |
-| `FiltersPanel` | Campos de intervalo de datas e cotação mín./máx.; botão "Limpar filtros"; mostra erros (início > fim, mín > máx). | `components/FiltersPanel/FiltersPanel.jsx` | `FiltersPanel.module.css` | `filters`, `onChange`, `onClear`, `errors` | — (controlado pelo pai) |
-| `TableSummary` | Exibe "N de M registros". | `components/TableSummary/TableSummary.jsx` | `TableSummary.module.css` | `filteredCount`, `totalCount` | — |
-| `ExportCsvButton` | Gera e baixa o CSV dos registros filtrados; fica desabilitado quando não há registros. | `components/ExportCsvButton/ExportCsvButton.jsx` | `ExportCsvButton.module.css` | `rows`, `from`, `to`, `disabled`, `labels` | — |
-| `RatesTable` | Tabela com cabeçalhos clicáveis para ordenar por data e por cotação. | `components/RatesTable/RatesTable.jsx` | `RatesTable.module.css` | `rows`, `sort`, `onSortChange` | — |
-| `RateRow` | Uma linha da tabela (data, origem, destino, cotação formatados). | `components/RateRow/RateRow.jsx` | `RateRow.module.css` | `date`, `from`, `to`, `rate` | — |
-
-### 3.5 Estados de interface (compartilhados)
+### 3.3 Organisms
 
 | Componente | Responsabilidade | JSX | CSS Module | Principais props | Estados |
 | --- | --- | --- | --- | --- | --- |
-| `LoadingState` | Indicador de carregamento. | `components/LoadingState/LoadingState.jsx` | `LoadingState.module.css` | `message` | — |
-| `ErrorState` | Mensagem de erro com botão "Tentar novamente". | `components/ErrorState/ErrorState.jsx` | `ErrorState.module.css` | `message`, `onRetry` | — |
-| `EmptyState` | Mensagem de ausência de dados (sem resultados para o período ou para os filtros). | `components/EmptyState/EmptyState.jsx` | `EmptyState.module.css` | `message`, `action` (opcional) | — |
+| `Header` | Cabeçalho com logo e seletor de idioma. | `organisms/Header/Header.jsx` | `Header.module.css` | `language`, `onLanguageChange` | — |
+| `CurrencyConverter` | Card do conversor: organiza valor, par, troca, botão e resultado; concentra a exibição dos erros de valor e de par. | `organisms/CurrencyConverter/CurrencyConverter.jsx` | `CurrencyConverter.module.css` | `currencies`, `from`, `to`, `amount`, `rate`, `rateDate`, `status`, `converted`, `language`, `labels`, `errors`, `onFromChange`, `onToChange`, `onAmountChange`, `onSwap`, `onRetry` | `errors.amount`, `errors.pair`; `status` do resultado |
+| `HistorySection` | Card do histórico: título, variação percentual do período, seletor de períodos e gráfico, com loading/erro/vazio. | `organisms/HistorySection/HistorySection.jsx` | `HistorySection.module.css` | `period`, `onPeriodChange`, `rates`, `from`, `to`, `status`, `onRetry`, `periods`, `language`, `labels` | `status` (`success`/`loading`/`error`); vazio quando `rates.length === 0` |
+| `RatesTable` | Tabela com cabeçalhos ordenáveis por data e cotação, usando `aria-sort`. | `organisms/RatesTable/RatesTable.jsx` | `RatesTable.module.css` | `rows`, `sort`, `onSortChange`, `language`, `labels` | Ordenação ativa (`date`/`rate`, `asc`/`desc`) |
+| `RatesTableSection` | Card da tabela: filtros, contagem, exportação, estados e tabela. Usa `useRateFilters` para filtros e ordenação locais. | `organisms/RatesTableSection/RatesTableSection.jsx` | `RatesTableSection.module.css` | `rates`, `from`, `to`, `status`, `onRetry`, `language`, `labels` | `status`; filtros e ordenação locais; vazio por filtros |
 
 ## 4. Hooks customizados (`src/hooks/`)
 
-| Hook | Responsabilidade | Recebe | Retorna |
-| --- | --- | --- | --- |
-| `useCurrencies` | Busca a lista de moedas disponíveis uma única vez. | — | `{ currencies, status, error, retry }` |
-| `useLatestRate` | Busca a taxa e a data efetiva do par selecionado (`useEffect` com dependências `from` e `to`). | `from`, `to` | `{ rate, date, status, error, retry }` |
-| `useHistoricalRates` | Busca o histórico do par no período; cancela/ignora respostas obsoletas. | `from`, `to`, `period` | `{ rates, status, error, retry }` |
-| `useRateFilters` | (Opcional) Concentra estado de filtros e ordenação e devolve os registros processados. | `rates` | `{ filters, setFilters, clearFilters, sort, setSort, filteredRows, errors }` |
+| Hook | Responsabilidade | Recebe | Retorna | Situação atual |
+| --- | --- | --- | --- | --- |
+| `useCurrencies` | Busca a lista de moedas disponíveis. | — | `{ currencies, status, error, retry }` | Estrutura pronta; ainda não chama a API (retorna lista vazia). |
+| `useLatestRate` | Busca a taxa e a data efetiva do par selecionado. | `from`, `to` | `{ rate, date, status, error, retry }` | Estrutura pronta; ainda não chama a API. |
+| `useHistoricalRates` | Busca o histórico do par no período selecionado. | `from`, `to`, `period` | `{ rates, status, error, retry }` | Estrutura pronta; ainda não chama a API. |
+| `useRateFilters` | Concentra filtros e ordenação e devolve os registros processados. | `rates`, `messages` (textos de validação) | `{ filters, setFilters, errors, hasFilters, clearFilters, sort, toggleSort, filteredRows }` | **Em uso** por `RatesTableSection`. |
 
 `status` assume um dos valores: `"idle" | "loading" | "success" | "error"`.
+
+O `useRateFilters` inicia com `{ field: 'date', direction: 'desc' }` e alterna a direção ao clicar novamente no mesmo critério. Os erros são derivados de `validateFilters`, com mensagens vindas de `constants/i18n.js`.
 
 ## 5. Serviços, utilitários e constantes
 
 | Arquivo | Responsabilidade |
 | --- | --- |
-| `services/frankfurterApi.js` | Funções `fetch` + `async/await` para moedas, taxa atual e histórico; tratamento de erro HTTP e padronização do retorno. |
-| `utils/convertAmount.js` | Calcula `valor × taxa`. |
+| `services/frankfurterApi.js` | Funções `fetch` + `async/await` para moedas (`/v2/currencies`), taxa atual (`/v2/latest`) e histórico (`/v2/{início}..{fim}`), com verificação de `res.ok`. Base: `https://api.frankfurter.app`. |
+| `utils/convertAmount.js` | Calcula `valor × taxa`, aceitando vírgula ou ponto. |
 | `utils/validateAmount.js` | Valida o valor informado (vazio, não numérico, ≤ 0) e normaliza vírgula/ponto. |
-| `utils/getPeriodRange.js` | Converte o período (7D … 10A) em datas inicial e final. |
-| `utils/filterRates.js` | Aplica filtros combinados (datas e cotação, limites inclusivos). |
-| `utils/sortRates.js` | Ordena por data ou cotação, crescente ou decrescente. |
-| `utils/formatters.js` | Formata datas, números e moedas conforme o idioma. |
-| `utils/buildCsv.js` / `utils/downloadCsv.js` | Monta o conteúdo do CSV, gera o nome do arquivo e dispara o download no navegador. |
-| `constants/periods.js` | Lista dos oito períodos e seus rótulos. |
-| `constants/defaults.js` | Par, período e idioma padrão. |
-| `constants/i18n.js` | Textos em PT-BR, EN e ES. |
+| `utils/getPeriodRange.js` | Converte o período (7D … 10A) em `startDate` e `endDate` ISO. |
+| `utils/filterRates.js` | `parseDateInput` (dd/mm/aaaa ou ISO), `parseRateInput`, `filterRates` (limites inclusivos) e `validateFilters`; exporta `EMPTY_FILTERS`. |
+| `utils/sortRates.js` | Ordena por `date` ou `rate`, crescente ou decrescente. |
+| `utils/formatters.js` | Formata datas, números, moeda, percentual e datas curtas com `Intl`, conforme PT/EN/ES. |
+| `utils/buildCsv.js` | Monta o CSV com separador `;`, quebra de linha `\r\n` e escape de aspas. |
+| `utils/downloadCsv.js` | Cria o Blob, gera a URL temporária e dispara o download no navegador. |
+| `constants/periods.js` | Lista dos oito períodos (`value` e `label`). |
+| `constants/defaults.js` | `from: 'USD'`, `to: 'BRL'`, `period: '30D'`, `language: 'PT'`. |
+| `constants/i18n.js` | Textos em PT-BR, EN e ES, incluindo rótulos, placeholders, mensagens, estados e funções de título/resumo. |
+| `styles/tokens.css` | Tokens visuais (cores, tipografia, espaçamento, forma, layout). |
+| `index.css` | Importa Manrope e Tailwind, mapeia os tokens com `@theme inline` e define tipografia base e foco global. |
+
+> **Integração:** ao ligar a API, confira o contrato de `services/frankfurterApi.js` contra o que foi validado em `API_TESTS.md` (rotas `/v2/rate` e `/v2/rates`) antes de substituir os dados mock.
 
 ## 6. Fluxo de dados e lifting state up
 
@@ -129,20 +137,27 @@ App
                          ┌──────────────────────────────────────────────┐
                          │ App                                          │
                          │ state: from, to, amount, period, language    │
-                         │ hooks: useCurrencies, useLatestRate,         │
-                         │        useHistoricalRates                    │
+                         │ dados mock: moedas, taxa atual e histórico   │
+                         │ deriva: amountError, pairError, converted    │
                          └──────┬───────────────┬───────────────┬───────┘
           props ↓  eventos ↑    │               │               │
                     CurrencyConverter    HistorySection   RatesTableSection
-                    (from, to, amount,   (period, rates)  (rates → filtros
-                     rate, onSwap...)                      e ordenação locais)
+                    (from, to, amount,   (period, rates)  (filters + sort
+                     rate, converted)                     locais via hook)
 ```
 
-1. O usuário muda moeda, valor ou período → o componente chama um callback recebido por prop (`onFromChange`, `onSwap`, `onPeriodChange`...).
-2. O `App` atualiza o estado (`setState`) → os hooks reagem às dependências e refazem a consulta apenas quando necessário.
-3. Os dados voltam para baixo por props: o conversor recebe taxa e data, o gráfico e a tabela recebem o **mesmo** array de histórico.
-4. Filtros e ordenação são estado **local** de `RatesTableSection` (só ela os usa). Os registros resultantes alimentam `TableSummary`, `RatesTable` e `ExportCsvButton`, garantindo que o CSV contenha exatamente o que a tabela mostra.
-5. Ao mudar par ou período, `RatesTableSection` reinicia os filtros (regra RN-11).
+1. O usuário muda moeda, valor, período ou idioma → o componente chama um callback recebido por prop (`onFromChange`, `onSwap`, `onPeriodChange`, `onLanguageChange`...).
+2. O `App` atualiza o estado e deriva `amountError`, `pairError` e `converted`. A conversão é recalculada em tempo real com a taxa mock fixa de **5,4218**; o botão "Converter" é visual e não dispara uma ação própria.
+3. Os dados descem por props: o conversor recebe taxa/data/valor convertido; o histórico e a tabela recebem os mesmos registros mock.
+4. Filtros e ordenação são estado **local** de `RatesTableSection`, via `useRateFilters`. Os registros resultantes alimentam `TableSummary`, `RatesTable` e `ExportCsvButton`, garantindo que o CSV contenha exatamente o que a tabela mostra.
+5. A troca de idioma seleciona o conjunto de textos de `constants/i18n.js` e atualiza `document.documentElement.lang` (`pt-BR`, `en` ou `es`).
+
+### 6.1 O que ainda falta para a integração com a API
+
+- Substituir os arrays mock do `App` pelos hooks `useCurrencies`, `useLatestRate` e `useHistoricalRates` ligados a `frankfurterApi.js`.
+- Propagar os estados `loading`/`error` dos hooks para as seções (os componentes já os suportam) e ligar `onRetry`.
+- Reiniciar os filtros quando o par ou o período mudar (regra RN-11), hoje não necessário porque o histórico mock é fixo.
+- Revisar o formato de data aceito nos filtros para o idioma EN: o placeholder exibe `mm/dd/yyyy`, mas `parseDateInput` interpreta `dd/mm/aaaa` e ISO.
 
 ## 7. Relação com os requisitos
 
@@ -156,6 +171,7 @@ App
 | `TableSummary` | RF-17 |
 | `ExportCsvButton` | RF-18 a RF-20 |
 | `LoadingState`, `ErrorState`, `EmptyState` | RF-21 |
-| `LanguageSwitcher`, `constants/i18n.js` | RF-22 |
+| `LanguageSwitcher`, `constants/i18n.js`, `document.documentElement.lang` | RF-22, RNF-12 |
 | Hooks customizados | RNF-03, RNF-04 |
 | `services/frankfurterApi.js` | RNF-05 |
+| `styles/tokens.css`, `index.css` e CSS Modules | RNF-06, RNF-07 |

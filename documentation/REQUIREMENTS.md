@@ -5,6 +5,8 @@
 **Entrega final:** 27/10/2026
 > 
 
+> **Status da implementação (27/10/2026):** a interface, os estados e as interações estão implementados em React com dados mock em `src/App.jsx`. A camada de serviço (`services/frankfurterApi.js`) e os hooks de consulta existem, mas a integração com a API Frankfurter ainda não está ativa. Este documento descreve o comportamento-alvo do produto; as diferenças em relação ao código atual estão registradas em `COMPONENTS.md`.
+
 ### Contexto
 
 Você foi contratado como desenvolvedor front-end por uma empresa de tecnologia financeira. A empresa deseja disponibilizar uma ferramenta para consultar taxas de câmbio, converter valores e analisar o comportamento histórico de moedas.
@@ -135,29 +137,29 @@ Detalhamento rastreável (cada item é referenciado nos critérios de aceite):
 | RF-17 | Exibir a quantidade de registros encontrados após filtros. | Alta |
 | RF-18 | Exportar em CSV exatamente os registros resultantes dos filtros (respeitando a ordenação atual), com cabeçalhos. | Alta |
 | RF-19 | Impedir a exportação quando não houver registros, informando o motivo. | Alta |
-| RF-20 | Gerar o CSV no navegador, com nome de arquivo identificável (par, período/datas). | Alta |
+| RF-20 | Gerar o CSV no navegador, com nome de arquivo identificável (par). | Alta |
 | RF-21 | Exibir estados de **loading**, **erro** e **ausência de dados** nas áreas que dependem da API. | Alta |
-| RF-22 | Permitir trocar o idioma da interface entre Português (BR), English e Español (seletor PT | EN | ES, conforme wireframe). | Média |
+| RF-22 | Permitir trocar o idioma da interface entre Português (BR), English e Español (seletor PT/EN/ES, conforme wireframe). | Média |
 
 ### Requisitos não funcionais
 
 | ID | Categoria | Requisito |
 | --- | --- | --- |
 | RNF-01 | Tecnologia | Aplicação construída como SPA com **React + JSX** (componentes funcionais) e criada/buildada com **Vite**. |
-| RNF-02 | Arquitetura | Código organizado em `components/`, `hooks/`, `services/`, `utils/` e `constants/`, com responsabilidades claras; lógica de negócio fora dos componentes de UI. |
+| RNF-02 | Arquitetura | Código organizado em `components/` (atoms, molecules e organisms), `hooks/`, `services/`, `utils/`, `constants/` e `styles/`, com responsabilidades claras; lógica de negócio fora dos componentes de UI. |
 | RNF-03 | Estado e efeitos | Uso de `useState` para o estado da interface e `useEffect` para consultas à API, com dependências corretas (sem requisições desnecessárias ou em loop). |
 | RNF-04 | Reutilização | Pelo menos um **custom hook** para consulta ou processamento de dados (ex.: histórico de cotações). |
 | RNF-05 | Integração | Consumo da API **Frankfurter** (v2) com `fetch` + `async/await`, isolado em uma camada de serviço. |
-| RNF-06 | Estilo | Estilos organizados com **CSS Modules**, seguindo o Design Guide do Hermes (paleta Ink/Forest/Paper/Surface/Line/Accent, tipografia Inter, grid de 8px, raio 8–14px, borda 1px, sem gradientes, glassmorphism ou cartões em excesso). |
-| RNF-07 | Responsividade | Interface utilizável em desktop e celular, sem rolagem horizontal da página inteira (tabelas podem rolar internamente). |
+| RNF-06 | Estilo | Estilos organizados com **CSS Modules** (Tailwind v4 aplicado via `@apply`/`@reference`) e tokens de `src/styles/tokens.css`, seguindo `documentation/New Styles/`: paleta navy/blue/canvas/surface/border/muted, tipografia **Manrope** 400/600/700, escala de 8 px, raio 10 px nos controles e 14 px nos cards, borda 1 px, controles de 48 px, foco `2px solid #2563EB` com offset 2 px; sem gradientes, glassmorphism ou sombras; cards apenas nas três seções. |
+| RNF-07 | Responsividade | Interface utilizável em desktop (≥1024 px), tablet (768–1023 px) e mobile (<768 px), sem rolagem horizontal da página inteira; o seletor de períodos e a tabela podem rolar internamente. |
 | RNF-08 | Usabilidade | Fluxo visível em uma única página: conversor → gráfico → filtros/tabela → CSV. Rótulos claros, foco visível e ação primária destacada. |
-| RNF-09 | Acessibilidade | Campos com `label`, contraste adequado entre texto e fundo, navegação por teclado nos controles, mensagens de erro associadas aos campos. |
+| RNF-09 | Acessibilidade | Campos com `label`, contraste adequado entre texto e fundo, navegação por teclado nos controles, foco visível (`outline` de 2 px azul com offset de 2 px) e mensagens de erro associadas aos campos. |
 | RNF-10 | Desempenho | Consultas disparadas apenas quando as dependências mudam; a troca de período/par deve exibir loading e não travar a interface, inclusive no período de 10 anos (grande volume de pontos). |
 | RNF-11 | Confiabilidade | Falhas de rede ou da API não podem quebrar a aplicação: exibir mensagem de erro e permitir tentar novamente. Respostas obsoletas (de requisições anteriores) não podem sobrescrever a mais recente. |
 | RNF-12 | Internacionalização | Idioma da interface em PT-BR, EN e ES, traduzindo rótulos, datas, formatação numérica, estados e cabeçalhos do CSV; códigos de moeda preservados no padrão ISO 4217 (ex.: EUR, USD). |
 | RNF-13 | Privacidade | Sem autenticação, sem armazenamento de dados pessoais e sem back-end próprio; todo o processamento (inclusive CSV) ocorre no navegador. |
-| RNF-14 | Versionamento | Repositório público no GitHub, fluxo `main` (estável) + `dev` (integração) + branches de feature quando necessário, com commits pequenos e semânticos (`feat:`, `refactor:`, `test:`...) que mostrem a evolução incremental. |
-| RNF-15 | Documentação | Repositório contendo README, REQUIREMENTS, COMPONENTS, FIGMA, API_TESTS, FUNCTION_TESTS, AI_USAGE e Collection do Postman exportada em JSON. |
+| RNF-14 | Versionamento | Repositório público no GitHub, branch principal `master`, com commits pequenos e semânticos (`feat:`, `refactor:`, `docs:`...) que mostrem a evolução incremental. |
+| RNF-15 | Documentação | Repositório contendo README, REQUIREMENTS, COMPONENTS, FIGMA, API_TESTS e AI_USAGE e, quando aplicável, Collection do Postman exportada em JSON. |
 | RNF-16 | Portabilidade | Projeto instalável e executável a partir do README (`npm install` e `npm run dev`), sem configuração manual além do descrito. |
 | RNF-17 | Compatibilidade | Funcionamento nas versões atuais dos principais navegadores (Chrome, Edge, Firefox e Safari). |
 
@@ -173,7 +175,8 @@ Detalhamento rastreável (cada item é referenciado nos critérios de aceite):
 | Custom Hooks | Extração de lógica reutilizável relacionada às consultas ou processamento. |
 | Fetch + async/await | Consumo da API Frankfurter. |
 | CSS Modules | Organização e isolamento dos estilos. |
-| Biblioteca de gráficos | Visualização do histórico de cotações. |
+| Tailwind CSS | Utilitários aplicados dentro dos CSS Modules (`@apply`), com os tokens mapeados via `@theme inline`. |
+| Visualização de dados | Gráfico de linha em SVG próprio, responsivo com `ResizeObserver` (sem biblioteca de gráficos). |
 | Postman | Investigação e validação dos endpoints. |
 | Git + GitHub | Versionamento e evidência da evolução incremental do projeto. |
 
@@ -181,10 +184,8 @@ Detalhamento rastreável (cada item é referenciado nos critérios de aceite):
 
 Você pode utilizar bibliotecas para apoiar a interface e funcionalidades específicas, por exemplo:
 
-- Recharts ou Chart.js;
-- Lucide React;
-- date-fns;
-- Papa Parse.
+- **Lucide React** (usada para os ícones);
+- Recharts ou Chart.js, date-fns e Papa Parse são permitidas pelo enunciado, mas não foram necessárias: o gráfico é um SVG próprio, as datas são formatadas com `Intl` e o CSV é gerado manualmente.
 
 > Bibliotecas não substituem os conceitos trabalhados em aula. Deve ser possível explicar a lógica de conversão, os estados, os efeitos, os filtros, a ordenação, o consumo da API e a exportação dos dados.
 > 
@@ -207,7 +208,7 @@ Você pode utilizar bibliotecas para apoiar a interface e funcionalidades espec�
 | ID | Regra |
 | --- | --- |
 | RN-07 | Períodos disponíveis: 7D, 15D, 30D, 3M, 6M, 1A, 5A e 10A, contados **retroativamente a partir da data atual** até hoje. |
-| RN-08 | Período padrão ao abrir a aplicação: **30D**. Par padrão sugerido: **USD → BRL** (a definir; deve ser um par suportado pela API). |
+| RN-08 | Período padrão ao abrir a aplicação: **30D**. Par padrão: **USD → BRL** (suportado pela API). |
 | RN-09 | Gráfico e tabela exibem **os mesmos dados**: a tabela é derivada do histórico carregado e o gráfico acompanha o par e o período selecionados. |
 | RN-10 | A tabela tem **uma linha por data com cotação publicada**. Datas sem cotação não são inventadas nem interpoladas. |
 | RN-11 | Trocar o par ou o período dispara nova consulta e **reinicia os filtros** da tabela (para evitar filtros de um período antigo aplicados a dados novos). |
@@ -232,8 +233,8 @@ Você pode utilizar bibliotecas para apoiar a interface e funcionalidades espec�
 | RN-20 | O CSV contém **somente os registros resultantes dos filtros**, na ordenação atual da tabela. |
 | RN-21 | O CSV inclui linha de cabeçalho com: data, moeda de origem, moeda de destino e cotação (cabeçalhos traduzidos conforme o idioma; códigos de moeda em ISO 4217). |
 | RN-22 | Com **zero registros**, a exportação é bloqueada (botão desabilitado e/ou mensagem informando o motivo); nenhum arquivo vazio é gerado. |
-| RN-23 | O arquivo é gerado **no navegador**, em UTF-8, sem enviar dados a nenhum servidor. |
-| RN-24 | O nome do arquivo é identificável e inclui o par e o intervalo de datas exportado. Exemplo: `cotacoes_USD-BRL_2026-09-27_a_2026-10-27.csv`. |
+| RN-23 | O arquivo é gerado **no navegador**, em UTF-8 com BOM, usando `;` como separador e `\r\n` entre linhas, sem enviar dados a nenhum servidor. |
+| RN-24 | O nome do arquivo é identificável e inclui o par; o intervalo de datas pode ser incluído quando disponível. Exemplo: `hermes-USD-BRL.csv`. |
 
 ### Critérios de aceite.
 
@@ -257,7 +258,7 @@ Cada critério segue o formato **Dado / Quando / Então** e é validado manualme
 | CA-14 | RF-17, RN-19 | **Dado** qualquer combinação de filtros, **quando** a tabela é atualizada, **então** a quantidade de registros exibida é igual ao número de linhas resultantes. |
 | CA-15 | RF-18, RN-20, RN-21 | **Dado** filtros aplicados, **quando** o usuário exporta, **então** o CSV baixado possui cabeçalho e contém exatamente as linhas visíveis na tabela, na mesma ordem. |
 | CA-16 | RF-19, RN-22 | **Dado** filtros que resultam em zero registros, **quando** o usuário tenta exportar, **então** nenhum arquivo é gerado e o usuário é informado do motivo. |
-| CA-17 | RF-20, RN-24 | **Dado** uma exportação válida, **quando** o download é concluído, **então** o nome do arquivo identifica o par e o intervalo de datas. |
+| CA-17 | RF-20, RN-24 | **Dado** uma exportação válida, **quando** o download é concluído, **então** o nome do arquivo identifica o par exportado. |
 | CA-18 | RF-21, RNF-11 | **Dado** que a API está indisponível ou retorna erro, **quando** a aplicação tenta carregar moedas, taxa ou histórico, **então** é exibida mensagem de erro com opção de tentar novamente, sem tela em branco ou quebra da aplicação. |
 | CA-19 | RF-21 | **Dado** uma consulta em andamento, **quando** a resposta ainda não chegou, **então** é exibido indicador de loading na área afetada. |
 | CA-20 | RF-21, RN-12 | **Dado** uma consulta que retorna sem dados, **quando** o resultado é renderizado, **então** é exibida mensagem de ausência de dados em vez de gráfico/tabela vazios. |
