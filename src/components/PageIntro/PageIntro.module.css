@@ -1,24 +1,14 @@
+@reference "../../index.css"
+
 .intro {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
+  @apply flex flex-col gap-2;
 }
 
 .title {
-  margin: 0;
-  font-size: 32px;
-  font-weight: 700;
-  color: var(--color-navy);
+  @apply m-0 text-[32px] md:text-[28px] font-bold text-navy;
 }
 
 .description {
-  margin: 0;
-  color: var(--color-muted);
-  font-size: 15px;
+  @apply m-0 text-muted text-[15px];
 }
 
-@media (max-width: 768px) {
-  .title {
-    font-size: 28px;
-  }
-}

@@ -1,8 +1,6 @@
+@reference "../../index.css"
+
 .empty {
-  padding: 16px;
-  color: var(--color-muted);
-  text-align: center;
-  background: var(--color-canvas);
-  border: 1px dashed var(--color-border);
-  border-radius: 10px;
+  @apply p-4 text-muted text-center bg-canvas border border-dashed border-border rounded-[10px];
 }
+

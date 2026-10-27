@@ -1,21 +1,10 @@
+@reference "../../index.css"
+
 .error {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  color: var(--color-negative);
-  padding: 16px;
-  background: rgba(220, 38, 38, 0.05);
-  border: 1px solid rgba(220, 38, 38, 0.2);
-  border-radius: 10px;
+  @apply flex flex-col gap-3 text-negative p-4 bg-negative/5 border border-negative/20 rounded-[10px];
 }
 
 .error button {
-  align-self: flex-start;
-  padding: 8px 12px;
-  border: 1px solid var(--color-border);
-  background: var(--color-surface);
-  color: var(--color-navy);
-  border-radius: 10px;
-  cursor: pointer;
-  font-family: var(--font-sans);
+  @apply self-start px-3 py-2 border border-border bg-surface text-navy rounded-[10px] cursor-pointer font-sans;
 }
+

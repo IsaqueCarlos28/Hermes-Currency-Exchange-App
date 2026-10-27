@@ -1,59 +1,26 @@
+@reference "../../index.css"
+
 .section {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  padding: 24px;
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: 14px;
+  @apply flex flex-col gap-5 p-6 md:p-4 bg-surface border border-border rounded-[14px];
 }
 
 .title {
-  margin: 0;
-  font-size: 24px;
-  font-weight: 700;
-  color: var(--color-navy);
+  @apply m-0 text-[24px] md:text-[22px] font-bold text-navy;
 }
 
 .grid {
-  display: grid;
-  grid-template-columns: 280px 1fr;
-  gap: 24px;
+  @apply grid grid-cols-[280px_1fr] gap-6 lg:grid-cols-1;
 }
 
 .filters {
-  border: 1px solid var(--color-border);
-  border-radius: 10px;
-  padding: 16px;
-  background: var(--color-surface);
+  @apply border border-border rounded-[10px] p-4 bg-surface;
 }
 
 .tableArea {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  min-width: 0;
+  @apply flex flex-col gap-3 min-w-0;
 }
 
 .actions {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 8px;
+  @apply flex items-center justify-between flex-wrap gap-2;
 }
 
-@media (max-width: 900px) {
-  .grid {
-    grid-template-columns: 1fr;
-  }
-}
-
-@media (max-width: 768px) {
-  .section {
-    padding: 16px;
-  }
-  .title {
-    font-size: 22px;
-  }
-}

@@ -1,5 +1,6 @@
+@reference "../../index.css"
+
 .summary {
-  padding: 4px 0;
-  color: var(--color-muted);
-  font-size: 14px;
+  @apply py-1 text-muted text-sm;
 }
+

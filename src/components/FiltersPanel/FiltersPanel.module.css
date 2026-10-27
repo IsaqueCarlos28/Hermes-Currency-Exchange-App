@@ -1,48 +1,26 @@
+@reference "../../index.css"
+
 .panel {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
+  @apply flex flex-col gap-3;
 }
 
 .panel > button {
-  padding: 10px 12px;
-  border: 1px solid var(--color-border);
-  background: var(--color-surface);
-  color: var(--color-navy);
-  border-radius: 10px;
-  cursor: pointer;
-  font-family: var(--font-sans);
-  font-weight: 600;
+  @apply px-3 py-2.5 border border-border bg-surface text-navy rounded-[10px] cursor-pointer font-sans font-semibold;
 }
 
 .field {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
+  @apply flex flex-col gap-1.5;
 }
 
 .field label {
-  font-weight: 600;
-  font-size: 13px;
-  color: var(--color-navy);
+  @apply font-semibold text-[13px] text-navy;
 }
 
 .field input {
-  padding: 10px 12px;
-  border: 1px solid var(--color-border);
-  border-radius: 10px;
-  font-family: var(--font-sans);
-  font-size: 14px;
-  color: var(--color-navy);
-  background: var(--color-surface);
-}
-
-.field input:focus {
-  outline: 2px solid rgba(37, 99, 235, 0.2);
-  border-color: var(--color-blue);
+  @apply px-3 py-2.5 border border-border rounded-[10px] font-sans text-sm text-navy bg-surface focus:outline-2 focus:outline-blue/20 focus:border-blue;
 }
 
 .error {
-  color: var(--color-negative);
-  font-size: 13px;
+  @apply text-negative text-[13px];
 }
+

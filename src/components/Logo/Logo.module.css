@@ -1,6 +1,6 @@
+@reference "../../index.css"
+
 .logo {
-  font-weight: 700;
-  font-size: 1.25rem;
-  letter-spacing: 0.08em;
-  color: var(--color-navy);
+  @apply font-bold text-xl tracking-widest text-navy;
 }
+

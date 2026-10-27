@@ -1,18 +1,6 @@
+@reference "../../index.css"
+
 .button {
-  cursor: pointer;
-  border: 1px solid var(--color-border);
-  background: var(--color-surface);
-  color: var(--color-navy);
-  border-radius: 10px;
-  width: 48px;
-  height: 48px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 18px;
-  margin-bottom: 2px;
+  @apply cursor-pointer border border-border bg-surface text-navy rounded-[10px] w-12 h-12 flex items-center justify-center text-lg mb-0.5 hover:bg-canvas;
 }
 
-.button:hover {
-  background: var(--color-canvas);
-}

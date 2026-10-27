@@ -1,4 +1,6 @@
+@reference "../../index.css"
+
 .loading {
-  padding: 16px;
-  color: var(--color-muted);
+  @apply p-4 text-muted;
 }
+

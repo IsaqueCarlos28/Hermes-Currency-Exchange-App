@@ -1,39 +1,18 @@
+@reference "../../index.css"
+
 .container {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  width: 100%;
-  max-width: 320px;
+  @apply flex flex-col gap-1.5 w-full max-w-[320px] md:max-w-full;
 }
 
 .label {
-  font-weight: 600;
-  font-size: 13px;
-  color: var(--color-navy);
+  @apply font-semibold text-[13px] text-navy;
 }
 
 .input {
-  padding: 12px 16px;
-  border: 1px solid var(--color-border);
-  border-radius: 10px;
-  font-family: var(--font-sans);
-  font-size: 15px;
-  color: var(--color-navy);
-  background: var(--color-surface);
-}
-
-.input:focus {
-  outline: 2px solid rgba(37, 99, 235, 0.2);
-  border-color: var(--color-blue);
+  @apply px-4 py-3 border border-border rounded-[10px] font-sans text-[15px] text-navy bg-surface focus:outline-2 focus:outline-blue/20 focus:border-blue;
 }
 
 .error {
-  color: var(--color-negative);
-  font-size: 13px;
+  @apply text-negative text-[13px];
 }
 
-@media (max-width: 768px) {
-  .container {
-    max-width: 100%;
-  }
-}
