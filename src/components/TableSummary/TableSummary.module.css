@@ -1,6 +1,0 @@
-@reference "../../index.css"
-
-.summary {
-  @apply py-1 text-muted text-sm;
-}
-

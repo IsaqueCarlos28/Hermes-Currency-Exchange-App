@@ -1,0 +1,6 @@
+@reference "../../../index.css";
+
+.header {
+  @apply flex items-center justify-between py-2;
+}
+

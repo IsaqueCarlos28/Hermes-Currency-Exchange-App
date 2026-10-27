@@ -1,0 +1,15 @@
+@reference "../../../index.css"
+
+.panel {
+  @apply flex flex-col gap-3;
+}
+
+.field {
+  @apply flex flex-col gap-1.5;
+}
+
+.error {
+  @apply text-negative text-[13px];
+}
+
+

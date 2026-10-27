@@ -1,0 +1,23 @@
+@reference "../../../index.css"
+
+.chart {
+  @apply w-full border border-border rounded-xl p-4 bg-surface;
+}
+
+.header {
+  @apply font-semibold mb-3 text-navy;
+}
+
+.svgContainer {
+  @apply w-full h-[260px] md:h-[200px];
+}
+
+.svg {
+  @apply w-full h-full;
+}
+
+.labels {
+  @apply flex justify-between text-[13px] text-muted mt-2;
+}
+
+

@@ -1,0 +1,15 @@
+@reference "../../../index.css"
+
+.container {
+  @apply flex flex-col gap-2 pt-3 border-t border-border;
+}
+
+.converted {
+  @apply font-bold text-[40px] md:text-[32px] text-navy;
+}
+
+.details {
+  @apply text-[15px] text-muted;
+}
+
+

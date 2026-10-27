@@ -1,6 +1,0 @@
-@reference "../../index.css"
-
-.logo {
-  @apply font-bold text-xl tracking-widest text-navy;
-}
-

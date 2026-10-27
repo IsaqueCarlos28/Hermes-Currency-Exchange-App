@@ -1,0 +1,15 @@
+@reference "../../../index.css"
+
+.switcher {
+  @apply flex gap-2 bg-surface border border-border rounded-[10px] p-1;
+}
+
+.button {
+  @apply cursor-pointer border-0 bg-transparent px-2.5 py-1.5 rounded-lg text-muted font-semibold font-sans;
+}
+
+.active {
+  @apply cursor-pointer border-0 bg-blue text-surface px-2.5 py-1.5 rounded-lg font-bold font-sans;
+}
+
+

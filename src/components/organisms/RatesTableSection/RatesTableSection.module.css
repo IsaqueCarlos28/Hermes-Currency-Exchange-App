@@ -1,0 +1,27 @@
+@reference "../../../index.css"
+
+.section {
+  @apply flex flex-col gap-5 p-6 md:p-4 bg-surface border border-border rounded-[14px];
+}
+
+.title {
+  @apply m-0 text-[24px] md:text-[22px] font-bold text-navy;
+}
+
+.grid {
+  @apply grid grid-cols-[280px_1fr] gap-6 lg:grid-cols-1;
+}
+
+.filters {
+  @apply border border-border rounded-[10px] p-4 bg-surface;
+}
+
+.tableArea {
+  @apply flex flex-col gap-3 min-w-0;
+}
+
+.actions {
+  @apply flex items-center justify-between flex-wrap gap-2;
+}
+
+

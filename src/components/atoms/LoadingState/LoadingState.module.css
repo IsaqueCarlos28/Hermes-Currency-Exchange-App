@@ -1,0 +1,7 @@
+@reference "../../../index.css"
+
+.loading {
+  @apply p-4 text-muted;
+}
+
+

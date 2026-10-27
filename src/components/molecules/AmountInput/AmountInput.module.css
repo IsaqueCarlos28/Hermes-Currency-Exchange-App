@@ -1,0 +1,10 @@
+@reference "../../../index.css";
+
+.container {
+  @apply flex flex-col gap-1.5 w-full;
+}
+
+.error {
+  @apply text-negative text-[13px];
+}
+

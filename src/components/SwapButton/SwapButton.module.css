@@ -1,6 +1,0 @@
-@reference "../../index.css"
-
-.button {
-  @apply w-12 h-12 p-0 flex items-center justify-center text-lg mb-0.5 hover:bg-canvas;
-}
-

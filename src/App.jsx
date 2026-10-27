@@ -2,11 +2,11 @@ import { useState } from 'react';
 import './App.css';
 import styles from './App.module.css';
 
-import Header from './components/Header/Header';
-import PageIntro from './components/PageIntro/PageIntro';
-import CurrencyConverter from './components/CurrencyConverter/CurrencyConverter';
-import HistorySection from './components/HistorySection/HistorySection';
-import RatesTableSection from './components/RatesTableSection/RatesTableSection';
+import Header from './components/organisms/Header/Header';
+import PageIntro from './components/molecules/PageIntro/PageIntro';
+import CurrencyConverter from './components/organisms/CurrencyConverter/CurrencyConverter';
+import HistorySection from './components/organisms/HistorySection/HistorySection';
+import RatesTableSection from './components/organisms/RatesTableSection/RatesTableSection';
 
 import { DEFAULTS } from './constants/defaults';
 import { PERIODS } from './constants/periods';

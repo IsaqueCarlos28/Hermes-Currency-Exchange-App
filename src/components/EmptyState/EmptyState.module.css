@@ -1,6 +1,0 @@
-@reference "../../index.css"
-
-.empty {
-  @apply p-4 text-muted text-center bg-canvas border border-dashed border-border rounded-[10px];
-}
-
