@@ -1,21 +1,33 @@
 import styles from './LanguageSwitcher.module.css';
 
+const LANGUAGES = ['PT', 'EN', 'ES'];
+
+const NAV_LABELS = {
+  PT: 'Idioma',
+  EN: 'Language',
+  ES: 'Idioma',
+};
+
 function LanguageSwitcher({ language, onChange }) {
-  const languages = ['PT', 'EN', 'ES'];
+  const navLabel = NAV_LABELS[language] || NAV_LABELS.PT;
 
   return (
-    <div className={styles.switcher}>
-      {languages.map((lang) => (
-        <button
-          key={lang}
-          type="button"
-          className={language === lang ? styles.active : styles.button}
-          onClick={() => onChange?.(lang)}
-        >
-          {lang}
-        </button>
-      ))}
-    </div>
+    <nav className={styles.switcher} aria-label={navLabel}>
+      {LANGUAGES.map((lang) => {
+        const isActive = language === lang;
+        return (
+          <button
+            key={lang}
+            type="button"
+            className={isActive ? styles.active : styles.button}
+            onClick={() => onChange?.(lang)}
+            aria-current={isActive ? 'true' : undefined}
+          >
+            {lang}
+          </button>
+        );
+      })}
+    </nav>
   );
 }
 

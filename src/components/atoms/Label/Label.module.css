@@ -1,6 +1,5 @@
 @reference "../../../index.css";
 
 .label {
-  @apply font-semibold text-[13px] text-navy;
+  @apply mb-2 block text-label font-semibold text-navy;
 }
-

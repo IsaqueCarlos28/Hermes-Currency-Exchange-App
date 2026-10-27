@@ -1,21 +1,39 @@
 import { useMemo, useState } from 'react';
+import filterRates, { EMPTY_FILTERS, validateFilters } from '../utils/filterRates';
+import sortRates from '../utils/sortRates';
 
-export function useRateFilters(rates = []) {
-  const [filters, setFilters] = useState({ startDate: '', endDate: '', minRate: '', maxRate: '' });
+export function useRateFilters(rates = [], messages) {
+  const [filters, setFilters] = useState(EMPTY_FILTERS);
   const [sort, setSort] = useState({ field: 'date', direction: 'desc' });
-  const [errors, setErrors] = useState({});
 
-  const clearFilters = () => {
-    setFilters({ startDate: '', endDate: '', minRate: '', maxRate: '' });
-    setErrors({});
+  const errors = useMemo(() => validateFilters(filters, messages), [filters, messages]);
+
+  const filteredRows = useMemo(
+    () => sortRates(filterRates(rates, filters), sort),
+    [rates, filters, sort],
+  );
+
+  const clearFilters = () => setFilters(EMPTY_FILTERS);
+
+  const toggleSort = (field) => {
+    setSort((current) => {
+      if (current.field !== field) return { field, direction: 'desc' };
+      return { field, direction: current.direction === 'desc' ? 'asc' : 'desc' };
+    });
   };
 
-  const filteredRows = useMemo(() => {
-    // Placeholder - implement actual filtering/sorting later
-    return rates;
-  }, [rates, filters, sort]);
+  const hasFilters = Object.values(filters).some((value) => value !== '');
 
-  return { filters, setFilters, clearFilters, sort, setSort, filteredRows, errors };
+  return {
+    filters,
+    setFilters,
+    errors,
+    hasFilters,
+    clearFilters,
+    sort,
+    toggleSort,
+    filteredRows,
+  };
 }
 
 export default useRateFilters;

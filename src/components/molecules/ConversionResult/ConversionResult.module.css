@@ -1,15 +1,58 @@
-@reference "../../../index.css"
+@reference "../../../index.css";
 
 .container {
-  @apply flex flex-col gap-2 pt-3 border-t border-border;
+  @apply flex flex-col gap-sm;
 }
 
-.converted {
-  @apply font-bold text-[40px] md:text-[32px] text-navy;
+.eyebrow {
+  @apply text-label font-semibold uppercase tracking-[0.06em] text-muted;
+}
+
+.from {
+  @apply text-[20px] font-semibold text-secondary;
+}
+
+.arrow {
+  @apply text-blue;
+}
+
+.to {
+  @apply text-[32px] font-bold leading-[1.15] text-navy md:text-[36px] lg:text-[40px];
 }
 
 .details {
-  @apply text-[15px] text-muted;
+  @apply mt-sm text-body-sm text-secondary;
 }
 
+.detailLine {
+  @apply block;
+}
 
+.skeletonAmount {
+  @apply block h-[14px] w-[120px] max-w-full rounded-[6px] bg-border;
+}
+
+.skeletonValue {
+  @apply block h-[50px] w-[190px] max-w-full rounded-[6px] bg-border;
+}
+
+.skeletonLine {
+  @apply block h-[14px] w-[150px] max-w-full rounded-[6px] bg-border;
+}
+
+.errorState {
+  @apply items-center text-center md:items-start md:text-left;
+}
+
+.errorIcon {
+  @apply h-7 w-7;
+  color: var(--color-negative);
+}
+
+.errorTitle {
+  @apply text-body font-semibold text-navy;
+}
+
+.retry {
+  @apply mt-sm;
+}

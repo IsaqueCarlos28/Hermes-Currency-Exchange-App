@@ -1,15 +1,41 @@
-@reference "../../../index.css"
+@reference "../../../index.css";
 
 .section {
-  @apply flex flex-col gap-5 p-6 md:p-4 bg-surface border border-border rounded-[14px];
+  @apply mx-auto mt-xl w-full max-w-[var(--container-max)] px-[var(--page-padding)] md:mt-2xl;
+}
+
+.card {
+  @apply rounded-large border border-border bg-surface px-md py-lg md:p-xl;
+}
+
+.header {
+  @apply mb-md flex flex-col gap-md md:mb-lg md:flex-row md:flex-wrap md:items-start md:justify-between;
+}
+
+.titleGroup {
+  @apply flex flex-col gap-xs;
 }
 
 .title {
-  @apply m-0 text-[24px] md:text-[22px] font-bold text-navy;
+  @apply text-h2 font-bold text-navy;
 }
 
-.content {
-  @apply min-h-[200px];
+.variation {
+  @apply flex flex-wrap items-center gap-xs text-body-sm text-secondary;
 }
 
+.variationValue {
+  @apply inline-flex items-center gap-xs font-bold;
+}
 
+.up {
+  color: var(--color-positive-text);
+}
+
+.down {
+  color: var(--color-negative);
+}
+
+.variationIcon {
+  @apply h-4 w-4 flex-none;
+}

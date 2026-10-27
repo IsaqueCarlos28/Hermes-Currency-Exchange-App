@@ -1,6 +1,21 @@
 @reference "../../../index.css";
 
 .button {
-  @apply cursor-pointer px-4 py-2.5 border border-border bg-surface text-navy rounded-[10px] font-sans font-semibold disabled:opacity-50 disabled:cursor-not-allowed;
+  @apply inline-flex h-[var(--control-height)] cursor-pointer items-center justify-center gap-sm rounded-button border px-lg font-sans text-body-sm font-semibold disabled:cursor-not-allowed;
 }
 
+.primary {
+  @apply border-blue bg-blue text-white hover:border-blue-hover hover:bg-blue-hover;
+}
+
+.secondary {
+  @apply border-border bg-surface text-navy hover:border-blue;
+}
+
+.disabled {
+  @apply border-border bg-disabled-bg text-disabled-text;
+}
+
+.spinner {
+  @apply h-[18px] w-[18px] flex-none animate-spin rounded-full border-2 border-current border-t-transparent;
+}

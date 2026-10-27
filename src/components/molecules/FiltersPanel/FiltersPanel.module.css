@@ -1,15 +1,32 @@
-@reference "../../../index.css"
+@reference "../../../index.css";
 
 .panel {
-  @apply flex flex-col gap-3;
+  @apply flex flex-col gap-md;
 }
 
-.field {
-  @apply flex flex-col gap-1.5;
+.eyebrow {
+  @apply text-label font-semibold uppercase tracking-[0.06em] text-muted;
 }
 
-.error {
-  @apply text-negative text-[13px];
+.grid {
+  @apply grid grid-cols-1 items-end gap-md;
 }
 
+@media (min-width: 768px) {
+  .grid {
+    grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  }
+}
 
+.errt {
+  @apply mt-2 flex items-center gap-xs text-label font-semibold;
+  color: var(--color-negative);
+}
+
+.errt svg {
+  @apply h-4 w-4 flex-none;
+}
+
+.clear {
+  @apply w-full;
+}

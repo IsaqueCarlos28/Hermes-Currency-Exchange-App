@@ -1,7 +1,24 @@
-@reference "../../../index.css"
+@reference "../../../index.css";
 
-.loading {
-  @apply p-4 text-muted;
+.state {
+  @apply flex min-h-[240px] flex-col items-center justify-center gap-3 p-xl text-center;
 }
 
+.spinner {
+  @apply h-7 w-7 animate-spin rounded-full;
+  border: 3px solid var(--color-border);
+  border-top-color: var(--color-blue);
+}
 
+.message {
+  @apply text-body font-semibold text-navy;
+}
+
+.skeletonTable {
+  @apply flex flex-col gap-5 rounded-container border border-border p-md;
+}
+
+.skeletonRow {
+  @apply h-4 rounded-[6px];
+  background: var(--color-border);
+}

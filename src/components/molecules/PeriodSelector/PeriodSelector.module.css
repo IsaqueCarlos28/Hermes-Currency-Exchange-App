@@ -1,15 +1,23 @@
-@reference "../../../index.css"
+@reference "../../../index.css";
 
 .selector {
-  @apply flex gap-2 flex-wrap bg-canvas border border-border rounded-[10px] p-1 w-fit;
+  @apply flex w-full items-center gap-xs overflow-x-auto md:w-auto;
 }
 
 .button {
-  @apply cursor-pointer border-0 bg-transparent px-3 py-2 rounded-lg text-muted font-semibold font-sans text-sm;
+  @apply h-10 min-w-[48px] flex-none cursor-pointer rounded-input border border-transparent bg-transparent px-3 text-[14px] font-semibold text-secondary;
+}
+
+.button:hover {
+  @apply border-border;
 }
 
 .active {
-  @apply cursor-pointer border-0 bg-blue text-surface px-3 py-2 rounded-lg font-bold font-sans text-sm;
+  @apply h-10 min-w-[48px] flex-none cursor-pointer rounded-input border border-blue bg-blue px-3 text-[14px] font-semibold text-white;
 }
 
-
+.button:focus-visible,
+.active:focus-visible {
+  outline: var(--focus-ring);
+  outline-offset: var(--focus-offset);
+}

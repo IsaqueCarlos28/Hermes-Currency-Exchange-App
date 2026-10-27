@@ -1,7 +1,25 @@
-@reference "../../../index.css"
+@reference "../../../index.css";
 
-.empty {
-  @apply p-4 text-muted text-center bg-canvas border border-dashed border-border rounded-[10px];
+.state {
+  @apply flex min-h-[240px] flex-col items-center justify-center gap-3 p-xl text-center;
 }
 
+.compact {
+  @apply min-h-[170px] p-0;
+}
 
+.icon {
+  @apply h-7 w-7 text-muted;
+}
+
+.title {
+  @apply text-body font-semibold text-navy;
+}
+
+.description {
+  @apply text-body-sm text-secondary;
+}
+
+.action {
+  @apply mt-sm;
+}

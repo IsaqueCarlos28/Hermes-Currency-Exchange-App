@@ -1,7 +1,14 @@
-@reference "../../../index.css"
+﻿@reference "../../../index.css";
 
 .container {
-  @apply flex flex-col gap-1.5 w-full;
+  @apply flex w-full flex-col;
 }
 
+.errt {
+  @apply mt-2 flex items-center gap-xs text-label font-semibold;
+  color: var(--color-negative);
+}
 
+.errt svg {
+  @apply h-4 w-4 flex-none;
+}

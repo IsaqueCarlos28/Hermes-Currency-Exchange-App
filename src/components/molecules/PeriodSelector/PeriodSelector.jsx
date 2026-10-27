@@ -1,19 +1,22 @@
 import styles from './PeriodSelector.module.css';
 
-function PeriodSelector({ periods = [], value, onChange }) {
+function PeriodSelector({ periods = [], value, onChange, label = 'Período' }) {
   return (
-    <div className={styles.selector}>
-      {periods.map((p) => {
-        const val = typeof p === 'string' ? p : p.value;
-        const label = typeof p === 'string' ? p : p.label || p.value;
+    <div className={styles.selector} role="group" aria-label={label}>
+      {periods.map((period) => {
+        const periodValue = typeof period === 'string' ? period : period.value;
+        const periodLabel = typeof period === 'string' ? period : period.label || period.value;
+        const isActive = value === periodValue;
+
         return (
           <button
-            key={val}
+            key={periodValue}
             type="button"
-            className={value === val ? styles.active : styles.button}
-            onClick={() => onChange?.(val)}
+            className={isActive ? styles.active : styles.button}
+            onClick={() => onChange?.(periodValue)}
+            aria-pressed={isActive}
           >
-            {label}
+            {periodLabel}
           </button>
         );
       })}

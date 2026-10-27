@@ -1,23 +1,62 @@
-@reference "../../../index.css"
+@reference "../../../index.css";
 
 .chart {
-  @apply w-full border border-border rounded-xl p-4 bg-surface;
-}
-
-.header {
-  @apply font-semibold mb-3 text-navy;
-}
-
-.svgContainer {
-  @apply w-full h-[260px] md:h-[200px];
+  @apply w-full;
 }
 
 .svg {
-  @apply w-full h-full;
+  @apply block h-auto w-full;
+  font-family: var(--font-family);
+  font-size: var(--fs-label);
+  overflow: visible;
 }
 
-.labels {
-  @apply flex justify-between text-[13px] text-muted mt-2;
+.gridLine {
+  stroke: var(--color-border);
+  stroke-width: 1;
 }
 
+.axisText {
+  fill: var(--color-muted);
+}
 
+.area {
+  fill: var(--color-blue);
+  fill-opacity: 0.07;
+}
+
+.line {
+  fill: none;
+  stroke: var(--color-blue);
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.markerLine {
+  stroke: var(--color-border);
+  stroke-dasharray: 4 4;
+}
+
+.marker {
+  fill: var(--color-surface);
+  stroke: var(--color-blue);
+  stroke-width: 3;
+}
+
+.tooltipBox {
+  fill: var(--color-surface);
+  stroke: var(--color-border);
+  stroke-width: 1;
+}
+
+.tooltipDate {
+  fill: var(--color-muted);
+  font-size: 12px;
+}
+
+.tooltipValue {
+  fill: var(--color-navy);
+  font-size: var(--fs-body);
+  font-weight: var(--fw-bold);
+}

@@ -1,11 +1,22 @@
-@reference "../../../index.css"
+@reference "../../../index.css";
 
-.error {
-  @apply flex flex-col gap-3 text-negative p-4 bg-negative/5 border border-negative/20 rounded-[10px];
+.state {
+  @apply flex min-h-[240px] flex-col items-center justify-center gap-3 p-xl text-center;
 }
 
-.error button {
-  @apply self-start px-3 py-2 border border-border bg-surface text-navy rounded-[10px] cursor-pointer font-sans;
+.icon {
+  @apply h-7 w-7;
+  color: var(--color-negative);
 }
 
+.title {
+  @apply text-body font-semibold text-navy;
+}
 
+.description {
+  @apply text-body-sm text-secondary;
+}
+
+.retry {
+  @apply mt-sm;
+}

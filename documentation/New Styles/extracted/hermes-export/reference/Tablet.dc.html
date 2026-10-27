@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Hermes</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700&amp;display=swap">
+<style>
+body{margin:0;background:#F5F7FA}
+.hm{font-family:Manrope,sans-serif;color:#0B1220;background:#F5F7FA;font-size:16px;line-height:1.5}
+.hm,.hm *{box-sizing:border-box}
+.hm h1,.hm h2,.hm h3,.hm p{margin:0}
+.wrap{max-width:1200px;margin:0 auto;padding:0 24px}
+.surf{background:#fff;border:1px solid #E2E8F0;border-radius:14px;padding:32px}
+.eyebrow{font-size:13px;font-weight:600;letter-spacing:.06em;color:#64748B;text-transform:uppercase}
+.lbl{font-size:13px;font-weight:600;display:block;margin-bottom:8px}
+.field{height:48px;width:100%;border:1px solid #E2E8F0;border-radius:10px;padding:0 16px;font:400 16px Manrope,sans-serif;color:#0B1220;background:#fff}
+.field:focus{outline:2px solid #2563EB;outline-offset:1px;border-color:#2563EB}
+select.field{appearance:none;-webkit-appearance:none;padding-right:44px;font-weight:600}
+.sel{position:relative}.sel svg{position:absolute;right:16px;top:14px;pointer-events:none}
+.btn{height:48px;border-radius:10px;padding:0 24px;font:600 15px Manrope,sans-serif;display:inline-flex;align-items:center;justify-content:center;gap:8px;cursor:pointer}
+.pri{background:#2563EB;color:#fff;border:1px solid #2563EB}.pri:hover{background:#1D4ED8}
+.sec{background:#fff;color:#0B1220;border:1px solid #E2E8F0}.sec:hover{border-color:#2563EB}
+.btn:focus-visible,.pill:focus-visible,.th:focus-visible,.lang a:focus-visible{outline:2px solid #2563EB;outline-offset:2px}
+.swap{width:48px;height:48px;padding:0;flex:none}
+.lang{display:flex;gap:4px}.lang a{padding:8px 12px;border-radius:10px;font-size:13px;font-weight:600;color:#475569;text-decoration:none}
+.lang a.on{background:#0B1220;color:#fff}
+.logo{display:flex;align-items:center;gap:8px;font-weight:700;font-size:18px;letter-spacing:.14em}
+.mark{width:32px;height:32px;border-radius:10px;background:#2563EB;display:grid;place-items:center}
+.pills{display:flex;gap:4px;overflow-x:auto}
+.pill{height:40px;min-width:48px;padding:0 12px;border-radius:10px;border:1px solid transparent;background:none;font:600 14px Manrope,sans-serif;color:#475569;cursor:pointer;flex:none}
+.pill:hover{border-color:#E2E8F0}.pill.on{background:#2563EB;color:#fff}
+.up{color:#15803D;font-weight:700;display:inline-flex;align-items:center;gap:4px}
+.tw{overflow-x:auto;border:1px solid #E2E8F0;border-radius:12px}
+table{border-collapse:collapse;width:100%;min-width:560px}
+th,td{text-align:left;padding:0 16px;height:52px;font-size:15px;border-bottom:1px solid #E2E8F0;white-space:nowrap}
+tbody tr:last-child td{border-bottom:0}tbody tr:hover{background:#F5F7FA}
+thead th{background:#F5F7FA;font-size:13px;font-weight:600;color:#475569;height:44px}
+.th{background:none;border:0;padding:0;font:600 13px Manrope,sans-serif;color:#2563EB;display:inline-flex;align-items:center;gap:4px;cursor:pointer}
+.th.n{color:#475569}
+.num{text-align:right;font-variant-numeric:tabular-nums;font-weight:600}
+.fg{display:grid;gap:16px;align-items:end}
+</style>
+</helmet>
+<div class="hm" style="min-height:2400px;padding-bottom:64px">
+<header class="wrap" style="display:flex;align-items:center;justify-content:space-between;height:72px">
+<div class="logo"><span class="mark"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 7h10l-3-3"></path><path d="M17 17H7l3 3"></path></svg></span>HERMES</div>
+<nav class="lang" aria-label="Idioma"><a href="#" class="on" aria-current="true">PT</a><a href="#">EN</a><a href="#">ES</a></nav>
+</header>
+<section class="wrap" style="padding-top:32px;padding-bottom:32px">
+<h1 style="font-size:32px;font-weight:700;line-height:1.25">Converta moedas e acompanhe o câmbio</h1>
+<p style="color:#475569;margin-top:8px;max-width:640px">Cotações reais do Banco Central Europeu: converta um valor, veja o histórico do par e exporte os dados em CSV.</p>
+</section>
+
+<section class="wrap" aria-labelledby="conv"><div class="surf" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(380px,1fr));gap:32px">
+<div>
+<h2 id="conv" class="eyebrow" style="margin-bottom:24px">Conversor de moedas</h2>
+<div style="max-width:420px;margin-bottom:16px"><label class="lbl" for="amt">Valor</label><input class="field" id="amt" value="100,00" inputmode="decimal" style="font-weight:600"></div>
+<div style="display:grid;grid-template-columns:1fr 48px 1fr;gap:12px;align-items:end">
+<div><label class="lbl" for="from">Moeda de origem</label><div class="sel"><select class="field" id="from"><option>USD</option></select><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#64748B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg></div></div>
+<button class="btn sec swap" aria-label="Trocar moedas"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0B1220" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 3 4 7l4 4"></path><path d="M4 7h16"></path><path d="m16 21 4-4-4-4"></path><path d="M20 17H4"></path></svg></button>
+<div><label class="lbl" for="to">Moeda de destino</label><div class="sel"><select class="field" id="to"><option>BRL</option></select><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#64748B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg></div></div>
+</div>
+<button class="btn pri" style="margin-top:24px;min-width:200px">Converter</button>
+</div>
+<div style="border-top:1px solid #E2E8F0;padding-top:32px;display:flex;flex-direction:column;justify-content:center;gap:8px" aria-live="polite">
+<span class="eyebrow">Você converteu</span>
+<p style="font-size:20px;font-weight:600;color:#475569">100 USD</p>
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14"></path><path d="m19 12-7 7-7-7"></path></svg>
+<p style="font-size:40px;font-weight:700;line-height:1.15">R$ 542,18</p>
+<p style="font-size:15px;color:#475569;margin-top:8px">1 USD = 5,4218 BRL<br>Cotação de 27/10/2026</p>
+</div>
+</div></section>
+
+<section class="wrap" aria-labelledby="hist" style="margin-top:48px"><div class="surf">
+<div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:16px;margin-bottom:24px">
+<div><h2 id="hist" style="font-size:24px;font-weight:700">Histórico USD → BRL</h2>
+<p style="margin-top:4px;font-size:15px;color:#475569"><span class="up"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 7 13.5 15.5 8.5 10.5 2 17"></path><path d="M16 7h6v6"></path></svg> +1,24%</span> nos últimos 30 dias</p></div>
+<div class="pills" role="group" aria-label="Período"><button class="pill">7D</button><button class="pill">15D</button><button class="pill on" aria-pressed="true">30D</button><button class="pill">3M</button><button class="pill">6M</button><button class="pill">1A</button><button class="pill">5A</button><button class="pill">10A</button></div>
+</div>
+<svg viewBox="0 0 1100 300" width="100%" role="img" aria-label="Gráfico de linha da cotação USD para BRL nos últimos 30 dias, subindo de 5,3558 para 5,4218" style="display:block">
+<g stroke="#E2E8F0" stroke-width="1"><line x1="60" y1="40" x2="1090" y2="40"></line><line x1="60" y1="110" x2="1090" y2="110"></line><line x1="60" y1="180" x2="1090" y2="180"></line><line x1="60" y1="250" x2="1090" y2="250"></line></g>
+<g fill="#64748B" font-family="Manrope,sans-serif" font-size="13"><text x="50" y="45" text-anchor="end">5,50</text><text x="50" y="115" text-anchor="end">5,45</text><text x="50" y="185" text-anchor="end">5,40</text><text x="50" y="255" text-anchor="end">5,35</text><text x="60" y="284">30/09</text><text x="330" y="284" text-anchor="middle">07/10</text><text x="600" y="284" text-anchor="middle">14/10</text><text x="870" y="284" text-anchor="middle">21/10</text><text x="1090" y="284" text-anchor="end">27/10</text></g>
+<polygon points="60,242 108,222 157,230 205,206 254,196 302,210 351,186 399,176 448,190 496,164 545,174 593,152 642,162 690,140 739,152 787,128 836,140 884,118 933,132 981,120 1030,138 1080,150 1080,250 60,250" fill="#2563EB" fill-opacity=".07"></polygon>
+<polyline points="60,242 108,222 157,230 205,206 254,196 302,210 351,186 399,176 448,190 496,164 545,174 593,152 642,162 690,140 739,152 787,128 836,140 884,118 933,132 981,120 1030,138 1080,150" fill="none" stroke="#2563EB" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"></polyline>
+<line x1="1080" y1="40" x2="1080" y2="250" stroke="#E2E8F0" stroke-dasharray="4 4"></line>
+<circle cx="1080" cy="150" r="6" fill="#fff" stroke="#2563EB" stroke-width="3"></circle>
+<rect x="934" y="52" width="130" height="52" rx="10" fill="#fff" stroke="#E2E8F0"></rect>
+<text x="948" y="74" font-family="Manrope,sans-serif" font-size="12" fill="#64748B">27/10/2026</text><text x="948" y="95" font-family="Manrope,sans-serif" font-size="16" font-weight="700" fill="#0B1220">5,4218</text>
+</svg>
+</div></section>
+
+<section class="wrap" aria-labelledby="tab" style="margin-top:48px"><div class="surf">
+<div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;margin-bottom:24px">
+<div><h2 id="tab" style="font-size:24px;font-weight:700">Tabela de cotações</h2>
+<p style="margin-top:4px;font-size:15px;color:#475569">6 de 21 registros</p></div>
+<button class="btn sec"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><path d="m7 10 5 5 5-5"></path><path d="M12 15V3"></path></svg> Exportar CSV</button>
+</div>
+<div style="margin-bottom:24px"><h3 class="eyebrow" style="margin-bottom:16px">Filtros</h3><div class="fg" style="grid-template-columns:repeat(auto-fit,minmax(170px,1fr))">
+<div><label class="lbl" for="d1">Data inicial</label><input class="field" id="d1" placeholder="dd/mm/aaaa"></div>
+<div><label class="lbl" for="d2">Data final</label><input class="field" id="d2" placeholder="dd/mm/aaaa"></div>
+<div><label class="lbl" for="r1">Cotação mínima</label><input class="field" id="r1" placeholder="5,3500"></div>
+<div><label class="lbl" for="r2">Cotação máxima</label><input class="field" id="r2" placeholder="5,5000"></div>
+<button class="btn sec">Limpar filtros</button>
+</div></div>
+<div class="tw"><table><thead><tr><th scope="col"><button class="th" aria-label="Ordenar por data, decrescente">Data <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14"></path><path d="m19 12-7 7-7-7"></path></svg></button></th><th scope="col">Origem</th><th scope="col">Destino</th><th scope="col" class="num"><button class="th n" aria-label="Ordenar por cotação">Cotação</button></th></tr></thead><tbody><tr><td>27/10/2026</td><td>USD</td><td>BRL</td><td class="num">5,4218</td></tr>
+<tr><td>26/10/2026</td><td>USD</td><td>BRL</td><td class="num">5,4102</td></tr>
+<tr><td>23/10/2026</td><td>USD</td><td>BRL</td><td class="num">5,3987</td></tr>
+<tr><td>22/10/2026</td><td>USD</td><td>BRL</td><td class="num">5,4310</td></tr>
+<tr><td>21/10/2026</td><td>USD</td><td>BRL</td><td class="num">5,4156</td></tr>
+<tr><td>20/10/2026</td><td>USD</td><td>BRL</td><td class="num">5,3874</td></tr></tbody></table></div>
+</div></section>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":768,"height":2400}}'>
+class Component extends DCLogic {
+renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

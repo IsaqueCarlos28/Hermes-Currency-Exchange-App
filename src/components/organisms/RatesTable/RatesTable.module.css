@@ -1,28 +1,47 @@
-@reference "../../../index.css"
+@reference "../../../index.css";
 
-.table {
-  @apply w-full border-collapse bg-surface border border-border rounded-[10px] overflow-hidden md:block md:overflow-x-auto;
+.wrapper {
+  @apply w-full overflow-x-auto rounded-container border border-border;
 }
 
-.table thead {
-  @apply bg-canvas;
+.table {
+  @apply w-full min-w-[560px] border-collapse;
 }
 
 .table th,
 .table td {
-  @apply border-b border-border px-4 py-3 text-left text-sm;
+  @apply h-[52px] whitespace-nowrap border-b border-border px-md text-left text-body-sm;
 }
 
-.table th {
-  @apply font-semibold text-navy cursor-pointer;
-}
-
-.table tbody tr:hover {
-  @apply bg-blue/2;
+.table thead th {
+  @apply h-11 bg-canvas text-label font-semibold text-secondary;
 }
 
 .table tbody tr:last-child td {
   @apply border-b-0;
 }
 
+.table tbody tr:hover {
+  @apply bg-canvas;
+}
 
+.num {
+  @apply text-right tabular-nums font-semibold;
+}
+
+.num .sort {
+  @apply w-full justify-end;
+}
+
+.sort {
+  @apply inline-flex cursor-pointer items-center gap-xs border-0 bg-transparent p-0 font-sans text-label font-semibold text-secondary;
+}
+
+.sortActive {
+  @apply text-blue;
+}
+
+.sort:focus-visible {
+  outline: var(--focus-ring);
+  outline-offset: var(--focus-offset);
+}

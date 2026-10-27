@@ -1,6 +1,27 @@
 @reference "../../../index.css";
 
-.select {
-  @apply w-full px-4 py-3 border border-border rounded-[10px] font-sans text-[15px] text-navy bg-surface focus:outline-2 focus:outline-blue/20 focus:border-blue;
+.wrapper {
+  @apply relative w-full;
 }
 
+.select {
+  @apply h-[var(--control-height)] w-full cursor-pointer appearance-none rounded-input border border-border bg-surface pl-md pr-11 font-sans text-body font-semibold text-navy;
+}
+
+.select:focus-visible {
+  outline: var(--focus-ring);
+  outline-offset: var(--focus-offset);
+  border-color: var(--color-blue);
+}
+
+.icon {
+  @apply pointer-events-none absolute right-md top-[14px] h-5 w-5 text-muted;
+}
+
+.error {
+  border-color: var(--color-negative);
+}
+
+.disabled {
+  @apply cursor-not-allowed bg-disabled-bg text-disabled-text;
+}

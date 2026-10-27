@@ -1,0 +1,41 @@
+/* Hermes — design tokens. Importar uma vez em src/main.jsx: import './styles/tokens.css' */
+:root {
+  /* Cores */
+  --color-navy: #0B1220;      /* texto principal, títulos */
+  --color-blue: #2563EB;      /* ações primárias, link, foco, período ativo, linha do gráfico */
+  --color-blue-hover: #1D4ED8;/* hover do botão primário */
+  --color-sky: #38BDF8;       /* destaque secundário (uso raro) */
+  --color-canvas: #F5F7FA;    /* fundo da página */
+  --color-surface: #FFFFFF;   /* superfícies */
+  --color-border: #E2E8F0;    /* bordas e divisores */
+  --color-muted: #64748B;     /* texto auxiliar sobre Surface */
+  --color-text-secondary: #475569; /* texto auxiliar sobre Canvas (contraste >= 4.5:1) */
+  --color-positive: #16A34A;  /* ícones/fundos semânticos */
+  --color-positive-text: #15803D; /* TEXTO positivo (contraste) */
+  --color-negative: #DC2626;
+  --color-disabled-bg: #F1F5F9;
+  --color-disabled-text: #94A3B8;
+
+  /* Tipografia */
+  --font-family: 'Manrope', system-ui, sans-serif;
+  --fs-display: 40px; --fs-h1: 32px; --fs-h2: 24px; --fs-h3: 18px;
+  --fs-body: 16px; --fs-body-sm: 15px; --fs-label: 13px;
+  --fw-regular: 400; --fw-semibold: 600; --fw-bold: 700;
+
+  /* Espaçamento (múltiplos de 8) */
+  --sp-xs: 4px; --sp-sm: 8px; --sp-md: 16px; --sp-lg: 24px;
+  --sp-xl: 32px; --sp-2xl: 48px; --sp-3xl: 64px;
+
+  /* Forma */
+  --radius-input: 10px; --radius-button: 10px; --radius-container: 12px; --radius-large: 14px;
+  --border: 1px solid var(--color-border);
+  --control-height: 48px;
+  --focus-ring: 2px solid var(--color-blue);
+  --focus-offset: 2px;
+
+  /* Layout */
+  --container-max: 1200px;
+  --page-padding: 32px;
+}
+@media (max-width: 1023px) { :root { --page-padding: 24px; --fs-display: 36px; --fs-h1: 30px; } }
+@media (max-width: 767px)  { :root { --page-padding: 16px; --fs-display: 32px; --fs-h1: 28px; --fs-h2: 22px; } }

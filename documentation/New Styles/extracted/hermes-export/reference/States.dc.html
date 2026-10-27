@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Hermes</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700&amp;display=swap">
+<style>
+body{margin:0;background:#F5F7FA}
+.hm{font-family:Manrope,sans-serif;color:#0B1220;background:#F5F7FA;font-size:16px;line-height:1.5}
+.hm,.hm *{box-sizing:border-box}
+.hm h1,.hm h2,.hm h3,.hm p{margin:0}
+.wrap{max-width:1200px;margin:0 auto;padding:0 32px}
+.surf{background:#fff;border:1px solid #E2E8F0;border-radius:14px;padding:32px}
+.eyebrow{font-size:13px;font-weight:600;letter-spacing:.06em;color:#64748B;text-transform:uppercase}
+.lbl{font-size:13px;font-weight:600;display:block;margin-bottom:8px}
+.field{height:48px;width:100%;border:1px solid #E2E8F0;border-radius:10px;padding:0 16px;font:400 16px Manrope,sans-serif;color:#0B1220;background:#fff}
+.field:focus{outline:2px solid #2563EB;outline-offset:1px;border-color:#2563EB}
+select.field{appearance:none;-webkit-appearance:none;padding-right:44px;font-weight:600}
+.sel{position:relative}.sel svg{position:absolute;right:16px;top:14px;pointer-events:none}
+.btn{height:48px;border-radius:10px;padding:0 24px;font:600 15px Manrope,sans-serif;display:inline-flex;align-items:center;justify-content:center;gap:8px;cursor:pointer}
+.pri{background:#2563EB;color:#fff;border:1px solid #2563EB}.pri:hover{background:#1D4ED8}
+.sec{background:#fff;color:#0B1220;border:1px solid #E2E8F0}.sec:hover{border-color:#2563EB}
+.btn:focus-visible,.pill:focus-visible,.th:focus-visible,.lang a:focus-visible{outline:2px solid #2563EB;outline-offset:2px}
+.swap{width:48px;height:48px;padding:0;flex:none}
+.lang{display:flex;gap:4px}.lang a{padding:8px 12px;border-radius:10px;font-size:13px;font-weight:600;color:#475569;text-decoration:none}
+.lang a.on{background:#0B1220;color:#fff}
+.logo{display:flex;align-items:center;gap:8px;font-weight:700;font-size:18px;letter-spacing:.14em}
+.mark{width:32px;height:32px;border-radius:10px;background:#2563EB;display:grid;place-items:center}
+.pills{display:flex;gap:4px;overflow-x:auto}
+.pill{height:40px;min-width:48px;padding:0 12px;border-radius:10px;border:1px solid transparent;background:none;font:600 14px Manrope,sans-serif;color:#475569;cursor:pointer;flex:none}
+.pill:hover{border-color:#E2E8F0}.pill.on{background:#2563EB;color:#fff}
+.up{color:#15803D;font-weight:700;display:inline-flex;align-items:center;gap:4px}
+.tw{overflow-x:auto;border:1px solid #E2E8F0;border-radius:12px}
+table{border-collapse:collapse;width:100%;min-width:560px}
+th,td{text-align:left;padding:0 16px;height:52px;font-size:15px;border-bottom:1px solid #E2E8F0;white-space:nowrap}
+tbody tr:last-child td{border-bottom:0}tbody tr:hover{background:#F5F7FA}
+thead th{background:#F5F7FA;font-size:13px;font-weight:600;color:#475569;height:44px}
+.th{background:none;border:0;padding:0;font:600 13px Manrope,sans-serif;color:#2563EB;display:inline-flex;align-items:center;gap:4px;cursor:pointer}
+.th.n{color:#475569}
+.num{text-align:right;font-variant-numeric:tabular-nums;font-weight:600}
+.fg{display:grid;gap:16px;align-items:end}
+.cap{font-size:13px;font-weight:600;color:#475569;margin:0 0 8px}
+.state{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;text-align:center;min-height:240px;padding:32px}
+.spin{width:28px;height:28px;border:3px solid #E2E8F0;border-top-color:#2563EB;border-radius:50%;animation:s 1s linear infinite}
+@keyframes s{to{transform:rotate(360deg)}}
+.skel{background:#E2E8F0;border-radius:6px;height:16px}
+.errt{color:#DC2626;font-size:13px;font-weight:600;margin-top:8px;display:flex;gap:4px;align-items:center}
+.bad{border-color:#DC2626}
+.dis{background:#F1F5F9;color:#94A3B8;border-color:#E2E8F0;cursor:not-allowed}
+.g{display:grid;gap:24px}
+.sw{height:48px;border-radius:10px;border:1px solid #E2E8F0}
+</style>
+</helmet>
+<div class="hm" style="width:1200px;padding:48px 32px">
+<h1 style="font-size:32px;font-weight:700">Estados da interface</h1>
+<p style="color:#475569;margin:8px 0 32px">Loading, erro e ausência de dados aparecem só na área afetada. O restante da tela continua utilizável.</p>
+<div class="g" style="grid-template-columns:1fr 1fr">
+<div><p class="cap">Gráfico · Loading</p><div class="surf"><div class="state" role="status"><span class="spin"></span><p style="font-weight:600">Carregando cotações...</p></div></div></div>
+<div><p class="cap">Gráfico · Erro</p><div class="surf"><div class="state" role="alert"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#DC2626" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><path d="M12 8v4"></path><path d="M12 28h.01"></path></svg><p style="font-weight:600">Não foi possível carregar as cotações.</p><p style="font-size:15px;color:#475569">Verifique sua conexão e tente de novo.</p><button class="btn pri">Tentar novamente</button></div></div></div>
+<div><p class="cap">Gráfico · Sem dados</p><div class="surf"><div class="state"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#64748B" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path></svg><p style="font-weight:600">Nenhum dado encontrado</p><p style="font-size:15px;color:#475569">Não há cotações publicadas para este par e período.</p></div></div></div>
+<div><p class="cap">Tabela · Loading</p><div class="surf"><div class="tw" role="status" aria-label="Carregando cotações..."><div style="padding:16px;display:grid;gap:20px"><div class="skel" style="width:40%"></div><div class="skel"></div><div class="skel"></div><div class="skel"></div><div class="skel" style="width:70%"></div></div></div></div></div>
+<div><p class="cap">Tabela · Filtros sem resultado</p><div class="surf"><p style="font-size:15px;color:#475569">0 de 21 registros</p><div class="state" style="min-height:170px"><p style="font-weight:600">Nenhum registro para os filtros aplicados</p><button class="btn sec">Limpar filtros</button></div><div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap"><button class="btn sec dis" disabled=""><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><path d="m7 10 5 5 5-5"></path><path d="M12 15V3"></path></svg> Exportar CSV</button><span style="font-size:13px;color:#475569">Sem registros para exportar.</span></div></div></div>
+<div><p class="cap">Conversor · Validação</p><div class="surf" style="display:grid;gap:16px"><div><label class="lbl" for="e1">Valor</label><input class="field bad" id="e1" value="-5" aria-invalid="true" aria-describedby="m1"><p class="errt" id="m1"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><path d="M12 8v4"></path><path d="M12 16h.01"></path></svg> Informe um valor maior que zero.</p></div><div><label class="lbl" for="e2">Moeda de destino</label><div class="sel"><select class="field bad" id="e2" aria-describedby="m2"><option>USD</option></select><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#64748B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg></div><p class="errt" id="m2"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><path d="M12 8v4"></path><path d="M12 16h.01"></path></svg> Escolha moedas diferentes.</p></div></div></div>
+<div><p class="cap">Conversor · Resultado carregando</p><div class="surf" style="display:grid;gap:12px;justify-items:center" role="status"><p class="eyebrow">Você converteu</p><div class="skel" style="width:96px"></div><div class="skel" style="width:200px;height:40px"></div><div class="skel" style="width:160px"></div></div></div>
+<div><p class="cap">Conversor · Erro de API</p><div class="surf"><div class="state" style="min-height:180px" role="alert"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#DC2626" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><path d="M12 8v4"></path><path d="M12 28h.01"></path></svg><p style="font-weight:600">Não foi possível obter a taxa.</p><button class="btn pri">Tentar novamente</button></div></div></div>
+</div></div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1200,"height":1500}}'>
+class Component extends DCLogic {
+renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

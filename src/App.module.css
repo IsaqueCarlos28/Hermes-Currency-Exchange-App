@@ -1,5 +1,5 @@
 @reference "./index.css";
 
 .app {
-  @apply max-w-[1200px] mx-auto px-8 py-8 flex flex-col gap-8 md:px-4 md:gap-6;
+  @apply flex w-full flex-col pb-10 md:pb-3xl;
 }

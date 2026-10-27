@@ -1,10 +1,14 @@
-@reference "../../../index.css";
+﻿@reference "../../../index.css";
 
 .container {
-  @apply flex flex-col gap-1.5 w-full;
+  @apply flex w-full flex-col;
 }
 
-.error {
-  @apply text-negative text-[13px];
+.container input {
+  @apply font-semibold;
 }
 
+.errt {
+  @apply mt-2 flex items-center gap-xs text-label font-semibold;
+  color: var(--color-negative);
+}

@@ -1,6 +1,5 @@
-@reference "../../../index.css"
+@reference "../../../index.css";
 
-.row {
-  /* basic styles */
+.num {
+  @apply text-right tabular-nums font-semibold;
 }
-

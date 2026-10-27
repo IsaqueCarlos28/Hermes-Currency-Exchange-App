@@ -1,15 +1,13 @@
-@reference "../../../index.css"
+@reference "../../../index.css";
 
 .intro {
-  @apply flex flex-col gap-2;
+  @apply mx-auto w-full max-w-[var(--container-max)] px-[var(--page-padding)] pb-lg pt-md md:py-xl;
 }
 
 .title {
-  @apply m-0 text-[32px] md:text-[28px] font-bold text-navy;
+  @apply text-h1 font-bold leading-[1.25] text-navy;
 }
 
 .description {
-  @apply m-0 text-muted text-[15px];
+  @apply mt-sm max-w-[640px] text-body-sm text-secondary md:text-body;
 }
-
-

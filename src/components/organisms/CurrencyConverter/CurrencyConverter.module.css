@@ -1,15 +1,50 @@
-@reference "../../../index.css"
+@reference "../../../index.css";
 
-.converter {
-  @apply flex flex-col gap-6 p-6 md:p-4 bg-surface border border-border rounded-[14px];
+.section {
+  @apply mx-auto w-full max-w-[var(--container-max)] px-[var(--page-padding)];
 }
 
-.row {
-  @apply grid grid-cols-[1fr_auto_1fr] items-end gap-4 md:grid-cols-1;
+.card {
+  @apply rounded-large border border-border bg-surface px-md py-lg md:p-xl;
+}
+
+.eyebrow {
+  @apply mb-md text-label font-semibold uppercase tracking-[0.06em] text-muted md:mb-lg;
+}
+
+.grid {
+  @apply grid grid-cols-1 lg:grid-cols-2 lg:gap-2xl;
+}
+
+.form {
+  @apply flex flex-col;
 }
 
 .amount {
-  @apply w-full max-w-[320px] md:max-w-full;
+  @apply mb-md md:max-w-[420px];
 }
 
+.pair {
+  @apply grid grid-cols-1 gap-0 md:grid-cols-[1fr_48px_1fr] md:items-end md:gap-3;
+}
 
+.swap {
+  @apply flex justify-center py-3 md:py-0;
+}
+
+.convert {
+  @apply mt-lg w-full md:w-auto md:min-w-[200px] md:self-start;
+}
+
+.pairError {
+  @apply mt-2 flex items-center gap-xs text-label font-semibold;
+  color: var(--color-negative);
+}
+
+.pairError svg {
+  @apply h-4 w-4 flex-none;
+}
+
+.result {
+  @apply mt-lg flex flex-col items-center justify-center border-t border-border pt-lg text-center md:mt-xl md:items-start md:pt-xl md:text-left lg:mt-0 lg:border-l lg:border-t-0 lg:pl-2xl lg:pt-0;
+}

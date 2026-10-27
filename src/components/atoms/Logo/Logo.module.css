@@ -1,7 +1,17 @@
-@reference "../../../index.css"
+@reference "../../../index.css";
 
 .logo {
-  @apply font-bold text-xl tracking-widest text-navy;
+  @apply flex items-center gap-sm;
 }
 
+.mark {
+  @apply grid h-8 w-8 flex-none place-items-center rounded-input bg-blue;
+}
 
+.icon {
+  @apply h-[18px] w-[18px] text-white;
+}
+
+.text {
+  @apply text-h3 font-bold uppercase tracking-[0.14em] text-navy;
+}

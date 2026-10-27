@@ -1,7 +1,6 @@
-@reference "../../../index.css"
+@reference "../../../index.css";
 
-.button {
-  @apply w-12 h-12 p-0 flex items-center justify-center text-lg mb-0.5 hover:bg-canvas;
+/* Repete a classe para vencer o padding padrão de Button.module.css. */
+.button.button {
+  @apply h-[var(--control-height)] w-[var(--control-height)] flex-none px-0;
 }
-
-

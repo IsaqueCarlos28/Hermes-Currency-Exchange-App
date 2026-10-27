@@ -1,16 +1,20 @@
 export function validateAmount(amount) {
   if (amount === '' || amount === null || amount === undefined) {
-    return { valid: false, error: 'Valor obrigatório' };
+    return { valid: false, error: 'Informe um valor maior que zero.' };
   }
+
   const normalized = String(amount).replace(',', '.');
-  const num = Number(normalized);
-  if (isNaN(num)) {
-    return { valid: false, error: 'Valor inválido' };
+  const parsed = Number(normalized);
+
+  if (Number.isNaN(parsed)) {
+    return { valid: false, error: 'Digite um número válido.' };
   }
-  if (num <= 0) {
-    return { valid: false, error: 'Valor deve ser maior que zero' };
+
+  if (parsed <= 0) {
+    return { valid: false, error: 'Informe um valor maior que zero.' };
   }
-  return { valid: true, value: num };
+
+  return { valid: true, value: parsed };
 }
 
 export default validateAmount;

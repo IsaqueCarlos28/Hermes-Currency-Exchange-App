@@ -1,7 +1,5 @@
-@reference "../../../index.css"
+@reference "../../../index.css";
 
 .summary {
-  @apply py-1 text-muted text-sm;
+  @apply text-body-sm text-secondary;
 }
-
-

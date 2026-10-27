@@ -1,15 +1,23 @@
-@reference "../../../index.css"
+@reference "../../../index.css";
 
 .switcher {
-  @apply flex gap-2 bg-surface border border-border rounded-[10px] p-1;
+  @apply flex items-center gap-xs;
 }
 
 .button {
-  @apply cursor-pointer border-0 bg-transparent px-2.5 py-1.5 rounded-lg text-muted font-semibold font-sans;
+  @apply cursor-pointer rounded-input border border-transparent bg-transparent px-3 py-2 text-label font-semibold text-secondary;
+}
+
+.button:hover {
+  @apply text-navy;
 }
 
 .active {
-  @apply cursor-pointer border-0 bg-blue text-surface px-2.5 py-1.5 rounded-lg font-bold font-sans;
+  @apply cursor-pointer rounded-input border border-navy bg-navy px-3 py-2 text-label font-semibold text-white;
 }
 
-
+.active:focus-visible,
+.button:focus-visible {
+  outline: var(--focus-ring);
+  outline-offset: var(--focus-offset);
+}
