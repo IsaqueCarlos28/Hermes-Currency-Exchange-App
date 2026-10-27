@@ -1,0 +1,15 @@
+.app {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+@media (max-width: 768px) {
+  .app {
+    padding: 16px;
+    gap: 24px;
+  }
+}
