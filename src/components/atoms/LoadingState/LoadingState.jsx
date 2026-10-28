@@ -7,8 +7,13 @@ function LoadingState({ message = 'Carregando cotações...', variant = 'default
     return (
       <div className={styles.skeletonTable} role="status" aria-live="polite">
         <span className="sr-only">{message}</span>
-        {SKELETON_WIDTHS.map((width) => (
-          <span key={width} className={styles.skeletonRow} style={{ width }} aria-hidden="true" />
+        {SKELETON_WIDTHS.map((width, index) => (
+          <span
+            key={'skeleton-' + index}
+            className={styles.skeletonRow}
+            style={{ width }}
+            aria-hidden="true"
+          />
         ))}
       </div>
     );
