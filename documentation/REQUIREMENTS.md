@@ -5,7 +5,7 @@
 **Entrega final:** 27/10/2026
 > 
 
-> **Status da implementação (27/10/2026):** a interface, os estados e as interações estão implementados em React com dados mock em `src/App.jsx`. A camada de serviço (`services/frankfurterApi.js`), os adaptadores de resposta (`services/frankfurterAdapters.js`) e os hooks de consulta já seguem o contrato real da Frankfurter v2 e suportam cancelamento/erro, mas o `App` ainda não os utiliza. Este documento descreve o comportamento-alvo do produto; as diferenças em relação ao código atual estão registradas em `COMPONENTS.md`.
+> **Status da implementação (27/10/2026):** a interface, os estados e as interações estão implementados em React e a aplicação consome a API Frankfurter v2 por meio dos hooks `useCurrencies`, `useLatestRate` e `useHistoricalRates` (com adaptadores de resposta, cancelamento e tentativa de novo). Os dados mock permanecem em `src/mocks/data.js` apenas como fixture. Este documento descreve o comportamento-alvo do produto; as diferenças em relação ao código atual estão registradas em `COMPONENTS.md`.
 
 ### Contexto
 

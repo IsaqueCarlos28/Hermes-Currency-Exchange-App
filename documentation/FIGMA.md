@@ -1146,7 +1146,7 @@ Os tokens visuais definidos neste documento são reutilizados na implementação
 ## 26. Estado atual da implementação
 
 - Interface completa em React + CSS Modules, com os três cards (Conversor, Histórico e Tabela), responsiva em 390/768/1024/1440 px.
-- Dados mock em `src/mocks/data.js` (5 moedas e 21 registros de histórico), normalizados pelos mesmos adaptadores da API; a conversão é calculada em tempo real e o botão "Converter" é visual.
+- Dados carregados da API Frankfurter v2 (moedas, taxa efetiva e histórico); a conversão é calculada em tempo real e o botão "Converter" é visual. Mocks permanecem em `src/mocks/data.js` apenas como fixture.
 - Estados de loading, erro e vazio implementados nos componentes; a camada de serviço, os adaptadores e os hooks já seguem o contrato da API Frankfurter v2, mas o `App` ainda usa os mocks e não os conecta.
 - Internacionalização PT/EN/ES via `constants/i18n.js`, com `document.documentElement.lang` sincronizado.
 - Exportação CSV no navegador, com os registros filtrados e na ordenação atual.

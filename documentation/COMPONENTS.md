@@ -2,7 +2,7 @@
 
 Arquitetura de componentes do **Hermes — Currency Exchange App**.
 
-> **Nota:** este documento descreve o código atual em `src/` depois da refatoração visual alinhada a `documentation/New Styles/`. A interface está implementada e funcional com dados mock no `App`; a camada de serviço e os hooks de consulta já estão implementados sobre o contrato real da Frankfurter v2 (com adaptadores de resposta), mas o `App` ainda não os utiliza. Onde isso afeta o comportamento, há uma observação.
+> **Nota:** este documento descreve o código atual em `src/` depois da refatoração visual alinhada a `documentation/New Styles/`. A interface está implementada e funcional consumindo a API Frankfurter v2 no `App` (via `useCurrencies`, `useLatestRate` e `useHistoricalRates`); os mocks permanecem em `src/mocks/data.js` apenas como fixture. Onde isso afeta o comportamento, há uma observação.
 
 ## 1. Visão geral
 
@@ -158,11 +158,10 @@ O `useRateFilters` inicia com `{ field: 'date', direction: 'desc' }` e alterna a
 
 ### 6.1 O que ainda falta para a integração com a API
 
-- Substituir, no `App`, os imports de `mocks/data` pelos hooks `useCurrencies`, `useLatestRate` e `useHistoricalRates`. Os mocks já passam pelos mesmos adaptadores, então o formato recebido pelos componentes não muda.
-- Propagar os estados `loading`/`error` dos hooks para as seções (os componentes já os suportam) e ligar `onRetry`; hoje o `App` envia `status="success"` fixo.
-- Reiniciar os filtros quando o par ou o período mudar (regra RN-11), hoje não necessário porque o histórico mock é fixo.
+- A integração ativa está concluída: o `App` usa `useCurrencies`, `useLatestRate` e `useHistoricalRates`, propagando `status`, `error` e `retry` para as seções, e os filtros são reiniciados quando o histórico muda.
 - Definir o comportamento do botão "Converter": hoje ele é visual e a conversão é recalculada em tempo real.
-- Revisar o formato de data aceito nos filtros para o idioma EN: o placeholder exibe `mm/dd/yyyy`, mas `parseDateInput` interpreta `dd/mm/aaaa` e ISO.
+- Revisar o formato de data aceito nos filtros para o idioma EN: o placeholder agora exibe `dd/mm/aaaa`, mas a entrada em formato local (`mm/dd/yyyy`) ainda não é aceita.
+- Adicionar testes automatizados (unitários dos adaptadores e hooks) e evidências no repositório.
 
 ## 7. Relação com os requisitos
 
