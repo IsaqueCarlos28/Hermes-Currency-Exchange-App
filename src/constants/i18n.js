@@ -131,7 +131,7 @@ export const LABELS = {
       endDate: 'End date',
       minRate: 'Minimum rate',
       maxRate: 'Maximum rate',
-      datePlaceholder: 'mm/dd/yyyy',
+      datePlaceholder: 'dd/mm/yyyy',
       minPlaceholder: '5.3500',
       maxPlaceholder: '5.5000',
       clear: 'Clear filters',

@@ -1,10 +1,16 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import filterRates, { EMPTY_FILTERS, validateFilters } from '../utils/filterRates';
 import sortRates from '../utils/sortRates';
 
 export function useRateFilters(rates = [], messages) {
   const [filters, setFilters] = useState(EMPTY_FILTERS);
   const [sort, setSort] = useState({ field: 'date', direction: 'desc' });
+
+  // Reinicia filtros e ordenação quando os dados carregados mudam (RN-11).
+  useEffect(() => {
+    setFilters(EMPTY_FILTERS);
+    setSort({ field: 'date', direction: 'desc' });
+  }, [rates]);
 
   const errors = useMemo(() => validateFilters(filters, messages), [filters, messages]);
 

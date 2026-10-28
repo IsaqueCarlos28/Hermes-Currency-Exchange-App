@@ -15,9 +15,14 @@ export function getPeriodRange(period = '30D') {
   const start = new Date(end);
   start.setDate(start.getDate() - days);
 
+  const toIso = (date) =>
+    `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(
+      date.getDate(),
+    ).padStart(2, '0')}`;
+
   return {
-    startDate: start.toISOString().slice(0, 10),
-    endDate: end.toISOString().slice(0, 10),
+    startDate: toIso(start),
+    endDate: toIso(end),
   };
 }
 
