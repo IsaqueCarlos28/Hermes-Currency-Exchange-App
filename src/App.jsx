@@ -10,33 +10,12 @@ import RatesTableSection from './components/organisms/RatesTableSection/RatesTab
 import { DEFAULTS } from './constants/defaults';
 import { PERIODS } from './constants/periods';
 import { getLabels } from './constants/i18n';
-
-// Mock data based on the API patterns (documentation/API_TESTS.md)
-const MOCK_CURRENCIES = ['USD', 'BRL', 'EUR', 'GBP', 'JPY'];
-const MOCK_LATEST_RATE = { rate: 5.4218, date: '2026-10-27' };
-const MOCK_HISTORICAL_RATES = [
-  { date: '2026-10-27', rate: 5.4218 },
-  { date: '2026-10-26', rate: 5.4102 },
-  { date: '2026-10-23', rate: 5.3987 },
-  { date: '2026-10-22', rate: 5.431 },
-  { date: '2026-10-21', rate: 5.4156 },
-  { date: '2026-10-20', rate: 5.3874 },
-  { date: '2026-10-19', rate: 5.3791 },
-  { date: '2026-10-16', rate: 5.3842 },
-  { date: '2026-10-15', rate: 5.3908 },
-  { date: '2026-10-14', rate: 5.3765 },
-  { date: '2026-10-13', rate: 5.3981 },
-  { date: '2026-10-12', rate: 5.4057 },
-  { date: '2026-10-09', rate: 5.3962 },
-  { date: '2026-10-08', rate: 5.3814 },
-  { date: '2026-10-07', rate: 5.3859 },
-  { date: '2026-10-06', rate: 5.3902 },
-  { date: '2026-10-05', rate: 5.3748 },
-  { date: '2026-10-02', rate: 5.3681 },
-  { date: '2026-10-01', rate: 5.3726 },
-  { date: '2026-09-30', rate: 5.3604 },
-  { date: '2026-09-29', rate: 5.3558 },
-];
+import {
+  MOCK_CURRENCIES,
+  MOCK_HISTORICAL_RATES,
+  MOCK_LATEST_RATE,
+} from './mocks/data';
+import { convertAmount } from './utils/convertAmount';
 
 function App() {
   const [from, setFrom] = useState(DEFAULTS.from);
@@ -69,11 +48,17 @@ function App() {
 
   const converted = useMemo(() => {
     if (amountError || pairError) return undefined;
-    return Number(String(amount).replace(',', '.')) * MOCK_LATEST_RATE.rate;
+    return convertAmount(amount, MOCK_LATEST_RATE.rate) ?? undefined;
   }, [amount, amountError, pairError]);
 
   const tableRows = useMemo(
-    () => MOCK_HISTORICAL_RATES.map((rate) => ({ date: rate.date, from, to, rate: rate.rate })),
+    () =>
+      MOCK_HISTORICAL_RATES.map((row) => ({
+        date: row.date,
+        from,
+        to,
+        rate: row.rate,
+      })),
     [from, to],
   );
 
