@@ -2,7 +2,7 @@
 
 Arquitetura de componentes do **Hermes — Currency Exchange App**.
 
-> **Nota:** este documento descreve o código atual em `src/` depois da refatoração visual alinhada a `documentation/New Styles/`. A interface está implementada e funcional com dados mock no `App`; `services/frankfurterApi.js` e os hooks de consulta já existem como base, mas a integração com a API Frankfurter ainda não está ativa. Onde isso afeta o comportamento, há uma observação.
+> **Nota:** este documento descreve o código atual em `src/` depois da refatoração visual alinhada a `documentation/New Styles/`. A interface está implementada e funcional com dados mock no `App`; a camada de serviço e os hooks de consulta já estão implementados sobre o contrato real da Frankfurter v2 (com adaptadores de resposta), mas o `App` ainda não os utiliza. Onde isso afeta o comportamento, há uma observação.
 
 ## 1. Visão geral
 
@@ -101,12 +101,14 @@ App
 
 | Hook | Responsabilidade | Recebe | Retorna | Situação atual |
 | --- | --- | --- | --- | --- |
-| `useCurrencies` | Busca a lista de moedas disponíveis. | — | `{ currencies, status, error, retry }` | Estrutura pronta; ainda não chama a API (retorna lista vazia). |
-| `useLatestRate` | Busca a taxa e a data efetiva do par selecionado. | `from`, `to` | `{ rate, date, status, error, retry }` | Estrutura pronta; ainda não chama a API. |
-| `useHistoricalRates` | Busca o histórico do par no período selecionado. | `from`, `to`, `period` | `{ rates, status, error, retry }` | Estrutura pronta; ainda não chama a API. |
+| `useCurrencies` | Busca a lista de moedas disponíveis. | — | `{ currencies, status, error, retry }` | Pronto: chama `/v2/currencies` e normaliza com `normalizeCurrencies`; ainda não é usado pelo `App`. |
+| `useLatestRate` | Busca a taxa e a data efetiva do par selecionado. | `from`, `to` | `{ rate, date, from, to, status, error, retry }` | Pronto: chama `/v2/rate/{from}/{to}` e normaliza com `normalizeLatestRate`; não é usado quando o par é inválido. |
+| `useHistoricalRates` | Busca o histórico do par no período selecionado. | `from`, `to`, `period` | `{ rates, status, error, retry }` | Pronto: calcula o intervalo com `getPeriodRange`, chama `/v2/rates` e normaliza com `normalizeHistoricalRates`. |
 | `useRateFilters` | Concentra filtros e ordenação e devolve os registros processados. | `rates`, `messages` (textos de validação) | `{ filters, setFilters, errors, hasFilters, clearFilters, sort, toggleSort, filteredRows }` | **Em uso** por `RatesTableSection`. |
 
 `status` assume um dos valores: `"idle" | "loading" | "success" | "error"`.
+
+Os hooks de API cancelam a requisição anterior com `AbortController` e usam um `requestId` para descartar respostas obsoletas (RNF-11). Todos expõem `retry` para a ação de tentar novamente.
 
 O `useRateFilters` inicia com `{ field: 'date', direction: 'desc' }` e alterna a direção ao clicar novamente no mesmo critério. Os erros são derivados de `validateFilters`, com mensagens vindas de `constants/i18n.js`.
 
@@ -114,7 +116,9 @@ O `useRateFilters` inicia com `{ field: 'date', direction: 'desc' }` e alterna a
 
 | Arquivo | Responsabilidade |
 | --- | --- |
-| `services/frankfurterApi.js` | Funções `fetch` + `async/await` para moedas (`/v2/currencies`), taxa atual (`/v2/latest`) e histórico (`/v2/{início}..{fim}`), com verificação de `res.ok`. Base: `https://api.frankfurter.app`. |
+| `services/frankfurterApi.js` | Funções `fetch` + `async/await` para moedas (`/v2/currencies`), taxa atual (`/v2/rate/{from}/{to}`) e histórico (`/v2/rates?base=&quotes=&from=&to=`), com verificação de `res.ok`, `ApiError` com status e suporte a `AbortSignal`. Base: `https://api.frankfurter.dev`. |
+| `services/frankfurterAdapters.js` | Converte as respostas da API para o modelo da UI: moedas em `{ value, label, name }` (excluindo cripto, metais e XDR), taxa em `{ date, from, to, rate }` e histórico em linhas `{ date, from, to, rate }` ordenadas e sem duplicatas. |
+| `mocks/data.js` | Payloads mock no formato bruto da API v2, passados pelos mesmos adaptadores; exporta `MOCK_CURRENCIES`, `MOCK_LATEST_RATE` e `MOCK_HISTORICAL_RATES` já normalizados. |
 | `utils/convertAmount.js` | Calcula `valor × taxa`, aceitando vírgula ou ponto. |
 | `utils/validateAmount.js` | Valida o valor informado (vazio, não numérico, ≤ 0) e normaliza vírgula/ponto. |
 | `utils/getPeriodRange.js` | Converte o período (7D … 10A) em `startDate` e `endDate` ISO. |
@@ -154,9 +158,10 @@ O `useRateFilters` inicia com `{ field: 'date', direction: 'desc' }` e alterna a
 
 ### 6.1 O que ainda falta para a integração com a API
 
-- Substituir os arrays mock do `App` pelos hooks `useCurrencies`, `useLatestRate` e `useHistoricalRates` ligados a `frankfurterApi.js`.
-- Propagar os estados `loading`/`error` dos hooks para as seções (os componentes já os suportam) e ligar `onRetry`.
+- Substituir, no `App`, os imports de `mocks/data` pelos hooks `useCurrencies`, `useLatestRate` e `useHistoricalRates`. Os mocks já passam pelos mesmos adaptadores, então o formato recebido pelos componentes não muda.
+- Propagar os estados `loading`/`error` dos hooks para as seções (os componentes já os suportam) e ligar `onRetry`; hoje o `App` envia `status="success"` fixo.
 - Reiniciar os filtros quando o par ou o período mudar (regra RN-11), hoje não necessário porque o histórico mock é fixo.
+- Definir o comportamento do botão "Converter": hoje ele é visual e a conversão é recalculada em tempo real.
 - Revisar o formato de data aceito nos filtros para o idioma EN: o placeholder exibe `mm/dd/yyyy`, mas `parseDateInput` interpreta `dd/mm/aaaa` e ISO.
 
 ## 7. Relação com os requisitos
