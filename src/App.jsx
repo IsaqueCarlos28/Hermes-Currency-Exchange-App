@@ -10,11 +10,10 @@ import RatesTableSection from './components/organisms/RatesTableSection/RatesTab
 import { DEFAULTS } from './constants/defaults';
 import { PERIODS } from './constants/periods';
 import { getLabels } from './constants/i18n';
-import {
-  MOCK_CURRENCIES,
-  MOCK_HISTORICAL_RATES,
-  MOCK_LATEST_RATE,
-} from './mocks/data';
+
+import { useCurrencies } from './hooks/useCurrencies';
+import { useLatestRate } from './hooks/useLatestRate';
+import { useHistoricalRates } from './hooks/useHistoricalRates';
 import { convertAmount } from './utils/convertAmount';
 
 function App() {
@@ -31,9 +30,27 @@ function App() {
     document.documentElement.lang = documentLanguage[language] || 'pt-BR';
   }, [language]);
 
+  const { currencies, retry: retryCurrencies } = useCurrencies();
+  const {
+    rate: latestRate,
+    date: latestDate,
+    status: latestStatus,
+    retry: retryLatest,
+  } = useLatestRate(from, to);
+  const {
+    rates: historyRates,
+    status: historyStatus,
+    retry: retryHistory,
+  } = useHistoricalRates(from, to, period);
+
   const handleSwap = () => {
     setFrom(to);
     setTo(from);
+  };
+
+  const handleRetryConverter = () => {
+    retryCurrencies();
+    retryLatest();
   };
 
   const amountError = useMemo(() => {
@@ -48,19 +65,8 @@ function App() {
 
   const converted = useMemo(() => {
     if (amountError || pairError) return undefined;
-    return convertAmount(amount, MOCK_LATEST_RATE.rate) ?? undefined;
-  }, [amount, amountError, pairError]);
-
-  const tableRows = useMemo(
-    () =>
-      MOCK_HISTORICAL_RATES.map((row) => ({
-        date: row.date,
-        from,
-        to,
-        rate: row.rate,
-      })),
-    [from, to],
-  );
+    return convertAmount(amount, latestRate) ?? undefined;
+  }, [amount, amountError, pairError, latestRate]);
 
   return (
     <div className={styles.app}>
@@ -69,14 +75,14 @@ function App() {
       <PageIntro title={labels.intro.title} description={labels.intro.description} />
 
       <CurrencyConverter
-        currencies={MOCK_CURRENCIES}
+        currencies={currencies}
         from={from}
         to={to}
         amount={amount}
-        rate={MOCK_LATEST_RATE.rate}
-        rateDate={MOCK_LATEST_RATE.date}
+        rate={latestRate}
+        rateDate={latestDate}
         converted={converted}
-        status="success"
+        status={latestStatus}
         language={language}
         labels={labels.converter}
         errors={{ amount: amountError, pair: pairError }}
@@ -84,25 +90,28 @@ function App() {
         onToChange={setTo}
         onAmountChange={setAmount}
         onSwap={handleSwap}
+        onRetry={handleRetryConverter}
       />
 
       <HistorySection
         period={period}
         periods={PERIODS}
         onPeriodChange={setPeriod}
-        rates={MOCK_HISTORICAL_RATES}
+        rates={historyRates}
         from={from}
         to={to}
-        status="success"
+        status={historyStatus}
+        onRetry={retryHistory}
         language={language}
         labels={labels.history}
       />
 
       <RatesTableSection
-        rates={tableRows}
+        rates={historyRates}
         from={from}
         to={to}
-        status="success"
+        status={historyStatus}
+        onRetry={retryHistory}
         language={language}
         labels={labels.table}
       />
