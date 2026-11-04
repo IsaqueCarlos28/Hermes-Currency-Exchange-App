@@ -1,20 +1,29 @@
-export function validateAmount(amount) {
+const DEFAULT_MESSAGES = {
+  required: 'Informe um valor maior que zero.',
+  invalid: 'Digite um número válido.',
+};
+
+export function validateAmount(amount, messages = DEFAULT_MESSAGES) {
   if (amount === '' || amount === null || amount === undefined) {
-    return { valid: false, error: 'Informe um valor maior que zero.' };
+    return { valid: false, error: messages.required };
   }
 
-  const normalized = String(amount).replace(',', '.');
-  const parsed = Number(normalized);
+  const trimmed = String(amount).trim();
+  if (!trimmed) {
+    return { valid: false, error: messages.required };
+  }
 
-  if (Number.isNaN(parsed)) {
-    return { valid: false, error: 'Digite um número válido.' };
+  const parsed = Number(trimmed.replace(',', '.'));
+  if (!Number.isFinite(parsed)) {
+    return { valid: false, error: messages.invalid };
   }
 
   if (parsed <= 0) {
-    return { valid: false, error: 'Informe um valor maior que zero.' };
+    return { valid: false, error: messages.required };
   }
 
   return { valid: true, value: parsed };
 }
 
+export { DEFAULT_MESSAGES };
 export default validateAmount;

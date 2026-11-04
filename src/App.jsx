@@ -15,11 +15,15 @@ import { useCurrencies } from './hooks/useCurrencies';
 import { useLatestRate } from './hooks/useLatestRate';
 import { useHistoricalRates } from './hooks/useHistoricalRates';
 import { convertAmount } from './utils/convertAmount';
+import { validateAmount } from './utils/validateAmount';
+
+const INITIAL_AMOUNT = '100';
 
 function App() {
   const [from, setFrom] = useState(DEFAULTS.from);
   const [to, setTo] = useState(DEFAULTS.to);
-  const [amount, setAmount] = useState('100');
+  const [amount, setAmount] = useState(INITIAL_AMOUNT);
+  const [appliedAmount, setAppliedAmount] = useState(INITIAL_AMOUNT);
   const [period, setPeriod] = useState(DEFAULTS.period);
   const [language, setLanguage] = useState(DEFAULTS.language);
 
@@ -30,7 +34,11 @@ function App() {
     document.documentElement.lang = documentLanguage[language] || 'pt-BR';
   }, [language]);
 
-  const { currencies, retry: retryCurrencies } = useCurrencies();
+  const {
+    currencies,
+    status: currenciesStatus,
+    retry: retryCurrencies,
+  } = useCurrencies();
   const {
     rate: latestRate,
     date: latestDate,
@@ -53,20 +61,29 @@ function App() {
     retryLatest();
   };
 
-  const amountError = useMemo(() => {
-    if (String(amount).trim() === '') return labels.converter.amountRequired;
-    const parsed = Number(String(amount).replace(',', '.'));
-    if (Number.isNaN(parsed)) return labels.converter.amountInvalid;
-    if (parsed <= 0) return labels.converter.amountRequired;
-    return '';
-  }, [amount, labels]);
+  const amountValidation = useMemo(
+    () =>
+      validateAmount(amount, {
+        required: labels.converter.amountRequired,
+        invalid: labels.converter.amountInvalid,
+      }),
+    [amount, labels],
+  );
 
+  const amountError = amountValidation.valid ? '' : amountValidation.error;
   const pairError = from === to ? labels.converter.sameCurrencies : '';
 
+  // O resultado usa o valor confirmado pelo botão Converter. Assim a ação
+  // primária tem efeito real sem disparar uma nova consulta de taxa.
+  const handleConvert = () => {
+    if (!amountValidation.valid || pairError) return;
+    setAppliedAmount(String(amount).trim());
+  };
+
   const converted = useMemo(() => {
-    if (amountError || pairError) return undefined;
-    return convertAmount(amount, latestRate) ?? undefined;
-  }, [amount, amountError, pairError, latestRate]);
+    if (pairError) return undefined;
+    return convertAmount(appliedAmount, latestRate) ?? undefined;
+  }, [appliedAmount, pairError, latestRate]);
 
   return (
     <div className={styles.app}>
@@ -76,9 +93,11 @@ function App() {
 
       <CurrencyConverter
         currencies={currencies}
+        currenciesStatus={currenciesStatus}
         from={from}
         to={to}
         amount={amount}
+        appliedAmount={appliedAmount}
         rate={latestRate}
         rateDate={latestDate}
         converted={converted}
@@ -90,7 +109,9 @@ function App() {
         onToChange={setTo}
         onAmountChange={setAmount}
         onSwap={handleSwap}
+        onConvert={handleConvert}
         onRetry={handleRetryConverter}
+        onRetryCurrencies={retryCurrencies}
       />
 
       <HistorySection

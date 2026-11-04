@@ -14,13 +14,12 @@ function ConversionResult({
   amount,
   language = 'PT',
   labels = LABELS.PT.converter,
-  invalidAmount = false,
   onRetry,
 }) {
   const hasValue =
     converted !== undefined && converted !== null && !Number.isNaN(Number(converted));
   const hasRate = rate !== undefined && rate !== null && from && to && from !== to;
-  const amountLabel = !invalidAmount && amount ? `${amount} ${from}` : `-- ${from}`;
+  const amountLabel = amount ? `${amount} ${from}` : `-- ${from}`;
 
   if (status === 'loading') {
     return (

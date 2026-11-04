@@ -45,6 +45,23 @@
   @apply h-4 w-4 flex-none;
 }
 
+.currenciesError {
+  @apply mt-2 flex flex-col items-start gap-sm;
+}
+
+.currenciesErrorText {
+  @apply flex items-center gap-xs text-label font-semibold;
+  color: var(--color-negative);
+}
+
+.currenciesErrorText svg {
+  @apply h-4 w-4 flex-none;
+}
+
+.retry {
+  @apply w-full md:w-auto;
+}
+
 .result {
   @apply mt-lg flex flex-col items-center justify-center border-t border-border pt-lg text-center md:mt-xl md:items-start md:pt-xl md:text-left lg:mt-0 lg:border-l lg:border-t-0 lg:pl-2xl lg:pt-0;
 }

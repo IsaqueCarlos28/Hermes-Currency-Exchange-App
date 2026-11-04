@@ -9,9 +9,11 @@ import { LABELS } from '../../../constants/i18n';
 
 function CurrencyConverter({
   currencies = [],
+  currenciesStatus = 'success',
   from,
   to,
   amount,
+  appliedAmount,
   rate,
   rateDate,
   status,
@@ -23,8 +25,17 @@ function CurrencyConverter({
   onToChange,
   onAmountChange,
   onSwap,
+  onConvert,
   onRetry,
+  onRetryCurrencies,
 }) {
+  const currenciesUnavailable = currenciesStatus === 'loading' || currenciesStatus === 'error';
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    onConvert?.();
+  };
+
   return (
     <section className={styles.section} aria-labelledby="converter-title">
       <div className={styles.card}>
@@ -33,13 +44,14 @@ function CurrencyConverter({
         </h2>
 
         <div className={styles.grid}>
-          <div className={styles.form}>
+          <form className={styles.form} onSubmit={handleSubmit}>
             <div className={styles.amount}>
               <AmountInput
                 label={labels.amount}
                 value={amount}
                 onChange={onAmountChange}
                 error={errors.amount}
+                placeholder={labels.amountPlaceholder}
                 id="amount"
               />
             </div>
@@ -51,6 +63,7 @@ function CurrencyConverter({
                 value={from}
                 options={currencies}
                 onChange={onFromChange}
+                disabled={currenciesUnavailable}
                 error={errors.pair}
                 showErrorMessage={false}
                 describedBy={errors.pair ? 'pair-error' : undefined}
@@ -66,6 +79,7 @@ function CurrencyConverter({
                 value={to}
                 options={currencies}
                 onChange={onToChange}
+                disabled={currenciesUnavailable}
                 error={errors.pair}
                 showErrorMessage={false}
                 describedBy={errors.pair ? 'pair-error' : undefined}
@@ -79,14 +93,26 @@ function CurrencyConverter({
               </p>
             )}
 
-            <Button variant="primary" className={styles.convert}>
+            {currenciesStatus === 'error' && (
+              <div className={styles.currenciesError} role="alert">
+                <p className={styles.currenciesErrorText}>
+                  <AlertCircle aria-hidden="true" />
+                  <span>{labels.currenciesError}</span>
+                </p>
+                <Button variant="secondary" className={styles.retry} onClick={onRetryCurrencies}>
+                  {labels.retry}
+                </Button>
+              </div>
+            )}
+
+            <Button type="submit" variant="primary" className={styles.convert}>
               {labels.convert}
             </Button>
-          </div>
+          </form>
 
           <div className={styles.result} aria-live="polite">
             <ConversionResult
-              amount={amount}
+              amount={appliedAmount}
               converted={converted}
               rate={rate}
               rateDate={rateDate}
@@ -95,7 +121,6 @@ function CurrencyConverter({
               status={status}
               language={language}
               labels={labels}
-              invalidAmount={Boolean(errors.amount)}
               onRetry={onRetry}
             />
           </div>

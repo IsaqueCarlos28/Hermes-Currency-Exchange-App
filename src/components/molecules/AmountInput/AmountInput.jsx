@@ -3,7 +3,14 @@ import Label from '../../atoms/Label/Label';
 import Input from '../../atoms/Input/Input';
 import { AlertCircle } from 'lucide-react';
 
-function AmountInput({ value, onChange, error, label = 'Valor', id = 'amount' }) {
+function AmountInput({
+  value,
+  onChange,
+  error,
+  label = 'Valor',
+  placeholder = '0,00',
+  id = 'amount',
+}) {
   const errorId = `${id}-error`;
 
   return (
@@ -16,7 +23,7 @@ function AmountInput({ value, onChange, error, label = 'Valor', id = 'amount' })
         error={Boolean(error)}
         inputMode="decimal"
         autoComplete="off"
-        placeholder="0,00"
+        placeholder={placeholder}
         aria-describedby={error ? errorId : undefined}
       />
       {error && (
