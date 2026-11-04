@@ -77,10 +77,10 @@ App
 
 | Componente | Responsabilidade | JSX | CSS Module | Principais props | Estados |
 | --- | --- | --- | --- | --- | --- |
-| `AmountInput` | `Label` + `Input` do valor, com mensagem de erro associada. | `molecules/AmountInput/AmountInput.jsx` | `AmountInput.module.css` | `value`, `onChange`, `error`, `label`, `id` | `error` (controlado pelo pai) |
-| `ConversionResult` | Resultado da conversão: valor de origem, valor convertido, taxa e data, com variantes de loading e erro. | `molecules/ConversionResult/ConversionResult.jsx` | `ConversionResult.module.css` | `converted`, `rate`, `rateDate`, `from`, `to`, `status`, `amount`, `language`, `labels`, `invalidAmount`, `onRetry` | `status` (`success`/`loading`/`error`), `invalidAmount` |
+| `AmountInput` | `Label` + `Input` do valor, com mensagem de erro associada. | `molecules/AmountInput/AmountInput.jsx` | `AmountInput.module.css` | `value`, `onChange`, `error`, `label`, `placeholder`, `id` | `error` (controlado pelo pai) |
+| `ConversionResult` | Resultado da conversão: valor de origem, valor convertido, taxa e data, com variantes de loading e erro. | `molecules/ConversionResult/ConversionResult.jsx` | `ConversionResult.module.css` | `converted`, `rate`, `rateDate`, `from`, `to`, `status`, `amount`, `language`, `labels`, `onRetry` | `status` (`success`/`loading`/`error`) |
 | `CurrencySelect` | `Label` + `Select` de moeda, reutilizado para origem e destino. Pode delegar a mensagem de erro ao pai. | `molecules/CurrencySelect/CurrencySelect.jsx` | `CurrencySelect.module.css` | `label`, `value`, `options`, `onChange`, `disabled`, `error`, `showErrorMessage`, `describedBy`, `id` | `error` |
-| `FiltersPanel` | Campos de data inicial/final e cotação mínima/máxima, além de "Limpar filtros" e mensagens de validação. | `molecules/FiltersPanel/FiltersPanel.jsx` | `FiltersPanel.module.css` | `filters`, `onChange`, `onClear`, `errors`, `labels` | `errors` (`startDate`, `endDate`, `minRate`, `maxRate`, `range`, `rates`) |
+| `FiltersPanel` | Campos de data inicial/final e cotação mínima/máxima, além de "Limpar filtros" e mensagens de validação. | `molecules/FiltersPanel/FiltersPanel.jsx` | `FiltersPanel.module.css` | `filters`, `onChange`, `onClear`, `errors`, `labels` | `errors` (`startDate`, `endDate`, `minRate`, `maxRate`, `range`, `rates`); aviso de que filtros inválidos não foram aplicados |
 | `LanguageSwitcher` | Alterna PT/EN/ES e destaca o idioma ativo com `aria-current`. | `molecules/LanguageSwitcher/LanguageSwitcher.jsx` | `LanguageSwitcher.module.css` | `language`, `onChange` | — |
 | `PageIntro` | H1 e descrição da página. | `molecules/PageIntro/PageIntro.jsx` | `PageIntro.module.css` | `title`, `description` | — |
 | `PeriodSelector` | Botões 7D · 15D · 30D · 3M · 6M · 1A · 5A · 10A, com rolagem interna no mobile. | `molecules/PeriodSelector/PeriodSelector.jsx` | `PeriodSelector.module.css` | `periods`, `value`, `onChange`, `label` | `aria-pressed` no ativo |
@@ -92,25 +92,25 @@ App
 | Componente | Responsabilidade | JSX | CSS Module | Principais props | Estados |
 | --- | --- | --- | --- | --- | --- |
 | `Header` | Cabeçalho com logo e seletor de idioma. | `organisms/Header/Header.jsx` | `Header.module.css` | `language`, `onLanguageChange` | — |
-| `CurrencyConverter` | Card do conversor: organiza valor, par, troca, botão e resultado; concentra a exibição dos erros de valor e de par. | `organisms/CurrencyConverter/CurrencyConverter.jsx` | `CurrencyConverter.module.css` | `currencies`, `from`, `to`, `amount`, `rate`, `rateDate`, `status`, `converted`, `language`, `labels`, `errors`, `onFromChange`, `onToChange`, `onAmountChange`, `onSwap`, `onRetry` | `errors.amount`, `errors.pair`; `status` do resultado |
+| `CurrencyConverter` | Card do conversor: formulário com valor, par, troca, botão de conversão e resultado; concentra a exibição dos erros de valor, de par e de carregamento da lista de moedas. | `organisms/CurrencyConverter/CurrencyConverter.jsx` | `CurrencyConverter.module.css` | `currencies`, `currenciesStatus`, `from`, `to`, `amount`, `appliedAmount`, `rate`, `rateDate`, `status`, `converted`, `language`, `labels`, `errors`, `onFromChange`, `onToChange`, `onAmountChange`, `onSwap`, `onConvert`, `onRetry`, `onRetryCurrencies` | `errors.amount`, `errors.pair`; `currenciesStatus`; `status` do resultado |
 | `HistorySection` | Card do histórico: título, variação percentual do período, seletor de períodos e gráfico, com loading/erro/vazio. | `organisms/HistorySection/HistorySection.jsx` | `HistorySection.module.css` | `period`, `onPeriodChange`, `rates`, `from`, `to`, `status`, `onRetry`, `periods`, `language`, `labels` | `status` (`success`/`loading`/`error`); vazio quando `rates.length === 0` |
 | `RatesTable` | Tabela com cabeçalhos ordenáveis por data e cotação, usando `aria-sort`. | `organisms/RatesTable/RatesTable.jsx` | `RatesTable.module.css` | `rows`, `sort`, `onSortChange`, `language`, `labels` | Ordenação ativa (`date`/`rate`, `asc`/`desc`) |
-| `RatesTableSection` | Card da tabela: filtros, contagem, exportação, estados e tabela. Usa `useRateFilters` para filtros e ordenação locais. | `organisms/RatesTableSection/RatesTableSection.jsx` | `RatesTableSection.module.css` | `rates`, `from`, `to`, `status`, `onRetry`, `language`, `labels` | `status`; filtros e ordenação locais; vazio por filtros |
+| `RatesTableSection` | Card da tabela: filtros, contagem, exportação, estados e tabela. Usa `useRateFilters` (com o idioma atual) para filtros e ordenação locais. | `organisms/RatesTableSection/RatesTableSection.jsx` | `RatesTableSection.module.css` | `rates`, `from`, `to`, `status`, `onRetry`, `language`, `labels` | `status`; filtros e ordenação locais; vazio por filtros |
 
 ## 4. Hooks customizados (`src/hooks/`)
 
 | Hook | Responsabilidade | Recebe | Retorna | Situação atual |
 | --- | --- | --- | --- | --- |
-| `useCurrencies` | Busca a lista de moedas disponíveis. | — | `{ currencies, status, error, retry }` | Pronto: chama `/v2/currencies` e normaliza com `normalizeCurrencies`; ainda não é usado pelo `App`. |
-| `useLatestRate` | Busca a taxa e a data efetiva do par selecionado. | `from`, `to` | `{ rate, date, from, to, status, error, retry }` | Pronto: chama `/v2/rate/{from}/{to}` e normaliza com `normalizeLatestRate`; não é usado quando o par é inválido. |
-| `useHistoricalRates` | Busca o histórico do par no período selecionado. | `from`, `to`, `period` | `{ rates, status, error, retry }` | Pronto: calcula o intervalo com `getPeriodRange`, chama `/v2/rates` e normaliza com `normalizeHistoricalRates`. |
-| `useRateFilters` | Concentra filtros e ordenação e devolve os registros processados. | `rates`, `messages` (textos de validação) | `{ filters, setFilters, errors, hasFilters, clearFilters, sort, toggleSort, filteredRows }` | **Em uso** por `RatesTableSection`. |
+| `useCurrencies` | Busca a lista de moedas disponíveis. | — | `{ currencies, status, error, retry }` | Em uso pelo `App`: chama `/v2/currencies` e normaliza com `normalizeCurrencies`; `status` desabilita os seletores e exibe erro com retry quando a lista não carrega. |
+| `useLatestRate` | Busca a taxa e a data efetiva do par selecionado. | `from`, `to` | `{ rate, date, from, to, status, error, retry }` | Em uso: chama `/v2/rate/{from}/{to}` e normaliza com `normalizeLatestRate`; fica em `idle` quando o par é inválido. |
+| `useHistoricalRates` | Busca o histórico do par no período selecionado. | `from`, `to`, `period` | `{ rates, status, error, retry }` | Em uso: calcula o intervalo com `getPeriodRange`, chama `/v2/rates` e normaliza com `normalizeHistoricalRates`. |
+| `useRateFilters` | Concentra filtros e ordenação e devolve os registros processados. | `rates`, `messages` (textos de validação), `language` | `{ filters, setFilters, errors, clearFilters, sort, toggleSort, filteredRows }` | **Em uso** por `RatesTableSection`. |
 
 `status` assume um dos valores: `"idle" | "loading" | "success" | "error"`.
 
 Os hooks de API cancelam a requisição anterior com `AbortController` e usam um `requestId` para descartar respostas obsoletas (RNF-11). Todos expõem `retry` para a ação de tentar novamente.
 
-O `useRateFilters` inicia com `{ field: 'date', direction: 'desc' }` e alterna a direção ao clicar novamente no mesmo critério. Os erros são derivados de `validateFilters`, com mensagens vindas de `constants/i18n.js`.
+O `useRateFilters` inicia com `{ field: 'date', direction: 'desc' }` e alterna a direção ao clicar novamente no mesmo critério. Os erros são derivados de `validateFilters`, com mensagens vindas de `constants/i18n.js`. O idioma recebido também define o formato de data aceito nos filtros (PT/ES: `dd/mm/aaaa`; EN: `mm/dd/yyyy`; ISO sempre).
 
 ## 5. Serviços, utilitários e constantes
 
@@ -118,50 +118,55 @@ O `useRateFilters` inicia com `{ field: 'date', direction: 'desc' }` e alterna a
 | --- | --- |
 | `services/frankfurterApi.js` | Funções `fetch` + `async/await` para moedas (`/v2/currencies`), taxa atual (`/v2/rate/{from}/{to}`) e histórico (`/v2/rates?base=&quotes=&from=&to=`), com verificação de `res.ok`, `ApiError` com status e suporte a `AbortSignal`. Base: `https://api.frankfurter.dev`. |
 | `services/frankfurterAdapters.js` | Converte as respostas da API para o modelo da UI: moedas em `{ value, label, name }` (excluindo cripto, metais e XDR), taxa em `{ date, from, to, rate }` e histórico em linhas `{ date, from, to, rate }` ordenadas e sem duplicatas. |
-| `mocks/data.js` | Payloads mock no formato bruto da API v2, passados pelos mesmos adaptadores; exporta `MOCK_CURRENCIES`, `MOCK_LATEST_RATE` e `MOCK_HISTORICAL_RATES` já normalizados. |
-| `utils/convertAmount.js` | Calcula `valor × taxa`, aceitando vírgula ou ponto. |
-| `utils/validateAmount.js` | Valida o valor informado (vazio, não numérico, ≤ 0) e normaliza vírgula/ponto. |
+| `mocks/data.js` | Payloads mock no formato bruto da API v2, passados pelos mesmos adaptadores; exporta `MOCK_CURRENCIES`, `MOCK_LATEST_RATE` e `MOCK_HISTORICAL_RATES` já normalizados. Não é importado em tempo de execução — serve como fixture. |
+| `utils/convertAmount.js` | Calcula `valor × taxa`, aceitando vírgula ou ponto; devolve `null` quando valor ou taxa estão ausentes ou não são numéricos. |
+| `utils/validateAmount.js` | Valida o valor informado (vazio, não numérico, ≤ 0), normaliza vírgula/ponto e aceita mensagens traduzidas por parâmetro. |
 | `utils/getPeriodRange.js` | Converte o período (7D … 10A) em `startDate` e `endDate` ISO. |
-| `utils/filterRates.js` | `parseDateInput` (dd/mm/aaaa ou ISO), `parseRateInput`, `filterRates` (limites inclusivos) e `validateFilters`; exporta `EMPTY_FILTERS`. |
-| `utils/sortRates.js` | Ordena por `date` ou `rate`, crescente ou decrescente. |
-| `utils/formatters.js` | Formata datas, números, moeda, percentual e datas curtas com `Intl`, conforme PT/EN/ES. |
-| `utils/buildCsv.js` | Monta o CSV com separador `;`, quebra de linha `\r\n` e escape de aspas. |
-| `utils/downloadCsv.js` | Cria o Blob, gera a URL temporária e dispara o download no navegador. |
+| `utils/filterRates.js` | `parseDateInput` (formato local do idioma ou ISO), `parseRateInput`, `filterRates` (limites inclusivos; faixas invertidas não filtram) e `validateFilters`; exporta `EMPTY_FILTERS`. |
+| `utils/sortRates.js` | Ordena por `date` ou `rate`, crescente ou decrescente, sem alterar o array recebido. |
+| `utils/formatters.js` | Formata datas, números, moeda, percentual e datas curtas com `Intl`, conforme PT/EN/ES; datas ISO são interpretadas em UTC para não deslocar o dia exibido. |
+| `utils/buildCsv.js` | Monta o CSV com separador `;`, quebra de linha `\r\n`, escape de aspas e BOM UTF-8 opcional (`{ bom: true }`). |
+| `utils/downloadCsv.js` | Cria o Blob, gera a URL temporária, dispara o download no navegador e revoga a URL. |
 | `constants/periods.js` | Lista dos oito períodos (`value` e `label`). |
 | `constants/defaults.js` | `from: 'USD'`, `to: 'BRL'`, `period: '30D'`, `language: 'PT'`. |
 | `constants/i18n.js` | Textos em PT-BR, EN e ES, incluindo rótulos, placeholders, mensagens, estados e funções de título/resumo. |
 | `styles/tokens.css` | Tokens visuais (cores, tipografia, espaçamento, forma, layout). |
 | `index.css` | Importa Manrope e Tailwind, mapeia os tokens com `@theme inline` e define tipografia base e foco global. |
 
-> **Integração:** ao ligar a API, confira o contrato de `services/frankfurterApi.js` contra o que foi validado em `API_TESTS.md` (rotas `/v2/rate` e `/v2/rates`) antes de substituir os dados mock.
+> **Testes:** as funções puras de `src/utils/` e `src/services/` têm testes ao lado do arquivo (`*.test.js`), executados com `npm run test`. A cobertura está descrita em `documentation/FUNCTION_TESTS.md`.
 
 ## 6. Fluxo de dados e lifting state up
 
 ```
                          ┌──────────────────────────────────────────────┐
                          │ App                                          │
-                         │ state: from, to, amount, period, language    │
-                         │ dados mock: moedas, taxa atual e histórico   │
+                         │ state: from, to, amount, appliedAmount,      │
+                         │        period, language                      │
+                         │ hooks: moedas, taxa atual e histórico        │
                          │ deriva: amountError, pairError, converted    │
                          └──────┬───────────────┬───────────────┬───────┘
           props ↓  eventos ↑    │               │               │
                     CurrencyConverter    HistorySection   RatesTableSection
                     (from, to, amount,   (period, rates)  (filters + sort
-                     rate, converted)                     locais via hook)
+                     appliedAmount,                       locais via hook)
+                     rate, converted)
 ```
 
 1. O usuário muda moeda, valor, período ou idioma → o componente chama um callback recebido por prop (`onFromChange`, `onSwap`, `onPeriodChange`, `onLanguageChange`...).
-2. O `App` atualiza o estado e deriva `amountError`, `pairError` e `converted`. A conversão é recalculada em tempo real com a taxa mock fixa de **5,4218**; o botão "Converter" é visual e não dispara uma ação própria.
-3. Os dados descem por props: o conversor recebe taxa/data/valor convertido; o histórico e a tabela recebem os mesmos registros mock.
+2. O `App` atualiza o estado e deriva `amountError`, `pairError` e `converted`. O valor digitado só entra no resultado quando o botão "Converter" (ou Enter no campo de valor) é acionado: o `App` guarda o valor confirmado em `appliedAmount` e recalcula `converted` com a taxa já carregada, sem nova consulta. Trocar o par mantém o valor confirmado e recalcula com a taxa do novo par.
+3. Os dados descem por props: o conversor recebe taxa/data/valor convertido; o histórico e a tabela recebem o mesmo histórico carregado da API.
 4. Filtros e ordenação são estado **local** de `RatesTableSection`, via `useRateFilters`. Os registros resultantes alimentam `TableSummary`, `RatesTable` e `ExportCsvButton`, garantindo que o CSV contenha exatamente o que a tabela mostra.
 5. A troca de idioma seleciona o conjunto de textos de `constants/i18n.js` e atualiza `document.documentElement.lang` (`pt-BR`, `en` ou `es`).
 
-### 6.1 O que ainda falta para a integração com a API
+### 6.1 Decisões registradas
 
-- A integração ativa está concluída: o `App` usa `useCurrencies`, `useLatestRate` e `useHistoricalRates`, propagando `status`, `error` e `retry` para as seções, e os filtros são reiniciados quando o histórico muda.
-- Definir o comportamento do botão "Converter": hoje ele é visual e a conversão é recalculada em tempo real.
-- Revisar o formato de data aceito nos filtros para o idioma EN: o placeholder agora exibe `dd/mm/aaaa`, mas a entrada em formato local (`mm/dd/yyyy`) ainda não é aceita.
-- Adicionar testes automatizados (unitários dos adaptadores e hooks) e evidências no repositório.
+- A integração com a API está concluída: o `App` usa `useCurrencies`, `useLatestRate` e `useHistoricalRates`, propagando `status`, `error` e `retry`, e os filtros são reiniciados quando o histórico muda.
+- O botão "Converter" confirma o valor digitado, sem disparar nova consulta de taxa. A validação do valor é compartilhada com `validateAmount`.
+- O formato de data dos filtros acompanha o idioma (PT/ES `dd/mm/aaaa`, EN `mm/dd/yyyy`), com ISO sempre aceito.
+- Faixas invertidas (data ou cotação) são apontadas como erro e não filtram a tabela, evitando resultado vazio enganoso.
+- Testes automatizados com Vitest cobrem conversão, validação, datas, filtros, ordenação, formatação, CSV, período e adaptadores.
+- A lista de moedas tem estado de carregamento (seletores desabilitados) e de erro com nova tentativa.
+- A verificação manual no navegador (responsividade, teclado, download do CSV, três idiomas) foi realizada pelo autor, seguindo a checklist da Fase 5.
 
 ## 7. Relação com os requisitos
 

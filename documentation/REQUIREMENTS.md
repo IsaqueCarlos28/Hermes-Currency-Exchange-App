@@ -5,7 +5,7 @@
 **Entrega final:** 27/10/2026
 > 
 
-> **Status da implementação (27/10/2026):** a interface, os estados e as interações estão implementados em React e a aplicação consome a API Frankfurter v2 por meio dos hooks `useCurrencies`, `useLatestRate` e `useHistoricalRates` (com adaptadores de resposta, cancelamento e tentativa de novo). Os dados mock permanecem em `src/mocks/data.js` apenas como fixture. Este documento descreve o comportamento-alvo do produto; as diferenças em relação ao código atual estão registradas em `COMPONENTS.md`.
+> **Status da implementação (03/11/2026):** a interface, os estados e as interações estão implementados em React e a aplicação consome a API Frankfurter v2 por meio dos hooks `useCurrencies`, `useLatestRate` e `useHistoricalRates` (com adaptadores de resposta, cancelamento e tentativa de novo). As funções de negócio de `src/utils/` e `src/services/` têm testes automatizados (`npm run test`). Os dados mock permanecem em `src/mocks/data.js` apenas como fixture. Este documento descreve o comportamento-alvo do produto; as diferenças em relação ao código atual estão registradas em `COMPONENTS.md`.
 
 ### Contexto
 
@@ -196,7 +196,7 @@ Você pode utilizar bibliotecas para apoiar a interface e funcionalidades espec�
 
 | ID | Regra |
 | --- | --- |
-| RN-01 | O valor convertido é calculado **pela aplicação**: `valor convertido = valor informado × taxa` (taxa do par origem → destino obtida da API). A API não realiza a conversão do valor. |
+| RN-01 | O valor convertido é calculado **pela aplicação**: `valor convertido = valor informado × taxa` (taxa do par origem → destino obtida da API). A API não realiza a conversão do valor. A conversão é confirmada pelo botão "Converter" (ou pela tecla Enter no campo de valor) e reaproveita a taxa já carregada, sem nova consulta. |
 | RN-02 | A moeda de origem e a de destino devem ser **diferentes**. Se forem iguais, a conversão não é realizada e o usuário é avisado. |
 | RN-03 | O valor informado deve ser um número **maior que zero**. São inválidos: campo vazio, texto, zero e valores negativos. O campo deve aceitar vírgula ou ponto como separador decimal. |
 | RN-04 | A taxa e a **data efetiva** exibidas são as retornadas pela API. Como não há cotação publicada em todos os dias (ex.: fins de semana e feriados), a data efetiva pode ser anterior à data atual e deve ser sempre mostrada ao usuário. |
@@ -219,8 +219,8 @@ Você pode utilizar bibliotecas para apoiar a interface e funcionalidades espec�
 | ID | Regra |
 | --- | --- |
 | RN-13 | Os filtros atuam **somente sobre os dados já carregados** (período selecionado); não geram novas consultas à API. |
-| RN-14 | Filtro de datas: a data inicial não pode ser posterior à data final. Os limites são **inclusivos**. Pode-se informar apenas um dos limites. |
-| RN-15 | Filtro de cotação: o mínimo não pode ser maior que o máximo. Os limites são **inclusivos**. Pode-se informar apenas um dos limites. |
+| RN-14 | Filtro de datas: a data inicial não pode ser posterior à data final. Os limites são **inclusivos**. Pode-se informar apenas um dos limites. O formato aceito acompanha o idioma da interface (PT/ES `dd/mm/aaaa`, EN `mm/dd/yyyy`) e datas ISO também são aceitas. Faixa invertida é recusada com mensagem e **não** filtra a tabela. |
+| RN-15 | Filtro de cotação: o mínimo não pode ser maior que o máximo. Os limites são **inclusivos**. Pode-se informar apenas um dos limites. Faixa invertida é recusada com mensagem e **não** filtra a tabela. |
 | RN-16 | Filtros preenchidos são combinados com **E (AND)**: o registro precisa atender a todos. |
 | RN-17 | "Limpar filtros" remove todos os filtros e restaura a lista completa do período. Não altera o par nem o período. |
 | RN-18 | Ordenação padrão: **data decrescente** (mais recente primeiro). Clicar novamente no mesmo critério alterna entre crescente e decrescente. Apenas um critério de ordenação (data **ou** cotação) é aplicado por vez. |
@@ -273,7 +273,7 @@ Cada critério segue o formato **Dado / Quando / Então** e é validado manualme
 - link do repositório público no GitHub;
 - aplicação executável;
 - documentação completa;
-- link do Figma;
+- referências visuais do design system (`documentation/New Styles/`);
 - Collection do Postman;
 - evidências e imagens da aplicação;
 - histórico de commits compatível com a evolução do projeto.

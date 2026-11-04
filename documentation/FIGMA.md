@@ -8,9 +8,41 @@
 
 **Documento:** Design System / Guia Visual
 
-**Ferramenta:** Figma
+**Fonte visual:** referências exportadas em `documentation/New Styles/` (especificação, tokens e frames)
 
 > **Nota de implementação:** este documento está alinhado à fonte da verdade visual `documentation/New Styles/HERMES_UI_SPEC.md` e aos tokens de `src/styles/tokens.css`. Os valores e comportamentos abaixo refletem o código atual em React + CSS Modules (Tailwind v4 via `@apply`).
+
+---
+
+## Referências visuais
+
+As telas, estados e componentes deste documento têm como referência os arquivos de `documentation/New Styles/`, mantidos no próprio repositório. Não há protótipo externo vinculado à entrega: a especificação, os tokens e os frames abaixo são a evidência visual do projeto.
+
+### Layout desktop (1440 px)
+
+![Layout desktop em 1440 px](New%20Styles/01-desktop-1440.png)
+
+### Layout tablet (768 px)
+
+![Layout tablet em 768 px](New%20Styles/02-tablet-768.png)
+
+### Layout mobile (390 px)
+
+![Layout mobile em 390 px](New%20Styles/03-mobile-390.png)
+
+### Estados
+
+![Estados de carregamento, erro e vazio](New%20Styles/04-estados.png)
+
+### Componentes
+
+![Componentes do design system](New%20Styles/05-componentes.png)
+
+Arquivos de apoio:
+
+- `New Styles/HERMES_UI_SPEC.md` — especificação de layout, medidas e breakpoints.
+- `New Styles/tokens.css` e `New Styles/tokens.json` — tokens de cor, tipografia, espaçamento e forma.
+- `New Styles/extracted/hermes-export/` — pacote original exportado, mantido como arquivo-fonte (inclui os mesmos frames e os HTML de referência).
 
 ---
 
@@ -1119,14 +1151,14 @@ A identidade do Hermes deve fazer com que a aplicação pareça uma ferramenta f
 
 ## 25 Referência para Implementação
 
-As decisões deste documento orientaram a construção do Figma e a implementação em React.
+As decisões deste documento orientaram a implementação em React.
 
 A implementação mantém correspondência entre:
 
 ```
-Figma
+Referências visuais (documentation/New Styles/)
   ↓
-Design System
+Design System (tokens)
   ↓
 Componentes React
   ↓
@@ -1146,7 +1178,7 @@ Os tokens visuais definidos neste documento são reutilizados na implementação
 ## 26. Estado atual da implementação
 
 - Interface completa em React + CSS Modules, com os três cards (Conversor, Histórico e Tabela), responsiva em 390/768/1024/1440 px.
-- Dados carregados da API Frankfurter v2 (moedas, taxa efetiva e histórico); a conversão é calculada em tempo real e o botão "Converter" é visual. Mocks permanecem em `src/mocks/data.js` apenas como fixture.
-- Estados de loading, erro e vazio implementados nos componentes; a camada de serviço, os adaptadores e os hooks já seguem o contrato da API Frankfurter v2, mas o `App` ainda usa os mocks e não os conecta.
+- Dados carregados da API Frankfurter v2 (moedas, taxa efetiva e histórico); a conversão é calculada no navegador e confirmada pelo botão "Converter", sem nova consulta de taxa. Mocks permanecem em `src/mocks/data.js` apenas como fixture.
+- Estados de loading, erro (com nova tentativa) e vazio implementados nos componentes; a camada de serviço, os adaptadores e os hooks seguem o contrato da API Frankfurter v2 e estão conectados ao `App`.
 - Internacionalização PT/EN/ES via `constants/i18n.js`, com `document.documentElement.lang` sincronizado.
 - Exportação CSV no navegador, com os registros filtrados e na ordenação atual.

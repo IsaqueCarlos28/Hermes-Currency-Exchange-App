@@ -6,7 +6,7 @@
 - **Base URL:** `https://api.frankfurter.dev`
 - **Autenticação:** nenhuma (todas as requisições foram feitas sem chave ou headers especiais)
 - **Formato:** JSON (também CSV via `.csv` e NDJSON via `Accept`)
-- **Collection:** `postman/Currency-Exchange-Frankfurter.postman_collection.json`
+- **Collection:** `documentation/Currency-Exchange-Frankfurter.postman_collection.json`
 - **Como executar:** importar no Postman → Run collection → todos os testes devem passar.
 
 ## 2. Resultado da execução
@@ -22,13 +22,13 @@ Execução em **27/10/2026** (Collection Runner do Postman):
 | Respostas de sucesso | ~22–64 ms cada |
 | Respostas de erro (4xx) | ~221–240 ms cada |
 
-Evidência: `docs/img/runner.png` e `postman/Currency-Exchange-Frankfurter.postman_test_run.json`.
+Evidência versionada: `documentation/Currency Exchange App - Frankfurter API.postman_test_run.json` (relatório exportado pelo Collection Runner). Não há captura de tela da execução no repositório.
 
 ## 3. Endpoints investigados
 
 | Endpoint | Para que serve no app | Parâmetros |
 | --- | --- | --- |
-| `GET /v2/currencies` | Popular os selects de moeda | `scope=all` (inclui legadas) |
+| `GET /v2/currencies` | Popular os selects de moeda | `scope=all` (opcional, inclui moedas legadas; a aplicação não envia o parâmetro) |
 | `GET /v2/currency/{code}` | Detalhe de uma moeda | — |
 | `GET /v2/rate/{base}/{quote}` | Taxa para o conversor | `date` (opcional) |
 | `GET /v2/rates` | Histórico (gráfico e tabela) | `base`, `quotes`, `from`, `to`, `group` (`week`/`month`) |
