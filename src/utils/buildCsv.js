@@ -3,13 +3,16 @@ function escapeCell(value) {
   return /[";\n]/.test(text) ? `"${text.replace(/"/g, '""')}"` : text;
 }
 
-export function buildCsv(rows = [], headers = []) {
+export function buildCsv(rows = [], headers = [], { bom = false } = {}) {
   const headerLine = headers.map(escapeCell).join(';');
   const lines = rows.map((row) => {
     const values = Array.isArray(row) ? row : Object.values(row);
     return values.map(escapeCell).join(';');
   });
-  return [headerLine, ...lines].join('\r\n');
+  const content = [headerLine, ...lines].join('\r\n');
+
+  // O BOM mantém acentos legíveis ao abrir o arquivo no Excel (RN-23).
+  return bom ? `\uFEFF${content}` : content;
 }
 
 export default buildCsv;

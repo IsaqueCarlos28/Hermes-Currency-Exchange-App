@@ -28,9 +28,10 @@ function ExportCsvButton({
         formatRate(row.rate, language, 4, 4),
       ]),
       [labels.date, labels.origin, labels.destination, labels.rate],
+      { bom: true },
     );
 
-    downloadCsv(`hermes-${from}-${to}.csv`, `\uFEFF${csv}`);
+    downloadCsv(`hermes-${from}-${to}.csv`, csv);
   };
 
   return (

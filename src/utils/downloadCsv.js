@@ -8,6 +8,8 @@ export function downloadCsv(filename, content) {
   document.body.appendChild(link);
   link.click();
   document.body.removeChild(link);
+  // Libera a URL temporária depois que o navegador inicia o download.
+  setTimeout(() => URL.revokeObjectURL(url), 0);
 }
 
 export default downloadCsv;

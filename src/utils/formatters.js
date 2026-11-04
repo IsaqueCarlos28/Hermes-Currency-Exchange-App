@@ -8,6 +8,15 @@ export function localeFor(language = 'PT') {
   return LOCALES[language] || LOCALES.PT;
 }
 
+/*
+ * As datas da API chegam como ISO (YYYY-MM-DD), sem horário. Fixar UTC evita
+ * que o fuso do usuário desloque a data exibida em um dia.
+ */
+function toDate(value) {
+  if (value instanceof Date) return value;
+  return new Date(`${String(value).slice(0, 10)}T00:00:00Z`);
+}
+
 export function formatNumber(value, language = 'PT', digits = 2) {
   const parsed = Number(value);
   if (!Number.isFinite(parsed)) return '';
@@ -43,7 +52,7 @@ export function formatCurrency(value, currency, language = 'PT') {
 
 export function formatDate(value, language = 'PT') {
   if (!value) return '';
-  const date = value instanceof Date ? value : new Date(`${value}T00:00:00`);
+  const date = toDate(value);
   if (Number.isNaN(date.getTime())) return String(value);
   return new Intl.DateTimeFormat(localeFor(language), {
     day: '2-digit',
@@ -55,7 +64,7 @@ export function formatDate(value, language = 'PT') {
 
 export function formatShortDate(value, language = 'PT') {
   if (!value) return '';
-  const date = value instanceof Date ? value : new Date(`${value}T00:00:00`);
+  const date = toDate(value);
   if (Number.isNaN(date.getTime())) return String(value);
   return new Intl.DateTimeFormat(localeFor(language), {
     day: '2-digit',
