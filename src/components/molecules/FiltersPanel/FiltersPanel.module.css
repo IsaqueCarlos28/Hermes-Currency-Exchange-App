@@ -30,3 +30,7 @@
 .clear {
   @apply w-full;
 }
+
+.note {
+  @apply text-label text-muted;
+}

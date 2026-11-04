@@ -20,7 +20,7 @@ function RatesTableSection({
   labels = LABELS.PT.table,
 }) {
   const { filters, setFilters, errors, clearFilters, sort, toggleSort, filteredRows } =
-    useRateFilters(rates, labels);
+    useRateFilters(rates, labels, language);
 
   const isEmpty = filteredRows.length === 0;
 
@@ -33,7 +33,9 @@ function RatesTableSection({
         language={language}
         labels={labels}
       />
-      {isEmpty && <p className={styles.exportNote}>{labels.exportEmpty}</p>}
+      {status === 'success' && isEmpty && (
+        <p className={styles.exportNote}>{labels.exportEmpty}</p>
+      )}
     </div>
   );
 

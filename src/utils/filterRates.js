@@ -5,6 +5,17 @@ const EMPTY_FILTERS = {
   maxRate: '',
 };
 
+/*
+ * O campo de data aceita o formato local do idioma da interface e também ISO.
+ * PT/ES usam dd/mm/aaaa e EN usa mm/dd/yyyy; aceitar os dois sentidos na mesma
+ * interface tornaria datas como 05/03/2026 ambíguas.
+ */
+const DATE_ORDERS = {
+  PT: 'dmy',
+  EN: 'mdy',
+  ES: 'dmy',
+};
+
 function isValidIsoDate(iso) {
   const [year, month, day] = iso.split('-').map(Number);
   const date = new Date(Date.UTC(year, month - 1, day));
@@ -15,30 +26,48 @@ function isValidIsoDate(iso) {
   );
 }
 
-export function parseDateInput(value) {
+export function parseDateInput(value, language = 'PT') {
   if (!value) return null;
+
   const trimmed = String(value).trim();
-  const br = trimmed.match(/^(\d{2})\/(\d{2})\/(\d{4})$/);
-  if (br) {
-    const iso = `${br[3]}-${br[2]}-${br[1]}`;
-    return isValidIsoDate(iso) ? iso : null;
+  if (!trimmed) return null;
+
+  if (/^\d{4}-\d{2}-\d{2}$/.test(trimmed)) {
+    return isValidIsoDate(trimmed) ? trimmed : null;
   }
-  const iso = trimmed.match(/^(\d{4})-(\d{2})-(\d{2})$/);
-  if (iso && isValidIsoDate(trimmed)) return trimmed;
-  return null;
+
+  const local = trimmed.match(/^(\d{2})\/(\d{2})\/(\d{4})$/);
+  if (!local) return null;
+
+  const [, first, second, year] = local;
+  const order = DATE_ORDERS[language] || DATE_ORDERS.PT;
+  const iso = order === 'mdy' ? `${year}-${first}-${second}` : `${year}-${second}-${first}`;
+
+  return isValidIsoDate(iso) ? iso : null;
 }
 
 export function parseRateInput(value) {
   if (value === '' || value === null || value === undefined) return null;
-  const parsed = Number(String(value).replace(',', '.').trim());
+
+  const trimmed = String(value).trim();
+  if (!trimmed) return null;
+
+  const parsed = Number(trimmed.replace(',', '.'));
   return Number.isFinite(parsed) ? parsed : null;
 }
 
-export function filterRates(rates = [], filters = {}) {
-  const start = parseDateInput(filters.startDate);
-  const end = parseDateInput(filters.endDate);
+export function filterRates(rates = [], filters = {}, language = 'PT') {
+  const start = parseDateInput(filters.startDate, language);
+  const end = parseDateInput(filters.endDate, language);
   const min = parseRateInput(filters.minRate);
   const max = parseRateInput(filters.maxRate);
+
+  // Faixas invertidas são erro de entrada: aplicá-las descartaria todos os
+  // registros e a tabela pareceria vazia. A filtragem é suspensa e a mensagem
+  // de validação explica o motivo (RN-14 e RN-15).
+  if ((start && end && start > end) || (min !== null && max !== null && min > max)) {
+    return rates;
+  }
 
   return rates.filter((row) => {
     if (start && row.date < start) return false;
@@ -56,10 +85,10 @@ const DEFAULT_MESSAGES = {
   rateRange: 'A cotação mínima deve ser menor que a máxima.',
 };
 
-export function validateFilters(filters = {}, messages = DEFAULT_MESSAGES) {
+export function validateFilters(filters = {}, messages = DEFAULT_MESSAGES, language = 'PT') {
   const errors = {};
-  const start = parseDateInput(filters.startDate);
-  const end = parseDateInput(filters.endDate);
+  const start = parseDateInput(filters.startDate, language);
+  const end = parseDateInput(filters.endDate, language);
   const min = parseRateInput(filters.minRate);
   const max = parseRateInput(filters.maxRate);
 

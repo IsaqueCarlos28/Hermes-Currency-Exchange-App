@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import filterRates, { EMPTY_FILTERS, validateFilters } from '../utils/filterRates';
 import sortRates from '../utils/sortRates';
 
-export function useRateFilters(rates = [], messages) {
+export function useRateFilters(rates = [], messages, language = 'PT') {
   const [filters, setFilters] = useState(EMPTY_FILTERS);
   const [sort, setSort] = useState({ field: 'date', direction: 'desc' });
 
@@ -12,11 +12,14 @@ export function useRateFilters(rates = [], messages) {
     setSort({ field: 'date', direction: 'desc' });
   }, [rates]);
 
-  const errors = useMemo(() => validateFilters(filters, messages), [filters, messages]);
+  const errors = useMemo(
+    () => validateFilters(filters, messages, language),
+    [filters, messages, language],
+  );
 
   const filteredRows = useMemo(
-    () => sortRates(filterRates(rates, filters), sort),
-    [rates, filters, sort],
+    () => sortRates(filterRates(rates, filters, language), sort),
+    [rates, filters, sort, language],
   );
 
   const clearFilters = () => setFilters(EMPTY_FILTERS);
@@ -28,13 +31,10 @@ export function useRateFilters(rates = [], messages) {
     });
   };
 
-  const hasFilters = Object.values(filters).some((value) => value !== '');
-
   return {
     filters,
     setFilters,
     errors,
-    hasFilters,
     clearFilters,
     sort,
     toggleSort,

@@ -92,6 +92,9 @@ function FiltersPanel({ filters = {}, onChange, onClear, errors = {}, labels = L
           <span>{errors.rates}</span>
         </p>
       )}
+      {(errors.range || errors.rates) && (
+        <p className={styles.note}>{labels.filtersNotApplied}</p>
+      )}
     </div>
   );
 }
