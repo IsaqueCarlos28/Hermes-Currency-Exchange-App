@@ -1,0 +1,1454 @@
+{
+	"id": "4320d5b7-665d-4427-890f-c43bcf4c8825",
+	"name": "Currency Exchange App - Frankfurter API",
+	"timestamp": "2026-10-27T17:31:44.273Z",
+	"collection_id": "54350193-f1971f8d-be9f-47d4-adb1-07b6ef99fbe6",
+	"folder_id": 0,
+	"environment_id": "0",
+	"totalPass": 122,
+	"delay": 0,
+	"persist": true,
+	"status": "finished",
+	"startedAt": "2026-10-27T17:31:38.622Z",
+	"totalFail": 0,
+	"results": [
+		{
+			"id": "42f32fa4-1306-4c33-a1e8-4f6ff761dedc",
+			"name": "Listar moedas disponíveis",
+			"url": "https://api.frankfurter.dev/v2/currencies",
+			"time": 31,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status é 200": true,
+				"Content-Type é JSON": true,
+				"Tempo de resposta < 2000ms": true,
+				"Corpo não vazio": true,
+				"Inclui EUR, USD e BRL": true
+			},
+			"testPassFailCounts": {
+				"Status é 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Content-Type é JSON": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Tempo de resposta < 2000ms": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Corpo não vazio": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Inclui EUR, USD e BRL": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				31
+			],
+			"allTests": [
+				{
+					"Status é 200": true,
+					"Content-Type é JSON": true,
+					"Tempo de resposta < 2000ms": true,
+					"Corpo não vazio": true,
+					"Inclui EUR, USD e BRL": true
+				}
+			]
+		},
+		{
+			"id": "5500ec19-3bfa-44a8-b946-58e82d45d8f0",
+			"name": "Listar moedas (scope=all)",
+			"url": "https://api.frankfurter.dev/v2/currencies?scope=all",
+			"time": 33,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status é 200": true,
+				"Content-Type é JSON": true,
+				"Tempo de resposta < 2000ms": true
+			},
+			"testPassFailCounts": {
+				"Status é 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Content-Type é JSON": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Tempo de resposta < 2000ms": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				33
+			],
+			"allTests": [
+				{
+					"Status é 200": true,
+					"Content-Type é JSON": true,
+					"Tempo de resposta < 2000ms": true
+				}
+			]
+		},
+		{
+			"id": "90a9fd3a-cfe1-4f41-a1a9-29dc6316dde6",
+			"name": "Detalhe de uma moeda (BRL)",
+			"url": "https://api.frankfurter.dev/v2/currency/BRL",
+			"time": 36,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status é 200": true,
+				"Content-Type é JSON": true,
+				"Tempo de resposta < 2000ms": true
+			},
+			"testPassFailCounts": {
+				"Status é 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Content-Type é JSON": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Tempo de resposta < 2000ms": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				36
+			],
+			"allTests": [
+				{
+					"Status é 200": true,
+					"Content-Type é JSON": true,
+					"Tempo de resposta < 2000ms": true
+				}
+			]
+		},
+		{
+			"id": "07cc8f31-4741-41b4-8291-656ee609447d",
+			"name": "EUR → USD",
+			"url": "https://api.frankfurter.dev/v2/rate/EUR/USD",
+			"time": 22,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status é 200": true,
+				"Content-Type é JSON": true,
+				"Tempo de resposta < 2000ms": true,
+				"Tem date, base, quote e rate": true,
+				"rate é número positivo": true,
+				"date no formato YYYY-MM-DD": true,
+				"base=EUR e quote=USD": true
+			},
+			"testPassFailCounts": {
+				"Status é 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Content-Type é JSON": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Tempo de resposta < 2000ms": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Tem date, base, quote e rate": {
+					"pass": 1,
+					"fail": 0
+				},
+				"rate é número positivo": {
+					"pass": 1,
+					"fail": 0
+				},
+				"date no formato YYYY-MM-DD": {
+					"pass": 1,
+					"fail": 0
+				},
+				"base=EUR e quote=USD": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				22
+			],
+			"allTests": [
+				{
+					"Status é 200": true,
+					"Content-Type é JSON": true,
+					"Tempo de resposta < 2000ms": true,
+					"Tem date, base, quote e rate": true,
+					"rate é número positivo": true,
+					"date no formato YYYY-MM-DD": true,
+					"base=EUR e quote=USD": true
+				}
+			]
+		},
+		{
+			"id": "bc320292-65b9-4878-9218-18b0a4cf849e",
+			"name": "USD → BRL",
+			"url": "https://api.frankfurter.dev/v2/rate/USD/BRL",
+			"time": 32,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status é 200": true,
+				"Content-Type é JSON": true,
+				"Tempo de resposta < 2000ms": true,
+				"Tem date, base, quote e rate": true,
+				"rate é número positivo": true,
+				"date no formato YYYY-MM-DD": true,
+				"base=USD e quote=BRL": true
+			},
+			"testPassFailCounts": {
+				"Status é 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Content-Type é JSON": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Tempo de resposta < 2000ms": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Tem date, base, quote e rate": {
+					"pass": 1,
+					"fail": 0
+				},
+				"rate é número positivo": {
+					"pass": 1,
+					"fail": 0
+				},
+				"date no formato YYYY-MM-DD": {
+					"pass": 1,
+					"fail": 0
+				},
+				"base=USD e quote=BRL": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				32
+			],
+			"allTests": [
+				{
+					"Status é 200": true,
+					"Content-Type é JSON": true,
+					"Tempo de resposta < 2000ms": true,
+					"Tem date, base, quote e rate": true,
+					"rate é número positivo": true,
+					"date no formato YYYY-MM-DD": true,
+					"base=USD e quote=BRL": true
+				}
+			]
+		},
+		{
+			"id": "ae857e13-b832-4a31-81e3-04897275894d",
+			"name": "BRL → USD (par invertido)",
+			"url": "https://api.frankfurter.dev/v2/rate/BRL/USD",
+			"time": 32,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status é 200": true,
+				"Content-Type é JSON": true,
+				"Tempo de resposta < 2000ms": true,
+				"Tem date, base, quote e rate": true,
+				"rate é número positivo": true,
+				"date no formato YYYY-MM-DD": true
+			},
+			"testPassFailCounts": {
+				"Status é 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Content-Type é JSON": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Tempo de resposta < 2000ms": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Tem date, base, quote e rate": {
+					"pass": 1,
+					"fail": 0
+				},
+				"rate é número positivo": {
+					"pass": 1,
+					"fail": 0
+				},
+				"date no formato YYYY-MM-DD": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				32
+			],
+			"allTests": [
+				{
+					"Status é 200": true,
+					"Content-Type é JSON": true,
+					"Tempo de resposta < 2000ms": true,
+					"Tem date, base, quote e rate": true,
+					"rate é número positivo": true,
+					"date no formato YYYY-MM-DD": true
+				}
+			]
+		},
+		{
+			"id": "ebeec6a6-1354-40c8-a542-9fa995659f2f",
+			"name": "Código em minúsculas (usd/eur)",
+			"url": "https://api.frankfurter.dev/v2/rate/usd/eur",
+			"time": 64,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status é 200": true,
+				"Content-Type é JSON": true,
+				"Tempo de resposta < 2000ms": true,
+				"Tem date, base, quote e rate": true,
+				"rate é número positivo": true,
+				"date no formato YYYY-MM-DD": true
+			},
+			"testPassFailCounts": {
+				"Status é 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Content-Type é JSON": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Tempo de resposta < 2000ms": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Tem date, base, quote e rate": {
+					"pass": 1,
+					"fail": 0
+				},
+				"rate é número positivo": {
+					"pass": 1,
+					"fail": 0
+				},
+				"date no formato YYYY-MM-DD": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				64
+			],
+			"allTests": [
+				{
+					"Status é 200": true,
+					"Content-Type é JSON": true,
+					"Tempo de resposta < 2000ms": true,
+					"Tem date, base, quote e rate": true,
+					"rate é número positivo": true,
+					"date no formato YYYY-MM-DD": true
+				}
+			]
+		},
+		{
+			"id": "c123f71d-1959-4600-a8b4-07623eed4281",
+			"name": "Várias moedas de uma vez",
+			"url": "https://api.frankfurter.dev/v2/rates?base=EUR&quotes=USD,BRL,GBP",
+			"time": 24,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status é 200": true,
+				"Content-Type é JSON": true,
+				"Tempo de resposta < 2000ms": true,
+				"Resposta é um array não vazio": true,
+				"Cada item tem date, base, quote e rate": true,
+				"Datas em ordem (sem inversões)": true,
+				"3 cotações": true
+			},
+			"testPassFailCounts": {
+				"Status é 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Content-Type é JSON": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Tempo de resposta < 2000ms": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Resposta é um array não vazio": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Cada item tem date, base, quote e rate": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Datas em ordem (sem inversões)": {
+					"pass": 1,
+					"fail": 0
+				},
+				"3 cotações": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				24
+			],
+			"allTests": [
+				{
+					"Status é 200": true,
+					"Content-Type é JSON": true,
+					"Tempo de resposta < 2000ms": true,
+					"Resposta é um array não vazio": true,
+					"Cada item tem date, base, quote e rate": true,
+					"Datas em ordem (sem inversões)": true,
+					"3 cotações": true
+				}
+			]
+		},
+		{
+			"id": "099e541c-3d46-47ee-897e-44c83acd2a05",
+			"name": "EUR → USD em 2024-05-01 (dia útil)",
+			"url": "https://api.frankfurter.dev/v2/rate/EUR/USD?date=2024-05-01",
+			"time": 28,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status é 200": true,
+				"Content-Type é JSON": true,
+				"Tempo de resposta < 2000ms": true,
+				"Tem date, base, quote e rate": true,
+				"rate é número positivo": true,
+				"date no formato YYYY-MM-DD": true,
+				"date = 2024-05-01": true
+			},
+			"testPassFailCounts": {
+				"Status é 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Content-Type é JSON": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Tempo de resposta < 2000ms": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Tem date, base, quote e rate": {
+					"pass": 1,
+					"fail": 0
+				},
+				"rate é número positivo": {
+					"pass": 1,
+					"fail": 0
+				},
+				"date no formato YYYY-MM-DD": {
+					"pass": 1,
+					"fail": 0
+				},
+				"date = 2024-05-01": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				28
+			],
+			"allTests": [
+				{
+					"Status é 200": true,
+					"Content-Type é JSON": true,
+					"Tempo de resposta < 2000ms": true,
+					"Tem date, base, quote e rate": true,
+					"rate é número positivo": true,
+					"date no formato YYYY-MM-DD": true,
+					"date = 2024-05-01": true
+				}
+			]
+		},
+		{
+			"id": "3a44d1fc-e7a2-40f8-9dfb-5891f711a31d",
+			"name": "EUR → USD em sábado (2024-05-04)",
+			"url": "https://api.frankfurter.dev/v2/rate/EUR/USD?date=2024-05-04",
+			"time": 29,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status é 200": true,
+				"Content-Type é JSON": true,
+				"Tempo de resposta < 2000ms": true,
+				"Data retornada <= data solicitada (usa último dia publicado)": true
+			},
+			"testPassFailCounts": {
+				"Status é 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Content-Type é JSON": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Tempo de resposta < 2000ms": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Data retornada <= data solicitada (usa último dia publicado)": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				29
+			],
+			"allTests": [
+				{
+					"Status é 200": true,
+					"Content-Type é JSON": true,
+					"Tempo de resposta < 2000ms": true,
+					"Data retornada <= data solicitada (usa último dia publicado)": true
+				}
+			]
+		},
+		{
+			"id": "54919d34-b019-4fa6-8ad9-95dae6d82937",
+			"name": "EUR → USD em feriado (2024-12-25)",
+			"url": "https://api.frankfurter.dev/v2/rate/EUR/USD?date=2024-12-25",
+			"time": 27,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status é 200": true,
+				"Content-Type é JSON": true,
+				"Tempo de resposta < 2000ms": true
+			},
+			"testPassFailCounts": {
+				"Status é 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Content-Type é JSON": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Tempo de resposta < 2000ms": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				27
+			],
+			"allTests": [
+				{
+					"Status é 200": true,
+					"Content-Type é JSON": true,
+					"Tempo de resposta < 2000ms": true
+				}
+			]
+		},
+		{
+			"id": "d5506d32-62ff-4fdd-b987-cfc291a4e2da",
+			"name": "Data futura",
+			"url": "https://api.frankfurter.dev/v2/rate/EUR/USD?date=2099-01-01",
+			"time": 236,
+			"responseCode": {
+				"code": 404,
+				"name": "Not Found"
+			},
+			"tests": {
+				"Não retorna 5xx": true
+			},
+			"testPassFailCounts": {
+				"Não retorna 5xx": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				236
+			],
+			"allTests": [
+				{
+					"Não retorna 5xx": true
+				}
+			]
+		},
+		{
+			"id": "645b1a73-17f0-48d1-b111-f07324c2a1f5",
+			"name": "Histórico mai/2024 (exemplo do enunciado)",
+			"url": "https://api.frankfurter.dev/v2/rates?from=2024-05-01&to=2024-05-31&base=EUR&quotes=USD",
+			"time": 38,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status é 200": true,
+				"Content-Type é JSON": true,
+				"Tempo de resposta < 2000ms": true,
+				"Resposta é um array não vazio": true,
+				"Cada item tem date, base, quote e rate": true,
+				"Datas em ordem (sem inversões)": true,
+				"Todos os itens são EUR→USD": true,
+				"Primeira data >= 2024-05-01 e última <= 2024-05-31": true
+			},
+			"testPassFailCounts": {
+				"Status é 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Content-Type é JSON": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Tempo de resposta < 2000ms": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Resposta é um array não vazio": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Cada item tem date, base, quote e rate": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Datas em ordem (sem inversões)": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Todos os itens são EUR→USD": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Primeira data >= 2024-05-01 e última <= 2024-05-31": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				38
+			],
+			"allTests": [
+				{
+					"Status é 200": true,
+					"Content-Type é JSON": true,
+					"Tempo de resposta < 2000ms": true,
+					"Resposta é um array não vazio": true,
+					"Cada item tem date, base, quote e rate": true,
+					"Datas em ordem (sem inversões)": true,
+					"Todos os itens são EUR→USD": true,
+					"Primeira data >= 2024-05-01 e última <= 2024-05-31": true
+				}
+			]
+		},
+		{
+			"id": "703025c4-f318-4479-bed9-a9eb19b453fd",
+			"name": "Histórico 7 dias (USD→BRL)",
+			"url": "https://api.frankfurter.dev/v2/rates?from=2026-10-20&to=2026-10-27&base=USD&quotes=BRL",
+			"time": 22,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status é 200": true,
+				"Content-Type é JSON": true,
+				"Tempo de resposta < 2000ms": true,
+				"Resposta é um array não vazio": true,
+				"Cada item tem date, base, quote e rate": true,
+				"Datas em ordem (sem inversões)": true
+			},
+			"testPassFailCounts": {
+				"Status é 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Content-Type é JSON": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Tempo de resposta < 2000ms": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Resposta é um array não vazio": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Cada item tem date, base, quote e rate": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Datas em ordem (sem inversões)": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				22
+			],
+			"allTests": [
+				{
+					"Status é 200": true,
+					"Content-Type é JSON": true,
+					"Tempo de resposta < 2000ms": true,
+					"Resposta é um array não vazio": true,
+					"Cada item tem date, base, quote e rate": true,
+					"Datas em ordem (sem inversões)": true
+				}
+			]
+		},
+		{
+			"id": "d413f746-5491-43cb-a10b-bb4d51337930",
+			"name": "Histórico 30 dias (USD→BRL)",
+			"url": "https://api.frankfurter.dev/v2/rates?from=2026-09-27&to=2026-10-27&base=USD&quotes=BRL",
+			"time": 45,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status é 200": true,
+				"Content-Type é JSON": true,
+				"Tempo de resposta < 2000ms": true,
+				"Resposta é um array não vazio": true,
+				"Cada item tem date, base, quote e rate": true,
+				"Datas em ordem (sem inversões)": true
+			},
+			"testPassFailCounts": {
+				"Status é 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Content-Type é JSON": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Tempo de resposta < 2000ms": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Resposta é um array não vazio": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Cada item tem date, base, quote e rate": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Datas em ordem (sem inversões)": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				45
+			],
+			"allTests": [
+				{
+					"Status é 200": true,
+					"Content-Type é JSON": true,
+					"Tempo de resposta < 2000ms": true,
+					"Resposta é um array não vazio": true,
+					"Cada item tem date, base, quote e rate": true,
+					"Datas em ordem (sem inversões)": true
+				}
+			]
+		},
+		{
+			"id": "060a9807-c9fd-4b70-8d59-cdfa53b4b11a",
+			"name": "Histórico 1 ano (USD→BRL)",
+			"url": "https://api.frankfurter.dev/v2/rates?from=2025-10-27&to=2026-10-27&base=USD&quotes=BRL",
+			"time": 23,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status é 200": true,
+				"Content-Type é JSON": true,
+				"Tempo de resposta < 2000ms": true,
+				"Resposta é um array não vazio": true,
+				"Cada item tem date, base, quote e rate": true,
+				"Datas em ordem (sem inversões)": true
+			},
+			"testPassFailCounts": {
+				"Status é 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Content-Type é JSON": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Tempo de resposta < 2000ms": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Resposta é um array não vazio": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Cada item tem date, base, quote e rate": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Datas em ordem (sem inversões)": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				23
+			],
+			"allTests": [
+				{
+					"Status é 200": true,
+					"Content-Type é JSON": true,
+					"Tempo de resposta < 2000ms": true,
+					"Resposta é um array não vazio": true,
+					"Cada item tem date, base, quote e rate": true,
+					"Datas em ordem (sem inversões)": true
+				}
+			]
+		},
+		{
+			"id": "653e46dc-b133-4304-a1c1-779e17a1d659",
+			"name": "Histórico 5 anos (USD→BRL)",
+			"url": "https://api.frankfurter.dev/v2/rates?from=2021-10-28&to=2026-10-27&base=USD&quotes=BRL",
+			"time": 30,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status é 200": true,
+				"Content-Type é JSON": true,
+				"Tempo de resposta < 2000ms": true,
+				"Resposta é um array não vazio": true,
+				"Cada item tem date, base, quote e rate": true,
+				"Datas em ordem (sem inversões)": true
+			},
+			"testPassFailCounts": {
+				"Status é 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Content-Type é JSON": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Tempo de resposta < 2000ms": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Resposta é um array não vazio": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Cada item tem date, base, quote e rate": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Datas em ordem (sem inversões)": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				30
+			],
+			"allTests": [
+				{
+					"Status é 200": true,
+					"Content-Type é JSON": true,
+					"Tempo de resposta < 2000ms": true,
+					"Resposta é um array não vazio": true,
+					"Cada item tem date, base, quote e rate": true,
+					"Datas em ordem (sem inversões)": true
+				}
+			]
+		},
+		{
+			"id": "584df647-a3af-4791-b2c6-5fe3db357ff9",
+			"name": "Histórico 10 anos (USD→BRL)",
+			"url": "https://api.frankfurter.dev/v2/rates?from=2016-10-29&to=2026-10-27&base=USD&quotes=BRL",
+			"time": 32,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status é 200": true,
+				"Content-Type é JSON": true,
+				"Tempo de resposta < 2000ms": true,
+				"Resposta é um array não vazio": true,
+				"Cada item tem date, base, quote e rate": true,
+				"Datas em ordem (sem inversões)": true
+			},
+			"testPassFailCounts": {
+				"Status é 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Content-Type é JSON": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Tempo de resposta < 2000ms": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Resposta é um array não vazio": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Cada item tem date, base, quote e rate": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Datas em ordem (sem inversões)": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				32
+			],
+			"allTests": [
+				{
+					"Status é 200": true,
+					"Content-Type é JSON": true,
+					"Tempo de resposta < 2000ms": true,
+					"Resposta é um array não vazio": true,
+					"Cada item tem date, base, quote e rate": true,
+					"Datas em ordem (sem inversões)": true
+				}
+			]
+		},
+		{
+			"id": "fdd8a1fe-f012-4f40-8483-75d7733d049b",
+			"name": "Histórico 1 ano agrupado por semana",
+			"url": "https://api.frankfurter.dev/v2/rates?from=2025-10-27&to=2026-10-27&base=USD&quotes=BRL&group=week",
+			"time": 26,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status é 200": true,
+				"Content-Type é JSON": true,
+				"Tempo de resposta < 2000ms": true,
+				"Resposta é um array não vazio": true,
+				"Cada item tem date, base, quote e rate": true,
+				"Datas em ordem (sem inversões)": true
+			},
+			"testPassFailCounts": {
+				"Status é 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Content-Type é JSON": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Tempo de resposta < 2000ms": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Resposta é um array não vazio": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Cada item tem date, base, quote e rate": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Datas em ordem (sem inversões)": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				26
+			],
+			"allTests": [
+				{
+					"Status é 200": true,
+					"Content-Type é JSON": true,
+					"Tempo de resposta < 2000ms": true,
+					"Resposta é um array não vazio": true,
+					"Cada item tem date, base, quote e rate": true,
+					"Datas em ordem (sem inversões)": true
+				}
+			]
+		},
+		{
+			"id": "291542d2-d645-48a2-a144-b09afce99ced",
+			"name": "Histórico 10 anos agrupado por mês",
+			"url": "https://api.frankfurter.dev/v2/rates?from=2016-10-29&to=2026-10-27&base=USD&quotes=BRL&group=month",
+			"time": 24,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status é 200": true,
+				"Content-Type é JSON": true,
+				"Tempo de resposta < 2000ms": true,
+				"Resposta é um array não vazio": true,
+				"Cada item tem date, base, quote e rate": true,
+				"Datas em ordem (sem inversões)": true
+			},
+			"testPassFailCounts": {
+				"Status é 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Content-Type é JSON": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Tempo de resposta < 2000ms": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Resposta é um array não vazio": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Cada item tem date, base, quote e rate": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Datas em ordem (sem inversões)": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				24
+			],
+			"allTests": [
+				{
+					"Status é 200": true,
+					"Content-Type é JSON": true,
+					"Tempo de resposta < 2000ms": true,
+					"Resposta é um array não vazio": true,
+					"Cada item tem date, base, quote e rate": true,
+					"Datas em ordem (sem inversões)": true
+				}
+			]
+		},
+		{
+			"id": "5dc5a0ba-acf3-4aa3-933c-94cb9f2bea10",
+			"name": "Moeda inválida (EUR → XXX)",
+			"url": "https://api.frankfurter.dev/v2/rate/EUR/XXX",
+			"time": 221,
+			"responseCode": {
+				"code": 422,
+				"name": "Unprocessable Entity (WebDAV) (RFC 4918)"
+			},
+			"tests": {
+				"Status de erro esperado ([400, 404, 422])": true,
+				"Corpo traz mensagem de erro": true
+			},
+			"testPassFailCounts": {
+				"Status de erro esperado ([400, 404, 422])": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Corpo traz mensagem de erro": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				221
+			],
+			"allTests": [
+				{
+					"Status de erro esperado ([400, 404, 422])": true,
+					"Corpo traz mensagem de erro": true
+				}
+			]
+		},
+		{
+			"id": "32e3cb9f-3ae6-4ef8-ba3b-809eedc09e45",
+			"name": "Moeda inválida em /rates (base=ABC)",
+			"url": "https://api.frankfurter.dev/v2/rates?base=ABC",
+			"time": 223,
+			"responseCode": {
+				"code": 422,
+				"name": "Unprocessable Entity (WebDAV) (RFC 4918)"
+			},
+			"tests": {
+				"Status de erro esperado ([400, 404, 422])": true,
+				"Corpo traz mensagem de erro": true
+			},
+			"testPassFailCounts": {
+				"Status de erro esperado ([400, 404, 422])": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Corpo traz mensagem de erro": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				223
+			],
+			"allTests": [
+				{
+					"Status de erro esperado ([400, 404, 422])": true,
+					"Corpo traz mensagem de erro": true
+				}
+			]
+		},
+		{
+			"id": "63380619-9615-45e0-8b78-de96febc70e0",
+			"name": "Data em formato inválido",
+			"url": "https://api.frankfurter.dev/v2/rate/EUR/USD?date=01-05-2024",
+			"time": 228,
+			"responseCode": {
+				"code": 422,
+				"name": "Unprocessable Entity (WebDAV) (RFC 4918)"
+			},
+			"tests": {
+				"Status de erro esperado ([400, 404, 422])": true,
+				"Corpo traz mensagem de erro": true
+			},
+			"testPassFailCounts": {
+				"Status de erro esperado ([400, 404, 422])": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Corpo traz mensagem de erro": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				228
+			],
+			"allTests": [
+				{
+					"Status de erro esperado ([400, 404, 422])": true,
+					"Corpo traz mensagem de erro": true
+				}
+			]
+		},
+		{
+			"id": "1e6b8b5e-d914-4e91-bf4e-c2a6227ff6ee",
+			"name": "Intervalo invertido (from > to)",
+			"url": "https://api.frankfurter.dev/v2/rates?from=2024-05-31&to=2024-05-01&base=EUR&quotes=USD",
+			"time": 24,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Não retorna 5xx": true
+			},
+			"testPassFailCounts": {
+				"Não retorna 5xx": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				24
+			],
+			"allTests": [
+				{
+					"Não retorna 5xx": true
+				}
+			]
+		},
+		{
+			"id": "e58fb727-b361-4e6e-bc12-904790dfa2eb",
+			"name": "Mesma moeda (EUR → EUR)",
+			"url": "https://api.frankfurter.dev/v2/rate/EUR/EUR",
+			"time": 22,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Não retorna 5xx": true
+			},
+			"testPassFailCounts": {
+				"Não retorna 5xx": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				22
+			],
+			"allTests": [
+				{
+					"Não retorna 5xx": true
+				}
+			]
+		},
+		{
+			"id": "0eceeaa0-8449-40e1-ad46-9e86638545f8",
+			"name": "Data anterior ao início da série (1900-01-01)",
+			"url": "https://api.frankfurter.dev/v2/rate/EUR/USD?date=1900-01-01",
+			"time": 223,
+			"responseCode": {
+				"code": 404,
+				"name": "Not Found"
+			},
+			"tests": {
+				"Não retorna 5xx": true
+			},
+			"testPassFailCounts": {
+				"Não retorna 5xx": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				223
+			],
+			"allTests": [
+				{
+					"Não retorna 5xx": true
+				}
+			]
+		},
+		{
+			"id": "419facc3-0aaf-4fc8-9f65-7e00991d17c9",
+			"name": "Rota inexistente",
+			"url": "https://api.frankfurter.dev/v2/rota-que-nao-existe",
+			"time": 240,
+			"responseCode": {
+				"code": 404,
+				"name": "Not Found"
+			},
+			"tests": {
+				"Status 404": true
+			},
+			"testPassFailCounts": {
+				"Status 404": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				240
+			],
+			"allTests": [
+				{
+					"Status 404": true
+				}
+			]
+		},
+		{
+			"id": "065be307-5832-4111-9875-b7827d2f6a0a",
+			"name": "Histórico em CSV (.csv)",
+			"url": "https://api.frankfurter.dev/v2/rates.csv?from=2024-05-01&to=2024-05-10&base=EUR&quotes=USD",
+			"time": 22,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status é 200": true,
+				"Content-Type é CSV": true,
+				"Tem cabeçalho e linhas": true
+			},
+			"testPassFailCounts": {
+				"Status é 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Content-Type é CSV": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Tem cabeçalho e linhas": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				22
+			],
+			"allTests": [
+				{
+					"Status é 200": true,
+					"Content-Type é CSV": true,
+					"Tem cabeçalho e linhas": true
+				}
+			]
+		}
+	],
+	"count": 1,
+	"totalTime": 2037,
+	"collection": {
+		"requests": [
+			{
+				"id": "42f32fa4-1306-4c33-a1e8-4f6ff761dedc",
+				"method": "GET"
+			},
+			{
+				"id": "5500ec19-3bfa-44a8-b946-58e82d45d8f0",
+				"method": "GET"
+			},
+			{
+				"id": "90a9fd3a-cfe1-4f41-a1a9-29dc6316dde6",
+				"method": "GET"
+			},
+			{
+				"id": "07cc8f31-4741-41b4-8291-656ee609447d",
+				"method": "GET"
+			},
+			{
+				"id": "bc320292-65b9-4878-9218-18b0a4cf849e",
+				"method": "GET"
+			},
+			{
+				"id": "ae857e13-b832-4a31-81e3-04897275894d",
+				"method": "GET"
+			},
+			{
+				"id": "ebeec6a6-1354-40c8-a542-9fa995659f2f",
+				"method": "GET"
+			},
+			{
+				"id": "c123f71d-1959-4600-a8b4-07623eed4281",
+				"method": "GET"
+			},
+			{
+				"id": "099e541c-3d46-47ee-897e-44c83acd2a05",
+				"method": "GET"
+			},
+			{
+				"id": "3a44d1fc-e7a2-40f8-9dfb-5891f711a31d",
+				"method": "GET"
+			},
+			{
+				"id": "54919d34-b019-4fa6-8ad9-95dae6d82937",
+				"method": "GET"
+			},
+			{
+				"id": "d5506d32-62ff-4fdd-b987-cfc291a4e2da",
+				"method": "GET"
+			},
+			{
+				"id": "645b1a73-17f0-48d1-b111-f07324c2a1f5",
+				"method": "GET"
+			},
+			{
+				"id": "703025c4-f318-4479-bed9-a9eb19b453fd",
+				"method": "GET"
+			},
+			{
+				"id": "d413f746-5491-43cb-a10b-bb4d51337930",
+				"method": "GET"
+			},
+			{
+				"id": "060a9807-c9fd-4b70-8d59-cdfa53b4b11a",
+				"method": "GET"
+			},
+			{
+				"id": "653e46dc-b133-4304-a1c1-779e17a1d659",
+				"method": "GET"
+			},
+			{
+				"id": "584df647-a3af-4791-b2c6-5fe3db357ff9",
+				"method": "GET"
+			},
+			{
+				"id": "fdd8a1fe-f012-4f40-8483-75d7733d049b",
+				"method": "GET"
+			},
+			{
+				"id": "291542d2-d645-48a2-a144-b09afce99ced",
+				"method": "GET"
+			},
+			{
+				"id": "5dc5a0ba-acf3-4aa3-933c-94cb9f2bea10",
+				"method": "GET"
+			},
+			{
+				"id": "32e3cb9f-3ae6-4ef8-ba3b-809eedc09e45",
+				"method": "GET"
+			},
+			{
+				"id": "63380619-9615-45e0-8b78-de96febc70e0",
+				"method": "GET"
+			},
+			{
+				"id": "1e6b8b5e-d914-4e91-bf4e-c2a6227ff6ee",
+				"method": "GET"
+			},
+			{
+				"id": "e58fb727-b361-4e6e-bc12-904790dfa2eb",
+				"method": "GET"
+			},
+			{
+				"id": "0eceeaa0-8449-40e1-ad46-9e86638545f8",
+				"method": "GET"
+			},
+			{
+				"id": "419facc3-0aaf-4fc8-9f65-7e00991d17c9",
+				"method": "GET"
+			},
+			{
+				"id": "065be307-5832-4111-9875-b7827d2f6a0a",
+				"method": "GET"
+			}
+		]
+	}
+}
